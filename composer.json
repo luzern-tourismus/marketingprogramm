@@ -1,0 +1,19 @@
+{
+    "name": "luzerntourismus/marketingprogramm",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "LuzernTourismus\\MarketingProgramm\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Urs Lang",
+            "email": "urs.lang@luzern.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "nemundo/framework": "dev-master"
+    }
+}

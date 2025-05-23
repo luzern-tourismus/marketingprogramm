@@ -1,0 +1,3 @@
+git pull
+php82 bin/composer.phar update
+php82 bin/setup.php
