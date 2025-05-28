@@ -1,1 +1,1 @@
-<?phprequire __DIR__ . "/config.php";(new \Nemundo\App\ModelDesigner\ModelDesignerConfig())    ->addProject(new \MarketingProgramm\MarketingProgrammProject());
+<?phpuse LuzernTourismus\MarketingProgramm\MarketingProgrammProject;require __DIR__ . "/config.php";(new \Nemundo\App\ModelDesigner\ModelDesignerConfig())    ->addProject(new MarketingProgrammProject())    ->addProject(new \Nemundo\FrameworkProject());

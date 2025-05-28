@@ -1,0 +1,28 @@
+<?php
+
+namespace LuzernTourismus\MarketingProgramm\Page\Admin\Kontakt;
+
+use LuzernTourismus\MarketingProgramm\Com\Form\KontaktForm;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt\KontaktAdminSite;
+use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
+use Nemundo\Admin\Com\Title\AdminTitle;
+use Nemundo\Com\Template\AbstractTemplateDocument;
+
+class KontaktNewPage extends AbstractTemplateDocument
+{
+    public function getContent()
+    {
+
+        $layout = new AdminFlexboxLayout($this);
+
+        $title = new AdminTitle($layout);
+        $title->content = 'Neuer Kontakt';
+
+        $form = new KontaktForm($layout);
+        $form->redirectSite = KontaktAdminSite::$site;
+
+
+
+        return parent::getContent();
+    }
+}

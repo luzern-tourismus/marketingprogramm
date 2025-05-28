@@ -1,1 +1,1 @@
-<?phprequire_once 'config.php';(new \Nemundo\Project\Script\ProjectCleanScript())->run();require 'init.php';require 'setup.php';
+<?phpuse Nemundo\User\Builder\UserBuilder;use Nemundo\User\Builder\UserUsergroupBuilder;use Nemundo\User\Password\PasswordChange;require_once 'config.php';(new \Nemundo\Db\Provider\MySql\Database\MySqlDatabase())->emptyDatabase();

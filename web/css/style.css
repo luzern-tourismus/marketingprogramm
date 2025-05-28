@@ -1,0 +1,60 @@
+@import "../package/css/framework/framework.css";
+
+:root {
+
+    --default-space: 10px;
+    --color-light: whitesmoke;
+    --color-dark: #0053ae;
+
+}
+
+
+.logo-container {
+
+    gap: 60px;
+    filter: grayscale(100%);
+
+}
+
+.logo-container img {
+    width: 120px;
+}
+
+
+.open {
+    color: green;
+}
+
+
+.closed {
+    color: red;
+}
+
+
+/*
+.width-80percent {
+    width: 75%;
+}
+
+
+.width-20percent {
+    width: 20%;
+}*/
+
+
+.home {
+
+    background-image: url('/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+
+}
+
+.admin-fix-center-layout {
+    /*top: -100px;*/
+}
+
+.admin-footer {
+    padding: 15px;
+}

@@ -11,6 +11,7 @@ class HomeSite extends AbstractSite
     {
         $this->title = 'Home';
         $this->url = '';
+        $this->menuActive = false;
     }
 
     public function loadContent()

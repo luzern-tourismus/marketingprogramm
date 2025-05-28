@@ -1,0 +1,416 @@
+{
+    "app": "MarketingProgramm",
+    "name": "marketingprogramm",
+    "namespace": "LuzernTourismus\\MarketingProgramm",
+    "is_deleted": false,
+    "model": [
+        {
+            "template": "default",
+            "model_id": "c39f39da-7339-45af-a044-f029f34f12c9",
+            "label": "Aktivit\u00e4t",
+            "class_name": "Aktivitaet",
+            "table_name": "marketingprogramm_aktivitaet",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Aktivitaet",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Aktivit\u00e4t",
+                    "field_name": "aktivitaet",
+                    "variable_name": "aktivitaet",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Datum",
+                    "field_name": "datum",
+                    "variable_name": "datum",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "large_text",
+                    "label": "Kosten",
+                    "field_name": "kosten",
+                    "variable_name": "kosten",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "large_text",
+                    "label": "Leistung",
+                    "field_name": "leistung",
+                    "variable_name": "leistung",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "text",
+                    "label": "Zielpublikum",
+                    "field_name": "zielpublikum",
+                    "variable_name": "zielpublikum",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "external",
+                    "label": "Kategorie",
+                    "field_name": "kategorie",
+                    "variable_name": "kategorie",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "228fb55d-1d03-4c6d-910a-d707102288f1"
+                },
+                {
+                    "type": "external",
+                    "label": "Kontakt",
+                    "field_name": "kontakt",
+                    "variable_name": "kontakt",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "91e21f24-2a0f-4137-8df3-197b01570e6c"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "19612981-e5d1-44f0-8d67-8152acce6a9b",
+            "label": "Aktivit\u00e4t Change Log",
+            "class_name": "AktivitaetChangeLog",
+            "table_name": "marketingprogramm_aktivitaet_change_log",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\AktivitaetChangeLog",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "external",
+                    "label": "Aktivit\u00e4t",
+                    "field_name": "aktivitaet",
+                    "variable_name": "aktivitaet",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "c39f39da-7339-45af-a044-f029f34f12c9"
+                },
+                {
+                    "type": "external",
+                    "label": "User",
+                    "field_name": "user",
+                    "variable_name": "user",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "23f00db8-b303-40e4-ab45-32054a954434"
+                },
+                {
+                    "type": "date_time",
+                    "label": "Date Time",
+                    "field_name": "date_time",
+                    "variable_name": "dateTime",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Aktivit\u00e4t Has Changed",
+                    "field_name": "aktivitaet_has_changed",
+                    "variable_name": "aktivitaetHasChanged",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "text",
+                    "label": "Aktivit\u00e4t Old",
+                    "field_name": "aktivitaet_old",
+                    "variable_name": "aktivitaetOld",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Aktivit\u00e4t New",
+                    "field_name": "aktivitaet_new",
+                    "variable_name": "aktivitaetNew",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "d3d99eed-56af-4f3f-bfca-9c12d63401b9",
+            "label": "Anmeldung",
+            "class_name": "Anmeldung",
+            "table_name": "marketingprogramm_anmeldung",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Anmeldung",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "external",
+                    "label": "Aktivit\u00e4t",
+                    "field_name": "aktivitaet",
+                    "variable_name": "aktivitaet",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "c39f39da-7339-45af-a044-f029f34f12c9"
+                },
+                {
+                    "type": "external",
+                    "label": "Partner",
+                    "field_name": "partner",
+                    "variable_name": "partner",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "2de70f92-0c6f-4a0b-a5e3-452f0aa49e6d"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": [
+                {
+                    "index_name": "aktivitaet_partner",
+                    "index_type": "unique_index",
+                    "field_name": [
+                        "aktivitaet",
+                        "partner"
+                    ]
+                }
+            ]
+        },
+        {
+            "template": "default",
+            "model_id": "228fb55d-1d03-4c6d-910a-d707102288f1",
+            "label": "Kategorie",
+            "class_name": "Kategorie",
+            "table_name": "marketingprogramm_kategorie",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Kategorie",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Kategorie",
+                    "field_name": "kategorie",
+                    "variable_name": "kategorie",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "external",
+                    "label": "Thema",
+                    "field_name": "thema",
+                    "variable_name": "thema",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "e4ca7f05-8896-4358-8e2c-c5a6bea49f19"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "91e21f24-2a0f-4137-8df3-197b01570e6c",
+            "label": "Kontakt",
+            "class_name": "Kontakt",
+            "table_name": "marketingprogramm_kontakt",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Kontakt",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "field_name": "name",
+                    "variable_name": "name",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Vorname",
+                    "field_name": "vorname",
+                    "variable_name": "vorname",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Email",
+                    "field_name": "email",
+                    "variable_name": "email",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Telefon",
+                    "field_name": "telefon",
+                    "variable_name": "telefon",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "2de70f92-0c6f-4a0b-a5e3-452f0aa49e6d",
+            "label": "Partner",
+            "class_name": "Partner",
+            "table_name": "marketingprogramm_partner",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Partner",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Firma",
+                    "field_name": "firma",
+                    "variable_name": "firma",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "315b6c75-be54-4961-b7ba-858e70536062",
+            "label": "Partner Mitarbeiter",
+            "class_name": "PartnerMitarbeiter",
+            "table_name": "marketingprogramm_partner_mitarbeiter",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\PartnerMitarbeiter",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "external",
+                    "label": "Partner",
+                    "field_name": "partner",
+                    "variable_name": "partner",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "2de70f92-0c6f-4a0b-a5e3-452f0aa49e6d"
+                },
+                {
+                    "type": "text",
+                    "label": "Name",
+                    "field_name": "name",
+                    "variable_name": "name",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Vorname",
+                    "field_name": "vorname",
+                    "variable_name": "vorname",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Email",
+                    "field_name": "email",
+                    "variable_name": "email",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "e4ca7f05-8896-4358-8e2c-c5a6bea49f19",
+            "label": "Thema",
+            "class_name": "Thema",
+            "table_name": "marketingprogramm_thema",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Thema",
+            "row_class_name": "",
+            "primary_index": "number_id",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Thema",
+                    "field_name": "thema",
+                    "variable_name": "thema",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                }
+            ],
+            "index": []
+        }
+    ]
+}
