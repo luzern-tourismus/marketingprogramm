@@ -5,6 +5,8 @@ namespace LuzernTourismus\MarketingProgramm\Page\Admin\Anmeldung;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\AktivitaetListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\PartnerListBox;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungReader;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Anmeldung\AnmeldungExcelExportSite;
+use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
@@ -34,31 +36,38 @@ class AnmeldungAdminPage extends AbstractTemplateDocument
         $aktivitaet->submitOnChange=true;
 
 
+        $btn = new AdminIconSiteButton($layout);
+        $btn->site = AnmeldungExcelExportSite::$site;
 
         $table = new AdminTable($layout);
 
         $reader = new AnmeldungReader();
-        $reader->model->loadPartner()->loadAktivitaet();
+        $reader->model->loadPartner()->loadOption();
+        $reader->model->option->loadAktivitaet();
 
         if ($partner->hasValue()) {
             $reader->filter->andEqual($reader->model->partnerId,$partner->getValue());
         }
 
         if ($aktivitaet->hasValue()) {
-            $reader->filter->andEqual($reader->model->aktivitaetId,$aktivitaet->getValue());
+            $reader->filter->andEqual($reader->model->option->aktivitaetId,$aktivitaet->getValue());
         }
 
 
         (new AdminTableHeader($table))
             ->addText($reader->model->partner->label)
-            ->addText($reader->model->aktivitaet->label);
+            ->addText($reader->model->option->aktivitaet->label)
+            ->addText($reader->model->option->option->label)
+            ->addText($reader->model->option->preis->label);
 
 
         foreach ($reader->getData() as $anmeldungRow) {
 
             (new AdminTableRow($table))
                 ->addText($anmeldungRow->partner->firma)
-                ->addText($anmeldungRow->aktivitaet->aktivitaet);
+                ->addText($anmeldungRow->option->aktivitaet->aktivitaet)
+                ->addText($anmeldungRow->option->option)
+                ->addText($anmeldungRow->option->preis);
 
 
         }

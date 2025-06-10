@@ -4,8 +4,16 @@ namespace LuzernTourismus\MarketingProgramm\Business\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\Aktivitaet;
+use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetUpdate;
+use LuzernTourismus\MarketingProgramm\Data\AktivitaetChangeLog\AktivitaetChangeLog;
+
+use LuzernTourismus\MarketingProgramm\Data\Option\Option;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow;
 use Nemundo\Core\Check\ValueCheck;
+use Nemundo\Core\Type\DateTime\DateTime;
+use Nemundo\Core\Validation\NumberValidation;
+use Nemundo\User\Session\UserSession;
 
 class AktivitaetBuilder extends AbstractBuilder
 {
@@ -23,6 +31,12 @@ class AktivitaetBuilder extends AbstractBuilder
     public $zielpublikum;
 
     public $kontaktId;
+
+
+    protected function loadBuilder()
+    {
+        $this->type = new AktivitaetType();
+    }
 
 
 
@@ -46,13 +60,32 @@ class AktivitaetBuilder extends AbstractBuilder
             $data->kontaktId = $this->kontaktId;
         }
 
+        $this->id = $data->save();
+
+        //$this->saveChangeLog();
+
+        $aktivitaetNewRow = (new AktivitaetReader())->getRowById($this->id);
+
+        $data = new AktivitaetChangeLog();
+        $data->logId = $this->logId;
+        $data->aktivitaetId = $this->id;
+        $data->aktivitaetHasChanged = true;
+        $data->aktivitaetNew = $aktivitaetNewRow->aktivitaet;
+        $data->datumHasChanged = true;
+        $data->datumNew = $aktivitaetNewRow->datum;
+        //$data->dateTime = (new DateTime())->setNow();
+        //$data->userId = (new UserSession())->userId;
         $data->save();
+
 
     }
 
 
     protected function onUpdate()
     {
+
+        $aktivitaetOldRow = (new AktivitaetReader())->getRowById($this->id);
+
 
         $update = new AktivitaetUpdate();
         //$update->isDeleted = false;
@@ -74,6 +107,96 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $update->updateById($this->id);
 
+        $this->saveChangeLog2($aktivitaetOldRow);
+
+
+    }
+
+
+    private function saveChangeLog2(AktivitaetDataRow $aktivitaetOldRow = null)
+    {
+
+        $aktivitaetNewRow = (new AktivitaetReader())->getRowById($this->id);
+
+        $data = new AktivitaetChangeLog();
+        $data->aktivitaetId = $this->id;
+        $data->logId = $this->logId;
+
+        if ($aktivitaetOldRow->aktivitaet !== $aktivitaetNewRow->aktivitaet) {
+            $data->aktivitaetHasChanged = true;
+            $data->aktivitaetOld = $aktivitaetOldRow->aktivitaet;
+            $data->aktivitaetNew = $aktivitaetNewRow->aktivitaet;
+        } else {
+            $data->aktivitaetHasChanged = false;
+        }
+
+        if ($aktivitaetOldRow->datum !== $aktivitaetNewRow->datum) {
+            $data->datumHasChanged = true;
+            $data->datumOld = $aktivitaetOldRow->datum;
+            $data->datumNew = $aktivitaetNewRow->datum;
+        } else {
+            $data->datumHasChanged = false;
+        }
+
+        //$data->dateTime = (new DateTime())->setNow();
+        //$data->userId = (new UserSession())->userId;
+
+        $data->save();
+
+    }
+
+
+
+    protected function onDelete()
+    {
+
+        $update = new AktivitaetUpdate();
+        $update->isDeleted=true;
+        $update->updateById($this->id);
+
+
+    }
+
+
+
+    protected function onUndoDelete()
+    {
+
+        $update = new AktivitaetUpdate();
+        $update->isDeleted=false;
+        $update->updateById($this->id);
+
+
+    }
+
+
+
+
+
+    public function addOption($option, $preis)
+    {
+
+        $data = new Option();
+        $data->isDeleted = false;
+        $data->aktivitaetId = $this->id;
+        $data->option = $option;
+
+        if ((new NumberValidation())->isNumber($preis)) {
+            $data->hasPreis = true;
+            $data->preis = $preis;
+        } else {
+            $data->hasPreis = false;
+        }
+
+
+        $data->save();
+
+        return $this;
+
+    }
+
+    public function deleteOption($id)
+    {
 
     }
 

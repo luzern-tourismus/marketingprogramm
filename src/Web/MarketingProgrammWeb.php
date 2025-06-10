@@ -2,7 +2,6 @@
 
 namespace LuzernTourismus\MarketingProgramm\Web;
 
-use DataLuzern\Template\DataLuzernTemplate;
 use LuzernTourismus\MarketingProgramm\Controller\MarketingProgrammController;
 use Nemundo\Admin\AdminConfig;
 use Nemundo\User\Login\CookieLogin;

@@ -61,7 +61,7 @@ class PartnerMitarbeiterForm extends AbstractAdminForm
         $builder->nachname = $this->nachname->getValue();
         $builder->email = $this->email->getValue();
         $builder->partnerId= $this->partnerId;
-        $builder->create();
+        $builder->build();
 
     }
 

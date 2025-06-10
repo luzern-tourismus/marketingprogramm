@@ -20,6 +20,13 @@ class PartnerMitarbeiterBuilder extends AbstractBuilder
 
     public $email;
 
+
+    protected function loadBuilder()
+    {
+        $this->type= new PartnerMitarbeiterType();
+    }
+
+
     protected function onCreate()
     {
 
@@ -31,7 +38,7 @@ class PartnerMitarbeiterBuilder extends AbstractBuilder
         $data->name = $this->nachname;
         $data->email = $email;
         $data->partnerId = $this->partnerId;
-        $data->save();
+        $this->id= $data->save();
 
         $user = new UserBuilder();
         $user->email = $email;

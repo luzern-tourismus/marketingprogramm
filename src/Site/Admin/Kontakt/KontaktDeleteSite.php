@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt;
 
+use LuzernTourismus\MarketingProgramm\Business\Kontakt\KontaktBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieUpdate;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktUpdate;
 use LuzernTourismus\MarketingProgramm\Page\Admin\Kontakt\KontaktNewPage;
@@ -32,10 +33,11 @@ class KontaktDeleteSite extends AbstractDeleteIconSite
     {
 
         $kontaktId = (new KontaktParameter())->getValue();
+        (new KontaktBuilder($kontaktId))->delete();
 
-        $update = new KontaktUpdate();
+        /*$update = new KontaktUpdate();
         $update->isDeleted = true;
-        $update->updateById($kontaktId);
+        $update->updateById($kontaktId);*/
 
         (new UrlReferer())->redirect();
 

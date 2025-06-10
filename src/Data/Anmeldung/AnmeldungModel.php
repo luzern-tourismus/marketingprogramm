@@ -9,16 +9,6 @@ public $id;
 /**
 * @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
 */
-public $aktivitaetId;
-
-/**
-* @var \LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetExternalType
-*/
-public $aktivitaet;
-
-/**
-* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
-*/
 public $partnerId;
 
 /**
@@ -30,6 +20,16 @@ public $partner;
 * @var \Nemundo\Model\Type\Number\YesNoType
 */
 public $isDeleted;
+
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $optionId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Option\OptionExternalType
+*/
+public $option;
 
 protected function loadModel() {
 $this->tableName = "marketingprogramm_anmeldung";
@@ -46,13 +46,6 @@ $this->id->aliasFieldName = "marketingprogramm_anmeldung_id";
 $this->id->label = "Id";
 $this->id->allowNullValue = false;
 
-$this->aktivitaetId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
-$this->aktivitaetId->tableName = "marketingprogramm_anmeldung";
-$this->aktivitaetId->fieldName = "aktivitaet";
-$this->aktivitaetId->aliasFieldName = "marketingprogramm_anmeldung_aktivitaet";
-$this->aktivitaetId->label = "Aktivität";
-$this->aktivitaetId->allowNullValue = false;
-
 $this->partnerId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
 $this->partnerId->tableName = "marketingprogramm_anmeldung";
 $this->partnerId->fieldName = "partner";
@@ -68,21 +61,13 @@ $this->isDeleted->aliasFieldName = "marketingprogramm_anmeldung_is_deleted";
 $this->isDeleted->label = "Is Deleted";
 $this->isDeleted->allowNullValue = false;
 
-$index = new \Nemundo\Model\Definition\Index\ModelUniqueIndex($this);
-$index->indexName = "aktivitaet_partner";
-$index->addType($this->aktivitaetId);
-$index->addType($this->partnerId);
+$this->optionId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->optionId->tableName = "marketingprogramm_anmeldung";
+$this->optionId->fieldName = "option";
+$this->optionId->aliasFieldName = "marketingprogramm_anmeldung_option";
+$this->optionId->label = "Option";
+$this->optionId->allowNullValue = false;
 
-}
-public function loadAktivitaet() {
-if ($this->aktivitaet == null) {
-$this->aktivitaet = new \LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetExternalType($this, "marketingprogramm_anmeldung_aktivitaet");
-$this->aktivitaet->tableName = "marketingprogramm_anmeldung";
-$this->aktivitaet->fieldName = "aktivitaet";
-$this->aktivitaet->aliasFieldName = "marketingprogramm_anmeldung_aktivitaet";
-$this->aktivitaet->label = "Aktivität";
-}
-return $this;
 }
 public function loadPartner() {
 if ($this->partner == null) {
@@ -91,6 +76,16 @@ $this->partner->tableName = "marketingprogramm_anmeldung";
 $this->partner->fieldName = "partner";
 $this->partner->aliasFieldName = "marketingprogramm_anmeldung_partner";
 $this->partner->label = "Partner";
+}
+return $this;
+}
+public function loadOption() {
+if ($this->option == null) {
+$this->option = new \LuzernTourismus\MarketingProgramm\Data\Option\OptionExternalType($this, "marketingprogramm_anmeldung_option");
+$this->option->tableName = "marketingprogramm_anmeldung";
+$this->option->fieldName = "option";
+$this->option->aliasFieldName = "marketingprogramm_anmeldung_option";
+$this->option->label = "Option";
 }
 return $this;
 }

@@ -3,13 +3,13 @@
 namespace LuzernTourismus\MarketingProgramm\Com\Form;
 
 use LuzernTourismus\MarketingProgramm\Business\Aktivitaet\AktivitaetBuilder;
-use LuzernTourismus\MarketingProgramm\Business\Kategorie\KategorieBuilder;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KontaktListBox;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetModel;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
 use Nemundo\Admin\Com\Form\AbstractAdminForm;
-use Nemundo\Admin\Com\ListBox\AdminHtmlEditor;
+use Nemundo\Admin\Com\HtmlEditor\AdminHtmlEditor;
+use Nemundo\Admin\Com\ListBox\AdminLargeTextBox;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
 
 class AktivitaetForm extends AbstractAdminForm
@@ -62,29 +62,28 @@ class AktivitaetForm extends AbstractAdminForm
         $this->aktivitaet = new AdminTextBox($this);
         $this->aktivitaet->label = 'Aktivität';
         $this->aktivitaet->validation = true;
-        //$this->aktivitaet->required = true;
+
+        $this->kategorie = new KategorieListBox($this);
+        $this->kategorie->validation=true;
 
         $this->datum = new AdminTextBox($this);
         $this->datum->label = 'Datum';
 
         $this->kosten = new AdminHtmlEditor($this);
         $this->kosten->label = 'Kosten';
+        //$this->kosten->showTable = true;
 
-        $this->leistung = new AdminHtmlEditor($this);
+        $this->leistung = new AdminHtmlEditor($this);  //new AdminLargeTextBox($this);  // new AdminHtmlEditor($this);
         $this->leistung->label = 'Leistung';
 
-        //$this->datum = new AdminTextBox($this);
-        //$this->datum->label = 'Datum';
-
         $this->zielpublikum = new AdminTextBox($this);
-        $this->zielpublikum->label =$model->zielpublikum->label;
+        $this->zielpublikum->label = $model->zielpublikum->label;
 
-        $this->kategorie = new KategorieListBox($this);
 
         $this->kontakt = new KontaktListBox($this);
 
 
-        if ($this->aktivitaetId!==null) {
+        if ($this->aktivitaetId !== null) {
 
             $aktivitaetRow = (new AktivitaetReader())->getRowById($this->aktivitaetId);
 
@@ -98,18 +97,13 @@ class AktivitaetForm extends AbstractAdminForm
 
         }
 
-
-
-
-
         return parent::getContent();
 
     }
 
 
-
-    protected function onSubmit() {
-
+    protected function onSubmit()
+    {
 
         $builder = new AktivitaetBuilder($this->aktivitaetId);
         $builder->aktivaet = $this->aktivitaet->getValue();

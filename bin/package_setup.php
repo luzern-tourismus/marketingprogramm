@@ -10,7 +10,7 @@ $setup
     ->addPackage(new \Nemundo\Package\Framework\FrameworkJsPackage())
     ->addPackage(new \Nemundo\Package\Framework\FrameworkCssPackage())
     ->addPackage(new \Nemundo\Package\FontAwesome\Package\FontAwesomePackage())
-    ->addPackage(new \Nemundo\Package\Jquery\Package\JqueryPackage())
+    //->addPackage(new \Nemundo\Package\Jquery\Package\JqueryPackage())
     ->addPackage(new \Nemundo\Package\CkEditor5\CkEditor5Package());
 
 

@@ -9,16 +9,6 @@ public $id;
 /**
 * @var \Nemundo\Model\Type\Id\IdType
 */
-public $aktivitaetId;
-
-/**
-* @var \LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetExternalType
-*/
-public $aktivitaet;
-
-/**
-* @var \Nemundo\Model\Type\Id\IdType
-*/
 public $partnerId;
 
 /**
@@ -30,6 +20,16 @@ public $partner;
 * @var \Nemundo\Model\Type\Number\YesNoType
 */
 public $isDeleted;
+
+/**
+* @var \Nemundo\Model\Type\Id\IdType
+*/
+public $optionId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Option\OptionExternalType
+*/
+public $option;
 
 protected function loadExternalType() {
 parent::loadExternalType();
@@ -43,13 +43,6 @@ $this->id->externalTableName = $this->externalTableName;
 $this->id->aliasFieldName = $this->id->tableName . "_" . $this->id->fieldName;
 $this->id->label = "Id";
 $this->addType($this->id);
-
-$this->aktivitaetId = new \Nemundo\Model\Type\Id\IdType();
-$this->aktivitaetId->fieldName = "aktivitaet";
-$this->aktivitaetId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
-$this->aktivitaetId->aliasFieldName = $this->aktivitaetId->tableName ."_".$this->aktivitaetId->fieldName;
-$this->aktivitaetId->label = "Aktivität";
-$this->addType($this->aktivitaetId);
 
 $this->partnerId = new \Nemundo\Model\Type\Id\IdType();
 $this->partnerId->fieldName = "partner";
@@ -66,17 +59,13 @@ $this->isDeleted->aliasFieldName = $this->isDeleted->tableName . "_" . $this->is
 $this->isDeleted->label = "Is Deleted";
 $this->addType($this->isDeleted);
 
-}
-public function loadAktivitaet() {
-if ($this->aktivitaet == null) {
-$this->aktivitaet = new \LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetExternalType(null, $this->parentFieldName . "_aktivitaet");
-$this->aktivitaet->fieldName = "aktivitaet";
-$this->aktivitaet->tableName = $this->parentFieldName . "_" . $this->externalTableName;
-$this->aktivitaet->aliasFieldName = $this->aktivitaet->tableName ."_".$this->aktivitaet->fieldName;
-$this->aktivitaet->label = "Aktivität";
-$this->addType($this->aktivitaet);
-}
-return $this;
+$this->optionId = new \Nemundo\Model\Type\Id\IdType();
+$this->optionId->fieldName = "option";
+$this->optionId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->optionId->aliasFieldName = $this->optionId->tableName ."_".$this->optionId->fieldName;
+$this->optionId->label = "Option";
+$this->addType($this->optionId);
+
 }
 public function loadPartner() {
 if ($this->partner == null) {
@@ -86,6 +75,17 @@ $this->partner->tableName = $this->parentFieldName . "_" . $this->externalTableN
 $this->partner->aliasFieldName = $this->partner->tableName ."_".$this->partner->fieldName;
 $this->partner->label = "Partner";
 $this->addType($this->partner);
+}
+return $this;
+}
+public function loadOption() {
+if ($this->option == null) {
+$this->option = new \LuzernTourismus\MarketingProgramm\Data\Option\OptionExternalType(null, $this->parentFieldName . "_option");
+$this->option->fieldName = "option";
+$this->option->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->option->aliasFieldName = $this->option->tableName ."_".$this->option->fieldName;
+$this->option->label = "Option";
+$this->addType($this->option);
 }
 return $this;
 }

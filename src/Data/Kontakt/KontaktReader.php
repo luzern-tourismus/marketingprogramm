@@ -11,7 +11,7 @@ $this->model = new KontaktModel();
 parent::__construct();
 }
 /**
-* @return KontaktRow[]
+* @return \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow[]
 */
 public function getData() {
 $list = [];
@@ -22,7 +22,7 @@ $list[] = $row;
 return $list;
 }
 /**
-* @return KontaktRow
+* @return \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow
 */
 public function getRow() {
 $dataRow = parent::getRow();
@@ -30,13 +30,13 @@ $row = $this->getModelRow($dataRow);
 return $row;
 }
 /**
-* @return KontaktRow
+* @return \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow
 */
 public function getRowById($id) {
 return parent::getRowById($id);
 }
 private function getModelRow($dataRow) {
-$row = new KontaktRow($dataRow, $this->model, $this->multiLanguage);
+$row = new \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow($dataRow, $this->model, $this->multiLanguage);
 $row->model = $this->model;
 return $row;
 }

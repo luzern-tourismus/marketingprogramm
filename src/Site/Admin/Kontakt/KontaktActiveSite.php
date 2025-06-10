@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt;
 
+use LuzernTourismus\MarketingProgramm\Business\Kontakt\KontaktBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktUpdate;
 use LuzernTourismus\MarketingProgramm\Parameter\KontaktParameter;
 use Nemundo\Admin\Site\AbstractActiveIconSite;
@@ -29,10 +30,12 @@ class KontaktActiveSite extends AbstractActiveIconSite
     {
 
         $kontaktId = (new KontaktParameter())->getValue();
+        (new KontaktBuilder($kontaktId))->undoDelete();
 
-        $update = new KontaktUpdate();
+
+        /*$update = new KontaktUpdate();
         $update->isDeleted = false;
-        $update->updateById($kontaktId);
+        $update->updateById($kontaktId);*/
 
         (new UrlReferer())->redirect();
 

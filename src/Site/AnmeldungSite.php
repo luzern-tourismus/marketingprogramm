@@ -4,6 +4,7 @@ namespace LuzernTourismus\MarketingProgramm\Site;
 
 use LuzernTourismus\MarketingProgramm\Page\AnmeldungPage;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
+use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Web\Site\AbstractSite;
 

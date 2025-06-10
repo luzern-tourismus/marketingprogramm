@@ -2,14 +2,17 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
-use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\ThemaListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetItemSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetNewSite;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
+use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -28,19 +31,38 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $title->content = 'Aktivität';
 
 
+        $search = new AdminSearchForm($layout);
+
+        $thema = new ThemaListBox($search);
+        $thema->searchMode = true;
+        $thema->submitOnChange = true;
+
+        $kategorie = new KategorieListBox($search);
+        $kategorie->searchMode = true;
+        $kategorie->submitOnChange = true;
+
+
         $btn = new AdminIconSiteButton($layout);
         $btn->site = AktivitaetNewSite::$site;
-        $btn->showTitle=false;
+        $btn->showTitle = false;
 
 
         $table = new AdminTable($layout);
 
-        $reader = new AktivitaetReader();
-        $reader->model->loadKategorie()->loadKontakt();
-        $reader->model->kategorie->loadThema();
+        $reader = new AktivitaetDataReader();
+        $reader
+            ->filterByThema($thema->getValue())
+            ->filterByKategorie($kategorie->getValue())
+            ->orderByAktivitaet();
+
+
+        /*$reader->model->loadKategorie()->loadKontakt();
+        $reader->model->kategorie->loadThema();*/
+
 
         (new AdminTableHeader($table))
             ->addText($reader->model->aktivitaet->label)
+            ->addText($reader->model->kategorie->thema->label)
             ->addText($reader->model->kategorie->label)
             ->addEmpty(2);
 
@@ -55,9 +77,9 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
             $site->title = $aktivitaetRow->aktivitaet;
             $row->addSite($site);
 
+            $row->addText($aktivitaetRow->kategorie->thema->thema);
             $row->addText($aktivitaetRow->kategorie->kategorie);
             //$row->addText($aktivitaetRow->datum);
-
 
 
             $site = clone(AktivitaetEditSite::$site);
@@ -83,6 +105,6 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         }
 
         return parent::getContent();
-        
+
     }
 }

@@ -4,12 +4,15 @@ namespace LuzernTourismus\MarketingProgramm\Page;
 
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungReader;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
+use LuzernTourismus\MarketingProgramm\Parameter\AnmeldungParameter;
+use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
 use Nemundo\Admin\Com\Table\Row\AdminTableRow;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
+use Nemundo\Html\Formatting\Bold;
 
 class AnmeldungPage extends AbstractTemplateDocument
 {
@@ -34,21 +37,52 @@ class AnmeldungPage extends AbstractTemplateDocument
             $table = new AdminTable($layout);
 
             $anmeldungReader = new AnmeldungReader();
-            $anmeldungReader->model->loadAktivitaet();
+            $anmeldungReader->model->loadOption();
+            $anmeldungReader->model->option->loadAktivitaet();
             $anmeldungReader->filter->andEqual($anmeldungReader->model->partnerId, $partnerRow->id);
 
             (new AdminTableHeader($table))
-                ->addText($anmeldungReader->model->aktivitaet->label);
+                ->addText($anmeldungReader->model->option->aktivitaet->label)
+                ->addText($anmeldungReader->model->option->label)
+                ->addText($anmeldungReader->model->option->preis->label)
+                ->addEmpty();
+
+            $total = 0;
 
             foreach ($anmeldungReader->getData() as $anmeldungRow) {
 
-                (new AdminTableRow($table))
-                    ->addText($anmeldungRow->aktivitaet->aktivitaet);
+                $row = new AdminTableRow($table);
+                $row->strikeThrough = $anmeldungRow->isDeleted;
 
+                $row->addText($anmeldungRow->option->aktivitaet->aktivitaet)
+                    ->addText($anmeldungRow->option->option);
+
+                if ($anmeldungRow->option->hasPreis) {
+                    $row->addText($anmeldungRow->option->preis);
+                    if (!$anmeldungRow->isDeleted) {
+                        $total += $anmeldungRow->option->preis;
+                    }
+                } else {
+                    $row->addText('tbd');
+                }
+
+                $site = clone(AnmeldungDeleteSite::$site);
+                $site->addParameter(new AnmeldungParameter($anmeldungRow->id));
+                $row->addIconSite($site);
 
             }
 
-            //}
+            $row = new AdminTableRow($table);
+
+            $bold = new Bold();
+            $bold->content = 'Total';
+            $row->addText($bold->getBodyContent());
+
+            $row->addEmpty();
+
+            $bold = new Bold();
+            $bold->content = $total;
+            $row->addText($bold->getBodyContent());
 
         }
 

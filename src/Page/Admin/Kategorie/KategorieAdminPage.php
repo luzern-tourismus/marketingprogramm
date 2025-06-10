@@ -7,6 +7,7 @@ use LuzernTourismus\MarketingProgramm\Parameter\KategorieParameter;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieEditSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieItemSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieNewSite;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
@@ -45,7 +46,17 @@ class KategorieAdminPage extends AbstractTemplateDocument
 
             $row = new AdminTableRow($table);
             $row->strikeThrough = $kategorieRow->isDeleted;
-            $row->addText($kategorieRow->kategorie);
+
+
+            $site = clone(KategorieItemSite::$site);
+            $site->addParameter(new KategorieParameter($kategorieRow->id));
+            $site->title = $kategorieRow->kategorie;
+            $row->addSite($site);
+
+            //$row->addText($kategorieRow->kategorie);
+
+
+
             $row->addText($kategorieRow->thema->thema);
 
             if (!$kategorieRow->isDeleted) {

@@ -3,9 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Kontakt;
 
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktReader;
-use LuzernTourismus\MarketingProgramm\Parameter\KategorieParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\KontaktParameter;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt\KontaktActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt\KontaktDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt\KontaktEditSite;
@@ -30,18 +28,18 @@ class KontaktAdminPage extends AbstractTemplateDocument
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = KontaktNewSite::$site;
-        $btn->showTitle=false;
+        $btn->showTitle = false;
 
         $table = new AdminTable($layout);
 
         $reader = new KontaktReader();
 
         (new AdminTableHeader($table))
-            ->addText($reader->model->name->label)
+            ->addText($reader->model->nachname->label)
             ->addText($reader->model->vorname->label)
             ->addText($reader->model->telefon->label)
             ->addText($reader->model->email->label)
-        ->addEmpty(2);
+            ->addEmpty(2);
 
 
         foreach ($reader->getData() as $kontaktRow) {
@@ -53,7 +51,7 @@ class KontaktAdminPage extends AbstractTemplateDocument
             $row->strikeThrough = $kontaktRow->isDeleted;
 
             $row
-                ->addText($kontaktRow->name)
+                ->addText($kontaktRow->nachname)
                 ->addText($kontaktRow->vorname)
                 ->addText($kontaktRow->telefon)
                 ->addText($kontaktRow->email)
@@ -61,9 +59,9 @@ class KontaktAdminPage extends AbstractTemplateDocument
 
             if (!$kontaktRow->isDeleted) {
 
-            $site = clone(KontaktDeleteSite::$site);
-            $site->addParameter(new KontaktParameter($kontaktRow->id));
-            $row->addIconSite($site);
+                $site = clone(KontaktDeleteSite::$site);
+                $site->addParameter(new KontaktParameter($kontaktRow->id));
+                $row->addIconSite($site);
 
             } else {
 

@@ -14,6 +14,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "nemundo/framework": "dev-master"
+        "nemundo/framework": "dev-master",
+        "phpoffice/phpspreadsheet": "dev-master",
+        "nemundo/pdf": "dev-master"
     }
 }

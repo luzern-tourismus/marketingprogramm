@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet;
 
+use LuzernTourismus\MarketingProgramm\Business\Aktivitaet\AktivitaetBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetUpdate;
 use LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet\AktivitaetNewPage;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
@@ -28,10 +29,11 @@ class AktivitaetDeleteSite extends AbstractDeleteIconSite
     {
 
         $aktivitaetId = (new AktivitaetParameter())->getValue();
+        (new AktivitaetBuilder($aktivitaetId))->delete();
 
-        $update = new AktivitaetUpdate();
+        /*$update = new AktivitaetUpdate();
         $update->isDeleted=true;
-        $update->updateById($aktivitaetId);
+        $update->updateById($aktivitaetId);*/
 
         (new UrlReferer())->redirect();
 

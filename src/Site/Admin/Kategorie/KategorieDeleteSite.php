@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie;
 
+use LuzernTourismus\MarketingProgramm\Business\Kategorie\KategorieBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieUpdate;
 use LuzernTourismus\MarketingProgramm\Parameter\KategorieParameter;
 use Nemundo\Admin\Site\AbstractDeleteIconSite;
@@ -29,9 +30,12 @@ class KategorieDeleteSite extends AbstractDeleteIconSite
 
         $kategorieId = (new KategorieParameter())->getValue();
 
-        $update = new KategorieUpdate();
+        (new KategorieBuilder($kategorieId))->delete();
+
+
+        /*$update = new KategorieUpdate();
         $update->isDeleted = true;
-        $update->updateById($kategorieId);
+        $update->updateById($kategorieId);*/
 
         (new UrlReferer())->redirect();
 

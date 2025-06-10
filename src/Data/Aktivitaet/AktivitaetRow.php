@@ -57,7 +57,7 @@ public $kategorie;
 public $kontaktId;
 
 /**
-* @var \LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktRow
+* @var \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow
 */
 public $kontakt;
 
@@ -89,6 +89,6 @@ private function loadLuzernTourismusMarketingProgrammDataKategorieKategoriekateg
 $this->kategorie = new \LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieRow($this->row, $model);
 }
 private function loadLuzernTourismusMarketingProgrammDataKontaktKontaktkontaktRow($model) {
-$this->kontakt = new \LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktRow($this->row, $model);
+$this->kontakt = new \LuzernTourismus\MarketingProgramm\Reader\Kontakt\KontaktDataRow($this->row, $model);
 }
 }

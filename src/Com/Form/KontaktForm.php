@@ -2,10 +2,9 @@
 
 namespace LuzernTourismus\MarketingProgramm\Com\Form;
 
-use LuzernTourismus\MarketingProgramm\Business\Aktivitaet\AktivitaetBuilder;
 use LuzernTourismus\MarketingProgramm\Business\Kontakt\KontaktBuilder;
-use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktModel;
+use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktReader;
 use Nemundo\Admin\Com\Form\AbstractAdminForm;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
 
@@ -44,28 +43,38 @@ class KontaktForm extends AbstractAdminForm
 
         $this->vorname = new AdminTextBox($this);
         $this->vorname->label = $model->vorname->label;
+        $this->vorname->validation = true;
 
         $this->nachname = new AdminTextBox($this);
-        $this->nachname->label = $model->name->label;
+        $this->nachname->label = $model->nachname->label;
+        $this->nachname->validation = true;
 
         $this->telefon = new AdminTextBox($this);
         $this->telefon->label = $model->telefon->label;
 
         $this->email = new AdminTextBox($this);
         $this->email->label = $model->email->label;
+        $this->email->validation = true;
 
+        if ($this->kontaktId !== null) {
+            $kontaktRow = (new KontaktReader())->getRowById($this->kontaktId);
+            $this->nachname->value = $kontaktRow->nachname;
+            $this->vorname->value = $kontaktRow->vorname;
+            $this->telefon->value = $kontaktRow->telefon;
+            $this->email->value = $kontaktRow->email;
+        }
 
         return parent::getContent();
 
     }
 
 
-
-    protected function onSubmit() {
+    protected function onSubmit()
+    {
 
 
         $builder = new KontaktBuilder($this->kontaktId);
-        $builder->name = $this->nachname->getValue();
+        $builder->nachname = $this->nachname->getValue();
         $builder->vorname = $this->vorname->getValue();
         $builder->email = $this->email->getValue();
         $builder->telefon = $this->telefon->getValue();

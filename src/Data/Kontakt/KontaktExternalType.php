@@ -9,7 +9,7 @@ public $id;
 /**
 * @var \Nemundo\Model\Type\Text\TextType
 */
-public $name;
+public $nachname;
 
 /**
 * @var \Nemundo\Model\Type\Text\TextType
@@ -44,13 +44,13 @@ $this->id->aliasFieldName = $this->id->tableName . "_" . $this->id->fieldName;
 $this->id->label = "Id";
 $this->addType($this->id);
 
-$this->name = new \Nemundo\Model\Type\Text\TextType();
-$this->name->fieldName = "name";
-$this->name->tableName = $this->parentFieldName . "_" . $this->externalTableName;
-$this->name->externalTableName = $this->externalTableName;
-$this->name->aliasFieldName = $this->name->tableName . "_" . $this->name->fieldName;
-$this->name->label = "Name";
-$this->addType($this->name);
+$this->nachname = new \Nemundo\Model\Type\Text\TextType();
+$this->nachname->fieldName = "nachname";
+$this->nachname->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->nachname->externalTableName = $this->externalTableName;
+$this->nachname->aliasFieldName = $this->nachname->tableName . "_" . $this->nachname->fieldName;
+$this->nachname->label = "Name";
+$this->addType($this->nachname);
 
 $this->vorname = new \Nemundo\Model\Type\Text\TextType();
 $this->vorname->fieldName = "vorname";

@@ -4,6 +4,7 @@ namespace LuzernTourismus\MarketingProgramm\Controller;
 
 
 use LuzernTourismus\MarketingProgramm\Site\AktivitaetSite;
+use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungSaveSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungSite;
 use LuzernTourismus\MarketingProgramm\Site\HomeSite;
@@ -12,8 +13,11 @@ use LuzernTourismus\MarketingProgramm\Site\Admin\VerwaltungSite;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\BasismarketingThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\MarktmanagementThema;
+use LuzernTourismus\MarketingProgramm\Type\Thema\WerbungThema;
 use Nemundo\App\Application\Site\AppSite;
 use Nemundo\App\UserAction\Site\UserActionSite;
+use Nemundo\Core\Converter\UrlConverter;
+use Nemundo\Core\Text\TextConverter;
 use Nemundo\Core\Type\Text\Text;
 use Nemundo\Web\Controller\AbstractWebController;
 
@@ -25,6 +29,7 @@ class MarketingProgrammController extends AbstractWebController
         new HomeSite($this);
 
         $this
+            ->addThemaSite(new WerbungThema())
             ->addThemaSite(new BasismarketingThema())
             ->addThemaSite(new MarktmanagementThema());
 
@@ -40,6 +45,7 @@ class MarketingProgrammController extends AbstractWebController
 
 
         new AnmeldungSaveSite($this);
+        new AnmeldungDeleteSite($this);
 
         new AnmeldungSite($this);
         new VerwaltungSite($this);
@@ -57,9 +63,9 @@ class MarketingProgrammController extends AbstractWebController
     {
 
         $site = new AktivitaetSite($this);
-        $site->thema = $thema;  // new BasismarketingThema();
-        $site->title = $thema->thema;  // 'Basis';
-        $site->url = (new Text($thema->thema))->changeToLowercase()->getValue();  // 'basis';
+        $site->thema = $thema;
+        $site->title = $thema->thema;
+        $site->url = (new TextConverter( ))->convertToUrl($thema->thema);  // ->changeToLowercase()->getValue();  // 'basis';
 
         return $this;
 

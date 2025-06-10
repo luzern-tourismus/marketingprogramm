@@ -19,11 +19,12 @@ class AktivitaetLabelValueTable extends AdminLabelValueTable
         $this
             ->addLabelValue($this->aktivitaetRow->model->aktivitaet->label, $this->aktivitaetRow->aktivitaet)
             ->addLabelValue($this->aktivitaetRow->model->kategorie->label, $this->aktivitaetRow->kategorie->kategorie)
+            ->addLabelValue($this->aktivitaetRow->model->kategorie->thema->label, $this->aktivitaetRow->kategorie->thema->thema)
             ->addLabelValue($this->aktivitaetRow->model->datum->label, $this->aktivitaetRow->datum)
             ->addLabelValue($this->aktivitaetRow->model->kosten->label, $this->aktivitaetRow->kosten)
             ->addLabelValue($this->aktivitaetRow->model->leistung->label, $this->aktivitaetRow->leistung)
             ->addLabelValue($this->aktivitaetRow->model->zielpublikum->label, $this->aktivitaetRow->zielpublikum)
-            ->addLabelValue($this->aktivitaetRow->model->kontakt->label, $this->aktivitaetRow->kontakt->vorname . ' ' . $this->aktivitaetRow->kontakt->name . ', ' . $this->aktivitaetRow->kontakt->telefon . ' ' . $this->aktivitaetRow->kontakt->email);;
+            ->addLabelValue($this->aktivitaetRow->model->kontakt->label, $this->aktivitaetRow->kontakt->vorname . ' ' . $this->aktivitaetRow->kontakt->nachname . ', ' . $this->aktivitaetRow->kontakt->telefon . ' ' . $this->aktivitaetRow->kontakt->email);;
 
 
 

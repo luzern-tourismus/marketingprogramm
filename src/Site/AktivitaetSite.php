@@ -6,6 +6,7 @@ use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerBuilder;
 use LuzernTourismus\MarketingProgramm\Page\AktivitaetPage;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
+use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Web\Site\AbstractSite;
 
@@ -30,10 +31,11 @@ class AktivitaetSite extends AbstractSite
         $this->url = 'aktivitaet';
         $this->restricted=true;
         $this
+            ->addRestrictedUsergroup(new ReaderUsergroup())
             ->addRestrictedUsergroup(new VerwaltungUsergroup())
             ->addRestrictedUsergroup(new PartnerUsergroup());
 
-        //new AnmeldungSaveSite($this);
+        AktivitaetSite::$site = $this;
 
     }
 

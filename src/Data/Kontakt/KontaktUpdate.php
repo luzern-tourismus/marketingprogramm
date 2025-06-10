@@ -10,7 +10,7 @@ public $model;
 /**
 * @var string
 */
-public $name;
+public $nachname;
 
 /**
 * @var string
@@ -37,7 +37,7 @@ parent::__construct();
 $this->model = new KontaktModel();
 }
 public function update() {
-$this->typeValueList->setModelValue($this->model->name, $this->name);
+$this->typeValueList->setModelValue($this->model->nachname, $this->nachname);
 $this->typeValueList->setModelValue($this->model->vorname, $this->vorname);
 $this->typeValueList->setModelValue($this->model->email, $this->email);
 $this->typeValueList->setModelValue($this->model->telefon, $this->telefon);

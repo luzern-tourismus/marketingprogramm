@@ -19,7 +19,7 @@ public $id;
 /**
 * @var string
 */
-public $name;
+public $nachname;
 
 /**
 * @var string
@@ -45,7 +45,7 @@ public function __construct(\Nemundo\Db\Row\AbstractDataRow $row, $model, $multi
 parent::__construct($row->getData());
 $this->row = $row;
 $this->id = $this->getModelValue($model->id);
-$this->name = $this->getModelValue($model->name);
+$this->nachname = $this->getModelValue($model->nachname);
 $this->vorname = $this->getModelValue($model->vorname);
 $this->email = $this->getModelValue($model->email);
 $this->telefon = $this->getModelValue($model->telefon);

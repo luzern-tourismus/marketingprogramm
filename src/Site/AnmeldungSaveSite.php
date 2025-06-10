@@ -6,11 +6,11 @@ use LuzernTourismus\MarketingProgramm\Data\Anmeldung\Anmeldung;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
 use LuzernTourismus\MarketingProgramm\Page\AnmeldungPage;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
+use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Core\Http\Url\UrlReferer;
 use Nemundo\Web\Site\AbstractSite;
-
 class AnmeldungSaveSite extends AbstractSite
 {
 
@@ -36,11 +36,11 @@ class AnmeldungSaveSite extends AbstractSite
     public function loadContent()
     {
 
-        $aktivitaetId = (new AktivitaetParameter())->getValue();
+        $optionId = (new OptionParameter())->getValue();
 
         $data = new Anmeldung();
         $data->isDeleted = false;
-        $data->aktivitaetId = $aktivitaetId;
+        $data->optionId = $optionId;
         $data->partnerId = (new PartnerLookup())->getPartnerId();  // 0;
         $data->save();
 

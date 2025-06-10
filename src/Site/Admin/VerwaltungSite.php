@@ -4,9 +4,11 @@ namespace LuzernTourismus\MarketingProgramm\Site\Admin;
 
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Anmeldung\AnmeldungAdminSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\ChangeLog\ChangeLogSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt\KontaktAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerAdminSite;
+use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Web\Site\AbstractSite;
 
@@ -18,6 +20,7 @@ class VerwaltungSite extends AbstractSite
         $this->url = 'verwaltung';
         $this->restricted = true;
         $this
+            ->addRestrictedUsergroup(new ReaderUsergroup())
             ->addRestrictedUsergroup(new VerwaltungUsergroup());
 
         new AnmeldungAdminSite($this);
@@ -25,6 +28,7 @@ class VerwaltungSite extends AbstractSite
         new KategorieAdminSite($this);
         new KontaktAdminSite($this);
         new PartnerAdminSite($this);
+        new ChangeLogSite($this);
 
 
     }

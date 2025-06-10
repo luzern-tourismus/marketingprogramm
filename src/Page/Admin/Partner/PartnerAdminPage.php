@@ -4,7 +4,9 @@ namespace LuzernTourismus\MarketingProgramm\Page\Admin\Partner;
 
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 use LuzernTourismus\MarketingProgramm\Parameter\PartnerParameter;
+use LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerActiveSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerBestaetigungPdfSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerItemSite;
@@ -35,7 +37,8 @@ class PartnerAdminPage extends AbstractTemplateDocument
 
         $table = new AdminTable($layout);
 
-        $reader = new PartnerReader();
+        $reader = new PartnerDataReader();
+        $reader->orderByFirma();
 
         (new AdminTableHeader($table))
             ->addText($reader->model->firma->label)
@@ -52,8 +55,12 @@ class PartnerAdminPage extends AbstractTemplateDocument
             $site = clone(PartnerItemSite::$site);
             $site->title = $partnerRow->firma;
             $site->addParameter(new PartnerParameter($partnerRow->id));
-
             $row->addSite($site);
+
+            $site = clone(PartnerBestaetigungPdfSite::$site);
+            $site->addParameter(new PartnerParameter($partnerRow->id));
+            $row->addIconSite($site);
+
 
             /*$row
                 ->addText($partnerRow->firma);*/

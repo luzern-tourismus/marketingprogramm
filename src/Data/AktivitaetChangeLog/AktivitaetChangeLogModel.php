@@ -17,21 +17,6 @@ public $aktivitaetId;
 public $aktivitaet;
 
 /**
-* @var \Nemundo\Model\Type\External\Id\UniqueIdExternalIdType
-*/
-public $userId;
-
-/**
-* @var \Nemundo\User\Data\User\UserExternalType
-*/
-public $user;
-
-/**
-* @var \Nemundo\Model\Type\DateTime\DateTimeType
-*/
-public $dateTime;
-
-/**
 * @var \Nemundo\Model\Type\Number\YesNoType
 */
 public $aktivitaetHasChanged;
@@ -45,6 +30,31 @@ public $aktivitaetOld;
 * @var \Nemundo\Model\Type\Text\TextType
 */
 public $aktivitaetNew;
+
+/**
+* @var \Nemundo\Model\Type\Number\YesNoType
+*/
+public $datumHasChanged;
+
+/**
+* @var \Nemundo\Model\Type\Text\TextType
+*/
+public $datumOld;
+
+/**
+* @var \Nemundo\Model\Type\Text\TextType
+*/
+public $datumNew;
+
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $logId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\ChangeLog\ChangeLogExternalType
+*/
+public $log;
 
 protected function loadModel() {
 $this->tableName = "marketingprogramm_aktivitaet_change_log";
@@ -67,21 +77,6 @@ $this->aktivitaetId->fieldName = "aktivitaet";
 $this->aktivitaetId->aliasFieldName = "marketingprogramm_aktivitaet_change_log_aktivitaet";
 $this->aktivitaetId->label = "Aktivität";
 $this->aktivitaetId->allowNullValue = false;
-
-$this->userId = new \Nemundo\Model\Type\External\Id\UniqueIdExternalIdType($this);
-$this->userId->tableName = "marketingprogramm_aktivitaet_change_log";
-$this->userId->fieldName = "user";
-$this->userId->aliasFieldName = "marketingprogramm_aktivitaet_change_log_user";
-$this->userId->label = "User";
-$this->userId->allowNullValue = false;
-
-$this->dateTime = new \Nemundo\Model\Type\DateTime\DateTimeType($this);
-$this->dateTime->tableName = "marketingprogramm_aktivitaet_change_log";
-$this->dateTime->externalTableName = "marketingprogramm_aktivitaet_change_log";
-$this->dateTime->fieldName = "date_time";
-$this->dateTime->aliasFieldName = "marketingprogramm_aktivitaet_change_log_date_time";
-$this->dateTime->label = "Date Time";
-$this->dateTime->allowNullValue = false;
 
 $this->aktivitaetHasChanged = new \Nemundo\Model\Type\Number\YesNoType($this);
 $this->aktivitaetHasChanged->tableName = "marketingprogramm_aktivitaet_change_log";
@@ -109,6 +104,39 @@ $this->aktivitaetNew->label = "Aktivität New";
 $this->aktivitaetNew->allowNullValue = true;
 $this->aktivitaetNew->length = 255;
 
+$this->datumHasChanged = new \Nemundo\Model\Type\Number\YesNoType($this);
+$this->datumHasChanged->tableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumHasChanged->externalTableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumHasChanged->fieldName = "datum_has_changed";
+$this->datumHasChanged->aliasFieldName = "marketingprogramm_aktivitaet_change_log_datum_has_changed";
+$this->datumHasChanged->label = "Datum Has Changed";
+$this->datumHasChanged->allowNullValue = false;
+
+$this->datumOld = new \Nemundo\Model\Type\Text\TextType($this);
+$this->datumOld->tableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumOld->externalTableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumOld->fieldName = "datum_old";
+$this->datumOld->aliasFieldName = "marketingprogramm_aktivitaet_change_log_datum_old";
+$this->datumOld->label = "Datum Old";
+$this->datumOld->allowNullValue = true;
+$this->datumOld->length = 255;
+
+$this->datumNew = new \Nemundo\Model\Type\Text\TextType($this);
+$this->datumNew->tableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumNew->externalTableName = "marketingprogramm_aktivitaet_change_log";
+$this->datumNew->fieldName = "datum_new";
+$this->datumNew->aliasFieldName = "marketingprogramm_aktivitaet_change_log_datum_new";
+$this->datumNew->label = "Datum New";
+$this->datumNew->allowNullValue = true;
+$this->datumNew->length = 255;
+
+$this->logId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->logId->tableName = "marketingprogramm_aktivitaet_change_log";
+$this->logId->fieldName = "log";
+$this->logId->aliasFieldName = "marketingprogramm_aktivitaet_change_log_log";
+$this->logId->label = "Log";
+$this->logId->allowNullValue = false;
+
 }
 public function loadAktivitaet() {
 if ($this->aktivitaet == null) {
@@ -120,13 +148,13 @@ $this->aktivitaet->label = "Aktivität";
 }
 return $this;
 }
-public function loadUser() {
-if ($this->user == null) {
-$this->user = new \Nemundo\User\Data\User\UserExternalType($this, "marketingprogramm_aktivitaet_change_log_user");
-$this->user->tableName = "marketingprogramm_aktivitaet_change_log";
-$this->user->fieldName = "user";
-$this->user->aliasFieldName = "marketingprogramm_aktivitaet_change_log_user";
-$this->user->label = "User";
+public function loadLog() {
+if ($this->log == null) {
+$this->log = new \LuzernTourismus\MarketingProgramm\Data\ChangeLog\ChangeLogExternalType($this, "marketingprogramm_aktivitaet_change_log_log");
+$this->log->tableName = "marketingprogramm_aktivitaet_change_log";
+$this->log->fieldName = "log";
+$this->log->aliasFieldName = "marketingprogramm_aktivitaet_change_log_log";
+$this->log->label = "Log";
 }
 return $this;
 }

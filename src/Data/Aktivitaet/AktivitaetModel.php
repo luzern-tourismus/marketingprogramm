@@ -136,6 +136,10 @@ $this->isDeleted->aliasFieldName = "marketingprogramm_aktivitaet_is_deleted";
 $this->isDeleted->label = "Is Deleted";
 $this->isDeleted->allowNullValue = false;
 
+$index = new \Nemundo\Model\Definition\Index\ModelIndex($this);
+$index->indexName = "kategorie";
+$index->addType($this->kategorieId);
+
 }
 public function loadKategorie() {
 if ($this->kategorie == null) {

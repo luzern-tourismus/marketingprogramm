@@ -18,6 +18,22 @@ class PartnerForm extends AbstractAdminForm
      */
     private $firma;
 
+    /**
+     * @var AdminTextBox
+     */
+    private $strasse;
+
+    /**
+     * @var AdminTextBox
+     */
+    private $plz;
+
+    /**
+     * @var AdminTextBox
+     */
+    private $ort;
+
+
     public function getContent()
     {
 
@@ -26,6 +42,18 @@ class PartnerForm extends AbstractAdminForm
         $this->firma = new AdminTextBox($this);
         $this->firma->label = $model->firma->label;
         $this->firma->validation = true;
+
+        $this->strasse = new AdminTextBox($this);
+        $this->strasse->label = $model->strasse->label;
+
+        $this->plz = new AdminTextBox($this);
+        $this->plz->label = $model->plz->label;
+
+        $this->ort = new AdminTextBox($this);
+        $this->ort->label = $model->ort->label;
+
+
+
 
         if ($this->partnerId!==null) {
 
@@ -44,6 +72,9 @@ class PartnerForm extends AbstractAdminForm
 
         $builder = new PartnerBuilder($this->partnerId);
         $builder->firma = $this->firma->getValue();
+        $builder->strasse = $this->strasse->getValue();
+        $builder->plz = 0;//$this->plz->getValue();
+        $builder->ort = $this->ort->getValue();
         $builder->build();
 
     }

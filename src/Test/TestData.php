@@ -73,6 +73,9 @@ class TestData extends AbstractBase
 
             $builder = new PartnerBuilder();
             $builder->firma = $line;
+            $builder->strasse = 'Teststr. 1';
+            $builder->plz = '6000';
+            $builder->ort = 'Luzern';
             $builder->build();
 
         }

@@ -16,6 +16,21 @@ public $firma;
 */
 public $isDeleted;
 
+/**
+* @var \Nemundo\Model\Type\Text\TextType
+*/
+public $strasse;
+
+/**
+* @var \Nemundo\Model\Type\Number\NumberType
+*/
+public $plz;
+
+/**
+* @var \Nemundo\Model\Type\Text\TextType
+*/
+public $ort;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = PartnerModel::class;
@@ -44,6 +59,30 @@ $this->isDeleted->externalTableName = $this->externalTableName;
 $this->isDeleted->aliasFieldName = $this->isDeleted->tableName . "_" . $this->isDeleted->fieldName;
 $this->isDeleted->label = "Is Deleted";
 $this->addType($this->isDeleted);
+
+$this->strasse = new \Nemundo\Model\Type\Text\TextType();
+$this->strasse->fieldName = "strasse";
+$this->strasse->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->strasse->externalTableName = $this->externalTableName;
+$this->strasse->aliasFieldName = $this->strasse->tableName . "_" . $this->strasse->fieldName;
+$this->strasse->label = "Strasse";
+$this->addType($this->strasse);
+
+$this->plz = new \Nemundo\Model\Type\Number\NumberType();
+$this->plz->fieldName = "plz";
+$this->plz->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->plz->externalTableName = $this->externalTableName;
+$this->plz->aliasFieldName = $this->plz->tableName . "_" . $this->plz->fieldName;
+$this->plz->label = "PLZ";
+$this->addType($this->plz);
+
+$this->ort = new \Nemundo\Model\Type\Text\TextType();
+$this->ort->fieldName = "ort";
+$this->ort->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->ort->externalTableName = $this->externalTableName;
+$this->ort->aliasFieldName = $this->ort->tableName . "_" . $this->ort->fieldName;
+$this->ort->label = "Ort";
+$this->addType($this->ort);
 
 }
 }

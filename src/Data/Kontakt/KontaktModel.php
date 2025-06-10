@@ -9,7 +9,7 @@ public $id;
 /**
 * @var \Nemundo\Model\Type\Text\TextType
 */
-public $name;
+public $nachname;
 
 /**
 * @var \Nemundo\Model\Type\Text\TextType
@@ -46,14 +46,14 @@ $this->id->aliasFieldName = "marketingprogramm_kontakt_id";
 $this->id->label = "Id";
 $this->id->allowNullValue = false;
 
-$this->name = new \Nemundo\Model\Type\Text\TextType($this);
-$this->name->tableName = "marketingprogramm_kontakt";
-$this->name->externalTableName = "marketingprogramm_kontakt";
-$this->name->fieldName = "name";
-$this->name->aliasFieldName = "marketingprogramm_kontakt_name";
-$this->name->label = "Name";
-$this->name->allowNullValue = false;
-$this->name->length = 255;
+$this->nachname = new \Nemundo\Model\Type\Text\TextType($this);
+$this->nachname->tableName = "marketingprogramm_kontakt";
+$this->nachname->externalTableName = "marketingprogramm_kontakt";
+$this->nachname->fieldName = "nachname";
+$this->nachname->aliasFieldName = "marketingprogramm_kontakt_nachname";
+$this->nachname->label = "Name";
+$this->nachname->allowNullValue = false;
+$this->nachname->length = 255;
 
 $this->vorname = new \Nemundo\Model\Type\Text\TextType($this);
 $this->vorname->tableName = "marketingprogramm_kontakt";

@@ -4,6 +4,8 @@ namespace LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet;
 
 
 use LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet\AktivitaetAdminPage;
+use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
+use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Web\Site\AbstractSite;
 
 class AktivitaetAdminSite extends AbstractSite
@@ -18,6 +20,8 @@ class AktivitaetAdminSite extends AbstractSite
     {
         $this->title = 'Aktivität';
         $this->url = 'aktivitaet';
+        $this->restricted = true;
+        $this->addRestrictedUsergroup(new VerwaltungUsergroup());
 
         AktivitaetAdminSite::$site = $this;
 

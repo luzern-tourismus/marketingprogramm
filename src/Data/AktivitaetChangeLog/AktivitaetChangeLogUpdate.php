@@ -13,16 +13,6 @@ public $model;
 public $aktivitaetId;
 
 /**
-* @var string
-*/
-public $userId;
-
-/**
-* @var \Nemundo\Core\Type\DateTime\DateTime
-*/
-public $dateTime;
-
-/**
 * @var bool
 */
 public $aktivitaetHasChanged;
@@ -37,21 +27,39 @@ public $aktivitaetOld;
 */
 public $aktivitaetNew;
 
+/**
+* @var bool
+*/
+public $datumHasChanged;
+
+/**
+* @var string
+*/
+public $datumOld;
+
+/**
+* @var string
+*/
+public $datumNew;
+
+/**
+* @var string
+*/
+public $logId;
+
 public function __construct() {
 parent::__construct();
 $this->model = new AktivitaetChangeLogModel();
-$this->dateTime = new \Nemundo\Core\Type\DateTime\DateTime();
 }
 public function update() {
 $this->typeValueList->setModelValue($this->model->aktivitaetId, $this->aktivitaetId);
-$this->typeValueList->setModelValue($this->model->userId, $this->userId);
-if ($this->dateTime->hasValue()) {
-$property = new \Nemundo\Model\Data\Property\DateTime\DateTimeDataProperty($this->model->dateTime, $this->typeValueList);
-$property->setValue($this->dateTime);
-}
 $this->typeValueList->setModelValue($this->model->aktivitaetHasChanged, $this->aktivitaetHasChanged);
 $this->typeValueList->setModelValue($this->model->aktivitaetOld, $this->aktivitaetOld);
 $this->typeValueList->setModelValue($this->model->aktivitaetNew, $this->aktivitaetNew);
+$this->typeValueList->setModelValue($this->model->datumHasChanged, $this->datumHasChanged);
+$this->typeValueList->setModelValue($this->model->datumOld, $this->datumOld);
+$this->typeValueList->setModelValue($this->model->datumNew, $this->datumNew);
+$this->typeValueList->setModelValue($this->model->logId, $this->logId);
 parent::update();
 }
 }

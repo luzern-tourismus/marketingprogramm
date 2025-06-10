@@ -11,12 +11,12 @@ parent::__construct();
 $this->model = new AktivitaetModel();
 }
 /**
-* @return AktivitaetRow[]
+* @return \LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow[]
 */
 public function getData() {
 $list = [];
 foreach (parent::getData() as $dataRow) {
-$row = new AktivitaetRow($dataRow, $this->model);
+$row = new \LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow($dataRow, $this->model);
 $list[] = $row;
 }
 return $list;

@@ -3,9 +3,13 @@
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Partner;
 
 use LuzernTourismus\MarketingProgramm\Com\Form\PartnerMitarbeiterForm;
+use LuzernTourismus\MarketingProgramm\Data\Partner\Partner;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 use LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterReader;
 use LuzernTourismus\MarketingProgramm\Parameter\PartnerParameter;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerAdminSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerItemSite;
+use Nemundo\Admin\Com\Button\AdminSiteButton;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -22,6 +26,9 @@ class PartnerItemPage extends AbstractTemplateDocument
 
         $layout = new AdminFlexboxLayout($this);
 
+        $btn = new AdminSiteButton($layout);
+        $btn->site = PartnerAdminSite::$site;
+        $btn->site->title = 'Zurück';
 
         $reader = new PartnerReader();
         $reader->filter->andEqual($reader->model->id, $partnerId);

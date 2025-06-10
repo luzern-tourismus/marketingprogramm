@@ -12,9 +12,9 @@ class KontaktListBox extends AdminListBox
         $this->label = 'Kontakt';
 
         $reader = new KontaktReader();
-        $reader->filter->andEqual($reader->model->isDeleted,false);
+        $reader->filter->andEqual($reader->model->isDeleted, false);
         foreach ($reader->getData() as $kontaktRow) {
-            $this->addItem($kontaktRow->id,$kontaktRow->name.' '.$kontaktRow->vorname);
+            $this->addItem($kontaktRow->id, $kontaktRow->getVornameNachname());
         }
 
         return parent::getContent();

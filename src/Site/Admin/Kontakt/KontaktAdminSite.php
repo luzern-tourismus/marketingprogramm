@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Site\Admin\Kontakt;
 
 use LuzernTourismus\MarketingProgramm\Page\Admin\Kontakt\KontaktAdminPage;
+use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\Web\Site\AbstractSite;
 
 class KontaktAdminSite extends AbstractSite
@@ -17,6 +18,8 @@ class KontaktAdminSite extends AbstractSite
     {
         $this->title = 'Kontakt';
         $this->url = 'kontakt';
+        $this->restricted = true;
+        $this->addRestrictedUsergroup(new VerwaltungUsergroup());
 
         new KontaktNewSite($this);
         new KontaktEditSite($this);
