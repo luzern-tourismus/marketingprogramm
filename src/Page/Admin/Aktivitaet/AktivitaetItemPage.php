@@ -9,6 +9,7 @@ use LuzernTourismus\MarketingProgramm\Data\AktivitaetChangeLog\AktivitaetChangeL
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionDeleteSite;
 use Nemundo\Admin\Com\Button\AdminSiteButton;
@@ -35,8 +36,8 @@ class AktivitaetItemPage extends AbstractTemplateDocument
 
         $aktivitaetId = (new AktivitaetParameter())->getValue();
 
-        $reader = new AktivitaetReader();
-        $reader->model->loadKategorie()->loadKontakt();
+        $reader = new AktivitaetDataReader();
+        //$reader->model->loadKategorie()->loadKontakt();
         $reader->filter->andEqual($reader->model->id, $aktivitaetId);
         $aktivitaetRow = $reader->getRow();
 
