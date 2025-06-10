@@ -42,7 +42,7 @@ class PartnerAdminPage extends AbstractTemplateDocument
 
         (new AdminTableHeader($table))
             ->addText($reader->model->firma->label)
-            ->addEmpty(2);
+            ->addEmpty(3);
 
         foreach ($reader->getData() as $partnerRow) {
 
