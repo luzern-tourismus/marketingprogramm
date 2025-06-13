@@ -14,7 +14,7 @@ class AktivitaetDataReader extends AktivitaetReader
         parent::__construct();
 
         $this->model->loadKategorie()->loadKontakt();
-        $this->model->kategorie->loadThema();
+        $this->model->kategorie->loadThema()->loadRegion();
 
     }
 

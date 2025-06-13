@@ -7,6 +7,7 @@ use LuzernTourismus\MarketingProgramm\Com\ListBox\ThemaListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetActiveSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetItemSite;
@@ -28,7 +29,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $layout = new AdminFlexboxLayout($this);
 
         $title = new AdminTitle($layout);
-        $title->content = 'Aktivität';
+        $title->content = AktivitaetAdminSite::$site->title;
 
 
         $search = new AdminSearchForm($layout);

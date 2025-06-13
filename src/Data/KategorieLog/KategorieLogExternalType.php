@@ -66,6 +66,31 @@ public $kategorieId;
 */
 public $kategorie;
 
+/**
+* @var \Nemundo\Model\Type\Number\YesNoType
+*/
+public $regionHasChanged;
+
+/**
+* @var \Nemundo\Model\Type\Id\IdType
+*/
+public $regionOldId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType
+*/
+public $regionOld;
+
+/**
+* @var \Nemundo\Model\Type\Id\IdType
+*/
+public $regionNewId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType
+*/
+public $regionNew;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = KategorieLogModel::class;
@@ -139,6 +164,28 @@ $this->kategorieId->aliasFieldName = $this->kategorieId->tableName ."_".$this->k
 $this->kategorieId->label = "Kategorie";
 $this->addType($this->kategorieId);
 
+$this->regionHasChanged = new \Nemundo\Model\Type\Number\YesNoType();
+$this->regionHasChanged->fieldName = "region_has_changed";
+$this->regionHasChanged->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->regionHasChanged->externalTableName = $this->externalTableName;
+$this->regionHasChanged->aliasFieldName = $this->regionHasChanged->tableName . "_" . $this->regionHasChanged->fieldName;
+$this->regionHasChanged->label = "Region Has Changed";
+$this->addType($this->regionHasChanged);
+
+$this->regionOldId = new \Nemundo\Model\Type\Id\IdType();
+$this->regionOldId->fieldName = "region_old";
+$this->regionOldId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->regionOldId->aliasFieldName = $this->regionOldId->tableName ."_".$this->regionOldId->fieldName;
+$this->regionOldId->label = "Region Old";
+$this->addType($this->regionOldId);
+
+$this->regionNewId = new \Nemundo\Model\Type\Id\IdType();
+$this->regionNewId->fieldName = "region_new";
+$this->regionNewId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->regionNewId->aliasFieldName = $this->regionNewId->tableName ."_".$this->regionNewId->fieldName;
+$this->regionNewId->label = "Region New";
+$this->addType($this->regionNewId);
+
 }
 public function loadLog() {
 if ($this->log == null) {
@@ -181,6 +228,28 @@ $this->kategorie->tableName = $this->parentFieldName . "_" . $this->externalTabl
 $this->kategorie->aliasFieldName = $this->kategorie->tableName ."_".$this->kategorie->fieldName;
 $this->kategorie->label = "Kategorie";
 $this->addType($this->kategorie);
+}
+return $this;
+}
+public function loadRegionOld() {
+if ($this->regionOld == null) {
+$this->regionOld = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType(null, $this->parentFieldName . "_region_old");
+$this->regionOld->fieldName = "region_old";
+$this->regionOld->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->regionOld->aliasFieldName = $this->regionOld->tableName ."_".$this->regionOld->fieldName;
+$this->regionOld->label = "Region Old";
+$this->addType($this->regionOld);
+}
+return $this;
+}
+public function loadRegionNew() {
+if ($this->regionNew == null) {
+$this->regionNew = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType(null, $this->parentFieldName . "_region_new");
+$this->regionNew->fieldName = "region_new";
+$this->regionNew->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->regionNew->aliasFieldName = $this->regionNew->tableName ."_".$this->regionNew->fieldName;
+$this->regionNew->label = "Region New";
+$this->addType($this->regionNew);
 }
 return $this;
 }

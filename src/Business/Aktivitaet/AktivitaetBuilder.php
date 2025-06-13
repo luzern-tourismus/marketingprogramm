@@ -7,13 +7,14 @@ use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\Aktivitaet;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetUpdate;
 use LuzernTourismus\MarketingProgramm\Data\AktivitaetChangeLog\AktivitaetChangeLog;
-
 use LuzernTourismus\MarketingProgramm\Data\Option\Option;
+use LuzernTourismus\MarketingProgramm\Data\Option\OptionCount;
+use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow;
 use Nemundo\Core\Check\ValueCheck;
-use Nemundo\Core\Type\DateTime\DateTime;
+use Nemundo\Core\Debug\Debug;
 use Nemundo\Core\Validation\NumberValidation;
-use Nemundo\User\Session\UserSession;
+use Nemundo\Db\Sql\Order\SortOrder;
 
 class AktivitaetBuilder extends AbstractBuilder
 {
@@ -37,7 +38,6 @@ class AktivitaetBuilder extends AbstractBuilder
     {
         $this->type = new AktivitaetType();
     }
-
 
 
     protected function onCreate()
@@ -86,7 +86,6 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $aktivitaetOldRow = (new AktivitaetReader())->getRowById($this->id);
 
-
         $update = new AktivitaetUpdate();
         //$update->isDeleted = false;
         //$update->kategorieId = $this->kategorieId;
@@ -107,14 +106,6 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $update->updateById($this->id);
 
-        $this->saveChangeLog2($aktivitaetOldRow);
-
-
-    }
-
-
-    private function saveChangeLog2(AktivitaetDataRow $aktivitaetOldRow = null)
-    {
 
         $aktivitaetNewRow = (new AktivitaetReader())->getRowById($this->id);
 
@@ -146,35 +137,58 @@ class AktivitaetBuilder extends AbstractBuilder
     }
 
 
-
     protected function onDelete()
     {
 
         $update = new AktivitaetUpdate();
-        $update->isDeleted=true;
+        $update->isDeleted = true;
         $update->updateById($this->id);
 
 
     }
-
 
 
     protected function onUndoDelete()
     {
 
         $update = new AktivitaetUpdate();
-        $update->isDeleted=false;
+        $update->isDeleted = false;
         $update->updateById($this->id);
-
 
     }
 
 
-
-
-
     public function addOption($option, $preis)
     {
+
+        $itemOrder = null;
+
+        $count = new OptionCount();
+        $count->filter->andEqual($count->model->aktivitaetId, $this->id);
+        if ($count->getCount() === 0) {
+            $itemOrder = 0;
+        } else {
+
+            //(new Debug())->write('bla');
+
+            $reader = new OptionReader();
+            $reader->filter->andEqual($reader->model->aktivitaetId, $this->id);
+            $reader->addOrder($reader->model->itemOrder, SortOrder::DESCENDING);
+            $reader->limit=1;
+            foreach ($reader->getData() as $optionRow) {
+                $itemOrder = $optionRow->itemOrder;
+
+                //(new Debug())->write('itemorder');
+
+            }
+
+            $itemOrder++;
+
+        }
+
+        /*(new Debug())->write($itemOrder)->write($this->id);
+        exit;*/
+
 
         $data = new Option();
         $data->isDeleted = false;
@@ -188,7 +202,7 @@ class AktivitaetBuilder extends AbstractBuilder
             $data->hasPreis = false;
         }
 
-
+        $data->itemOrder = $itemOrder;
         $data->save();
 
         return $this;

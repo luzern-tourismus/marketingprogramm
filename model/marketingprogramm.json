@@ -247,6 +247,29 @@
         },
         {
             "template": "default",
+            "model_id": "96283c0a-9bbb-47a9-974b-403ef56f1754",
+            "label": "Anrede",
+            "class_name": "Anrede",
+            "table_name": "marketingprogramm_anrede",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Anrede",
+            "row_class_name": "",
+            "primary_index": "number_id",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Anrede",
+                    "field_name": "anrede",
+                    "variable_name": "anrede",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
             "model_id": "b1d5ab56-1af4-4a4f-993a-cf68ef48c462",
             "label": "Change Log",
             "class_name": "ChangeLog",
@@ -401,6 +424,15 @@
                     "variable_name": "isDeleted",
                     "allow_null": false,
                     "is_deleted": false
+                },
+                {
+                    "type": "external",
+                    "label": "Region",
+                    "field_name": "region",
+                    "variable_name": "region",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "2b02ab35-4ee0-481a-9e39-7452d657e904"
                 }
             ],
             "index": []
@@ -485,6 +517,32 @@
                     "allow_null": false,
                     "is_deleted": false,
                     "external_model_id": "228fb55d-1d03-4c6d-910a-d707102288f1"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Region Has Changed",
+                    "field_name": "region_has_changed",
+                    "variable_name": "regionHasChanged",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "external",
+                    "label": "Region Old",
+                    "field_name": "region_old",
+                    "variable_name": "regionOld",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "2b02ab35-4ee0-481a-9e39-7452d657e904"
+                },
+                {
+                    "type": "external",
+                    "label": "Region New",
+                    "field_name": "region_new",
+                    "variable_name": "regionNew",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "2b02ab35-4ee0-481a-9e39-7452d657e904"
                 }
             ],
             "index": [
@@ -751,9 +809,26 @@
                     "variable_name": "preis",
                     "allow_null": true,
                     "is_deleted": false
+                },
+                {
+                    "type": "number",
+                    "label": "Reihenfolge",
+                    "field_name": "item_order",
+                    "variable_name": "itemOrder",
+                    "allow_null": false,
+                    "is_deleted": false
                 }
             ],
-            "index": []
+            "index": [
+                {
+                    "index_name": "aktivitaet_item_order",
+                    "index_type": "index",
+                    "field_name": [
+                        "aktivitaet",
+                        "item_order"
+                    ]
+                }
+            ]
         },
         {
             "template": "default",
@@ -788,7 +863,7 @@
                     "label": "Strasse",
                     "field_name": "strasse",
                     "variable_name": "strasse",
-                    "allow_null": false,
+                    "allow_null": true,
                     "is_deleted": false,
                     "length": "255"
                 },
@@ -797,7 +872,7 @@
                     "label": "PLZ",
                     "field_name": "plz",
                     "variable_name": "plz",
-                    "allow_null": false,
+                    "allow_null": true,
                     "is_deleted": false
                 },
                 {
@@ -805,6 +880,89 @@
                     "label": "Ort",
                     "field_name": "ort",
                     "variable_name": "ort",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Anmeldung Finalisiert",
+                    "field_name": "anmeldung_finalisiert",
+                    "variable_name": "anmeldungFinalisiert",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "f96314af-9d7d-4d1e-8ff2-1202b2c7fad9",
+            "label": "Partner Log",
+            "class_name": "PartnerLog",
+            "table_name": "marketingprogramm_partner_log",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\PartnerLog",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "external",
+                    "label": "Partner",
+                    "field_name": "partner",
+                    "variable_name": "partner",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "2de70f92-0c6f-4a0b-a5e3-452f0aa49e6d"
+                },
+                {
+                    "type": "external",
+                    "label": "Log",
+                    "field_name": "log",
+                    "variable_name": "log",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "b1d5ab56-1af4-4a4f-993a-cf68ef48c462"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Firma Has Changed",
+                    "field_name": "firma_has_changed",
+                    "variable_name": "firmaHasChanged",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "text",
+                    "label": "Firma Old",
+                    "field_name": "firma_old",
+                    "variable_name": "firmaOld",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Firma New",
+                    "field_name": "firma_new",
+                    "variable_name": "firmaNew",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Strasse Has Changed",
+                    "field_name": "strasse_has_changed",
+                    "variable_name": "strasseHasChanged",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "text",
+                    "label": "Strasse Old",
+                    "field_name": "strasse_old",
+                    "variable_name": "strasseOld",
                     "allow_null": false,
                     "is_deleted": false,
                     "length": "255"
@@ -866,6 +1024,95 @@
                     "variable_name": "isDeleted",
                     "allow_null": false,
                     "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "2b02ab35-4ee0-481a-9e39-7452d657e904",
+            "label": "Region",
+            "class_name": "Region",
+            "table_name": "marketingprogramm_region",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Region",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "text",
+                    "label": "Region",
+                    "field_name": "region",
+                    "variable_name": "region",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Is Deleted",
+                    "field_name": "is_deleted",
+                    "variable_name": "isDeleted",
+                    "allow_null": false,
+                    "is_deleted": false
+                }
+            ],
+            "index": []
+        },
+        {
+            "template": "default",
+            "model_id": "5e7cc0f3-c5a4-4476-8848-0827dcfe795c",
+            "label": "Region Log",
+            "class_name": "RegionLog",
+            "table_name": "marketingprogramm_region_log",
+            "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\RegionLog",
+            "row_class_name": "",
+            "primary_index": "auto_increment",
+            "is_deleted": false,
+            "type": [
+                {
+                    "type": "external",
+                    "label": "Log",
+                    "field_name": "log",
+                    "variable_name": "log",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "b1d5ab56-1af4-4a4f-993a-cf68ef48c462"
+                },
+                {
+                    "type": "external",
+                    "label": "Region",
+                    "field_name": "region",
+                    "variable_name": "region",
+                    "allow_null": false,
+                    "is_deleted": false,
+                    "external_model_id": "2b02ab35-4ee0-481a-9e39-7452d657e904"
+                },
+                {
+                    "type": "yes_no",
+                    "label": "Region Has Changed",
+                    "field_name": "region_has_changed",
+                    "variable_name": "regionHasChanged",
+                    "allow_null": false,
+                    "is_deleted": false
+                },
+                {
+                    "type": "text",
+                    "label": "Region Old",
+                    "field_name": "region_old",
+                    "variable_name": "regionOld",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
+                },
+                {
+                    "type": "text",
+                    "label": "Region New",
+                    "field_name": "region_new",
+                    "variable_name": "regionNew",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "length": "255"
                 }
             ],
             "index": []

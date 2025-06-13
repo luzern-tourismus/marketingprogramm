@@ -47,6 +47,21 @@ public $themaNewId;
 */
 public $kategorieId;
 
+/**
+* @var bool
+*/
+public $regionHasChanged;
+
+/**
+* @var string
+*/
+public $regionOldId;
+
+/**
+* @var string
+*/
+public $regionNewId;
+
 public function __construct() {
 parent::__construct();
 $this->model = new KategorieLogModel();
@@ -60,6 +75,9 @@ $this->typeValueList->setModelValue($this->model->themaHasChanged, $this->themaH
 $this->typeValueList->setModelValue($this->model->themaOldId, $this->themaOldId);
 $this->typeValueList->setModelValue($this->model->themaNewId, $this->themaNewId);
 $this->typeValueList->setModelValue($this->model->kategorieId, $this->kategorieId);
+$this->typeValueList->setModelValue($this->model->regionHasChanged, $this->regionHasChanged);
+$this->typeValueList->setModelValue($this->model->regionOldId, $this->regionOldId);
+$this->typeValueList->setModelValue($this->model->regionNewId, $this->regionNewId);
 parent::update();
 }
 }

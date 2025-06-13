@@ -2,11 +2,13 @@
 
 namespace LuzernTourismus\MarketingProgramm\Install;
 
+use LuzernTourismus\MarketingProgramm\Application\MarketingProgrammApplication;
 use LuzernTourismus\MarketingProgramm\Business\Aktivitaet\AktivitaetType;
 use LuzernTourismus\MarketingProgramm\Business\Kategorie\KategorieType;
 use LuzernTourismus\MarketingProgramm\Business\Kontakt\KontaktType;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerMitarbeiterType;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerType;
+use LuzernTourismus\MarketingProgramm\Business\Region\RegionType;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\AbstractOperation;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\CreateOperation;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\DeleteOperation;
@@ -16,14 +18,16 @@ use LuzernTourismus\MarketingProgramm\ChangeLog\Setup\BusinessSetup;
 use LuzernTourismus\MarketingProgramm\Data\ChangeLogOperation\ChangeLogOperation;
 use LuzernTourismus\MarketingProgramm\Data\MarketingProgrammModelCollection;
 use LuzernTourismus\MarketingProgramm\Data\Thema\Thema;
+use LuzernTourismus\MarketingProgramm\Script\KontaktImportScript;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\BasismarketingThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\MarktmanagementThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\WerbungThema;
+use LuzernTourismus\MarketingProgramm\Usergroup\KontaktUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
-use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
 use Nemundo\App\Application\Type\Install\AbstractInstall;
+use Nemundo\App\Script\Setup\ScriptSetup;
 use Nemundo\Model\Setup\ModelCollectionSetup;
 use Nemundo\User\Setup\UsergroupSetup;
 
@@ -35,8 +39,12 @@ class MarketingProgrammInstall extends AbstractInstall
 
         (new UsergroupSetup())
             ->addUsergroup(new PartnerUsergroup())
-            ->addUsergroup(new ReaderUsergroup())
+            ->addUsergroup(new KontaktUsergroup())
             ->addUsergroup(new VerwaltungUsergroup());
+
+        (new ScriptSetup(new MarketingProgrammApplication()))
+            ->addScript(new KontaktImportScript());
+
 
         $this
             ->addThema(new WerbungThema())
@@ -52,6 +60,7 @@ class MarketingProgrammInstall extends AbstractInstall
         (new BusinessSetup())
             ->addType(new AktivitaetType())
             ->addType(new KategorieType())
+            ->addType(new RegionType())
             ->addType(new KontaktType())
             ->addType(new PartnerType())
             ->addType(new PartnerMitarbeiterType());

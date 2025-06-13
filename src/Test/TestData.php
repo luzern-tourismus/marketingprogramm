@@ -6,6 +6,7 @@ use LuzernTourismus\MarketingProgramm\Application\MarketingProgrammApplication;
 use LuzernTourismus\MarketingProgramm\Business\Kategorie\KategorieBuilder;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerBuilder;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerMitarbeiterBuilder;
+use LuzernTourismus\MarketingProgramm\Business\Region\RegionBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\BasismarketingThema;
@@ -57,6 +58,12 @@ class TestData extends AbstractBase
 
 
 
+        $this
+            ->addRegion('Schweiz')
+            ->addRegion('Europa')
+            ->addRegion('Übersee')
+            ->addRegion('Marktübergreifende Plattformen');
+            //->addRegion('')
 
 
 
@@ -98,6 +105,21 @@ class TestData extends AbstractBase
 
 
     }
+
+
+
+
+    private function addRegion($region)
+    {
+
+        $builder = new RegionBuilder();
+        $builder->region = $region;
+        $builder->build();
+
+        return $this;
+
+    }
+
 
 
 

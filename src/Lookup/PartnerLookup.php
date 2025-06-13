@@ -9,6 +9,9 @@ use Nemundo\User\Session\UserSession;
 class PartnerLookup extends AbstractBase
 {
 
+    private static $partnerRow;
+
+
     public function getPartnerId()
     {
 
@@ -24,23 +27,33 @@ class PartnerLookup extends AbstractBase
     }
 
 
+    public function isAnmeldungFinalisiert()
+    {
+
+        return $this->getPartnerRow()->anmeldungFinalisiert;
+
+    }
+
 
     public function getPartnerRow()
     {
 
-        $partnerRow = null;
+        //$partnerRow = null;
 
-        $partnerMitarbeiterReader = new PartnerMitarbeiterReader();
-        $partnerMitarbeiterReader->model->loadPartner();
-        $partnerMitarbeiterReader->filter->andEqual($partnerMitarbeiterReader->model->email, (new UserSession())->login);
+        if (PartnerLookup::$partnerRow == null) {
 
-        foreach ($partnerMitarbeiterReader->getData() as $partnerMitarbeiterRow) {
+            $partnerMitarbeiterReader = new PartnerMitarbeiterReader();
+            $partnerMitarbeiterReader->model->loadPartner();
+            $partnerMitarbeiterReader->filter->andEqual($partnerMitarbeiterReader->model->email, (new UserSession())->login);
 
-            $partnerRow = $partnerMitarbeiterRow->partner;
+            foreach ($partnerMitarbeiterReader->getData() as $partnerMitarbeiterRow) {
 
+                PartnerLookup::$partnerRow = $partnerMitarbeiterRow->partner;
+
+            }
         }
 
-        return $partnerRow;
+        return PartnerLookup::$partnerRow;
 
     }
 

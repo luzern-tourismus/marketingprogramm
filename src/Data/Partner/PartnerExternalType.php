@@ -31,6 +31,11 @@ public $plz;
 */
 public $ort;
 
+/**
+* @var \Nemundo\Model\Type\Number\YesNoType
+*/
+public $anmeldungFinalisiert;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = PartnerModel::class;
@@ -83,6 +88,14 @@ $this->ort->externalTableName = $this->externalTableName;
 $this->ort->aliasFieldName = $this->ort->tableName . "_" . $this->ort->fieldName;
 $this->ort->label = "Ort";
 $this->addType($this->ort);
+
+$this->anmeldungFinalisiert = new \Nemundo\Model\Type\Number\YesNoType();
+$this->anmeldungFinalisiert->fieldName = "anmeldung_finalisiert";
+$this->anmeldungFinalisiert->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->anmeldungFinalisiert->externalTableName = $this->externalTableName;
+$this->anmeldungFinalisiert->aliasFieldName = $this->anmeldungFinalisiert->tableName . "_" . $this->anmeldungFinalisiert->fieldName;
+$this->anmeldungFinalisiert->label = "Anmeldung Finalisiert";
+$this->addType($this->anmeldungFinalisiert);
 
 }
 }

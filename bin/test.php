@@ -1,1 +1,1 @@
-<?phprequire_once 'config.php';//(new \LuzernTourismus\MarketingProgramm\Test\TestData())->createTestData();(new \LuzernTourismus\MarketingProgramm\Test\PartnerTestData())->createTestData();
+<?phprequire_once 'config.php';(new \LuzernTourismus\MarketingProgramm\Test\TestData())->createTestData();(new \LuzernTourismus\MarketingProgramm\Test\PartnerTestData())->createTestData();

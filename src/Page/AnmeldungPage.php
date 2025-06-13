@@ -6,6 +6,8 @@ use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungReader;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
 use LuzernTourismus\MarketingProgramm\Parameter\AnmeldungParameter;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
+use LuzernTourismus\MarketingProgramm\Site\AnmeldungFinalisierenSite;
+use Nemundo\Admin\Com\Button\AdminSiteButton;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -13,6 +15,7 @@ use Nemundo\Admin\Com\Table\Row\AdminTableRow;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
 use Nemundo\Html\Formatting\Bold;
+use Nemundo\Html\Paragraph\Paragraph;
 
 class AnmeldungPage extends AbstractTemplateDocument
 {
@@ -40,6 +43,7 @@ class AnmeldungPage extends AbstractTemplateDocument
             $anmeldungReader->model->loadOption();
             $anmeldungReader->model->option->loadAktivitaet();
             $anmeldungReader->filter->andEqual($anmeldungReader->model->partnerId, $partnerRow->id);
+            $anmeldungReader->filter->andEqual($anmeldungReader->model->isDeleted, false);
 
             (new AdminTableHeader($table))
                 ->addText($anmeldungReader->model->option->aktivitaet->label)
@@ -55,20 +59,25 @@ class AnmeldungPage extends AbstractTemplateDocument
                 $row->strikeThrough = $anmeldungRow->isDeleted;
 
                 $row->addText($anmeldungRow->option->aktivitaet->aktivitaet)
-                    ->addText($anmeldungRow->option->option);
+                    ->addText($anmeldungRow->option->option)
+                    ->addText($anmeldungRow->option->getPreis());
 
-                if ($anmeldungRow->option->hasPreis) {
+                /*if ($anmeldungRow->option->hasPreis) {
                     $row->addText($anmeldungRow->option->preis);
                     if (!$anmeldungRow->isDeleted) {
                         $total += $anmeldungRow->option->preis;
                     }
                 } else {
                     $row->addText('tbd');
-                }
+                }*/
+
+
+                if (!$partnerRow->anmeldungFinalisiert) {
 
                 $site = clone(AnmeldungDeleteSite::$site);
                 $site->addParameter(new AnmeldungParameter($anmeldungRow->id));
                 $row->addIconSite($site);
+                }
 
             }
 
@@ -84,7 +93,23 @@ class AnmeldungPage extends AbstractTemplateDocument
             $bold->content = $total;
             $row->addText($bold->getBodyContent());
 
+
+            if (!$partnerRow->anmeldungFinalisiert) {
+                $btn = new AdminSiteButton($layout);
+                $btn->site = AnmeldungFinalisierenSite::$site;
+            } else {
+
+                $p = new Paragraph($layout);
+                $p->content = 'Anmeldung wurde finalisiert';
+
+
+            }
         }
+
+
+
+
+
 
 
         return parent::getContent();

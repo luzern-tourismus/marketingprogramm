@@ -41,6 +41,11 @@ public $plz;
 */
 public $ort;
 
+/**
+* @var bool
+*/
+public $anmeldungFinalisiert;
+
 public function __construct(\Nemundo\Db\Row\AbstractDataRow $row, $model, $multiLanguage = false) {
 parent::__construct($row->getData());
 $this->row = $row;
@@ -50,5 +55,6 @@ $this->isDeleted = boolval($this->getModelValue($model->isDeleted));
 $this->strasse = $this->getModelValue($model->strasse);
 $this->plz = intval($this->getModelValue($model->plz));
 $this->ort = $this->getModelValue($model->ort);
+$this->anmeldungFinalisiert = boolval($this->getModelValue($model->anmeldungFinalisiert));
 }
 }

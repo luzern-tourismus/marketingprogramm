@@ -36,6 +36,11 @@ public $hasPreis;
 */
 public $preis;
 
+/**
+* @var \Nemundo\Model\Type\Number\NumberType
+*/
+public $itemOrder;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = OptionModel::class;
@@ -87,6 +92,14 @@ $this->preis->externalTableName = $this->externalTableName;
 $this->preis->aliasFieldName = $this->preis->tableName . "_" . $this->preis->fieldName;
 $this->preis->label = "Preis";
 $this->addType($this->preis);
+
+$this->itemOrder = new \Nemundo\Model\Type\Number\NumberType();
+$this->itemOrder->fieldName = "item_order";
+$this->itemOrder->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->itemOrder->externalTableName = $this->externalTableName;
+$this->itemOrder->aliasFieldName = $this->itemOrder->tableName . "_" . $this->itemOrder->fieldName;
+$this->itemOrder->label = "Reihenfolge";
+$this->addType($this->itemOrder);
 
 }
 public function loadAktivitaet() {

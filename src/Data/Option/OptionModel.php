@@ -36,6 +36,11 @@ public $hasPreis;
 */
 public $preis;
 
+/**
+* @var \Nemundo\Model\Type\Number\NumberType
+*/
+public $itemOrder;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_option";
 $this->aliasTableName = "marketingprogramm_option";
@@ -90,6 +95,19 @@ $this->preis->fieldName = "preis";
 $this->preis->aliasFieldName = "marketingprogramm_option_preis";
 $this->preis->label = "Preis";
 $this->preis->allowNullValue = true;
+
+$this->itemOrder = new \Nemundo\Model\Type\Number\NumberType($this);
+$this->itemOrder->tableName = "marketingprogramm_option";
+$this->itemOrder->externalTableName = "marketingprogramm_option";
+$this->itemOrder->fieldName = "item_order";
+$this->itemOrder->aliasFieldName = "marketingprogramm_option_item_order";
+$this->itemOrder->label = "Reihenfolge";
+$this->itemOrder->allowNullValue = false;
+
+$index = new \Nemundo\Model\Definition\Index\ModelIndex($this);
+$index->indexName = "aktivitaet_item_order";
+$index->addType($this->aktivitaetId);
+$index->addType($this->itemOrder);
 
 }
 public function loadAktivitaet() {

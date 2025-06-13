@@ -31,6 +31,11 @@ public $plz;
 */
 public $ort;
 
+/**
+* @var bool
+*/
+public $anmeldungFinalisiert;
+
 public function __construct() {
 parent::__construct();
 $this->model = new PartnerModel();
@@ -41,6 +46,7 @@ $this->typeValueList->setModelValue($this->model->isDeleted, $this->isDeleted);
 $this->typeValueList->setModelValue($this->model->strasse, $this->strasse);
 $this->typeValueList->setModelValue($this->model->plz, $this->plz);
 $this->typeValueList->setModelValue($this->model->ort, $this->ort);
+$this->typeValueList->setModelValue($this->model->anmeldungFinalisiert, $this->anmeldungFinalisiert);
 $id = parent::save();
 return $id;
 }

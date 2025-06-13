@@ -11,7 +11,7 @@ class PartnerType extends AbstractBusinessType
     protected function loadType()
     {
 
-        $this->businessType= 'partner';
+        $this->businessType= 'Partner';
         $this->logView= PartnerLogView::class;
 
     }

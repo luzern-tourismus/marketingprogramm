@@ -31,6 +31,11 @@ public $plz;
 */
 public $ort;
 
+/**
+* @var \Nemundo\Model\Type\Number\YesNoType
+*/
+public $anmeldungFinalisiert;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_partner";
 $this->aliasTableName = "marketingprogramm_partner";
@@ -69,7 +74,7 @@ $this->strasse->externalTableName = "marketingprogramm_partner";
 $this->strasse->fieldName = "strasse";
 $this->strasse->aliasFieldName = "marketingprogramm_partner_strasse";
 $this->strasse->label = "Strasse";
-$this->strasse->allowNullValue = false;
+$this->strasse->allowNullValue = true;
 $this->strasse->length = 255;
 
 $this->plz = new \Nemundo\Model\Type\Number\NumberType($this);
@@ -78,7 +83,7 @@ $this->plz->externalTableName = "marketingprogramm_partner";
 $this->plz->fieldName = "plz";
 $this->plz->aliasFieldName = "marketingprogramm_partner_plz";
 $this->plz->label = "PLZ";
-$this->plz->allowNullValue = false;
+$this->plz->allowNullValue = true;
 
 $this->ort = new \Nemundo\Model\Type\Text\TextType($this);
 $this->ort->tableName = "marketingprogramm_partner";
@@ -86,8 +91,16 @@ $this->ort->externalTableName = "marketingprogramm_partner";
 $this->ort->fieldName = "ort";
 $this->ort->aliasFieldName = "marketingprogramm_partner_ort";
 $this->ort->label = "Ort";
-$this->ort->allowNullValue = false;
+$this->ort->allowNullValue = true;
 $this->ort->length = 255;
+
+$this->anmeldungFinalisiert = new \Nemundo\Model\Type\Number\YesNoType($this);
+$this->anmeldungFinalisiert->tableName = "marketingprogramm_partner";
+$this->anmeldungFinalisiert->externalTableName = "marketingprogramm_partner";
+$this->anmeldungFinalisiert->fieldName = "anmeldung_finalisiert";
+$this->anmeldungFinalisiert->aliasFieldName = "marketingprogramm_partner_anmeldung_finalisiert";
+$this->anmeldungFinalisiert->label = "Anmeldung Finalisiert";
+$this->anmeldungFinalisiert->allowNullValue = false;
 
 }
 }

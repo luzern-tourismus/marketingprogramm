@@ -10,8 +10,13 @@ use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
+use LuzernTourismus\MarketingProgramm\Reader\Option\OptionDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionDeleteSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionEditSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionNewSite;
+use LuzernTourismus\MarketingProgramm\Site\AktivitaetSite;
+use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Button\AdminSiteButton;
 use Nemundo\Admin\Com\Html\AdminUnorderedList;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
@@ -33,7 +38,6 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         $btn->site = AktivitaetAdminSite::$site;
         $btn->site->title = 'Zurück';
 
-
         $aktivitaetId = (new AktivitaetParameter())->getValue();
 
         $reader = new AktivitaetDataReader();
@@ -48,13 +52,21 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         //$table = new OptionTable($layout);
         //$table->aktivitaetId = $aktivitaetId;
 
+        $site = clone(OptionNewSite::$site);
+        $site->addParameter(new AktivitaetParameter($aktivitaetId));
+
+        $btn = new AdminIconSiteButton($layout);
+        $btn->site = $site;
+
+
         $table = new AdminTable($layout);
 
-        $reader = new OptionReader();
+        $reader = new OptionDataReader();
 
         (new AdminTableHeader($table))
             ->addText($reader->model->option->label)
             ->addText($reader->model->preis->label)
+            ->addText($reader->model->itemOrder->label)
             ->addEmpty();
 
 
@@ -66,6 +78,12 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             $row->strikeThrough = $optionRow->isDeleted;
             $row->addText($optionRow->option);
             $row->addText($optionRow->getPreis());
+            $row->addText($optionRow->itemOrder);
+
+            $site = clone(OptionEditSite::$site);
+            $site->addParameter(new OptionParameter($optionRow->id));
+            $row->addIconSite($site);
+
 
             $site = clone(OptionDeleteSite::$site);
             $site->addParameter(new OptionParameter($optionRow->id));
@@ -74,6 +92,8 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         }
 
 
+
+        /*
         $form = new OptionForm($layout);
         $form->aktivitaetId = $aktivitaetId;
 
@@ -115,7 +135,7 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             $row->addText($aktivitaetChangeLogRow->log->user->login);
             $row->addText($aktivitaetChangeLogRow->log->dateTime->getShortDateTimeLeadingZeroFormat());
 
-        }
+        }*/
 
         return parent::getContent();
     }

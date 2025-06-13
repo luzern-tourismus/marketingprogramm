@@ -3,31 +3,30 @@
 namespace LuzernTourismus\MarketingProgramm\Page;
 
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
-use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\RegionListBox;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungCount;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungId;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
 use LuzernTourismus\MarketingProgramm\Parameter\AnmeldungParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungSaveSite;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
+use LuzernTourismus\MarketingProgramm\Type\Thema\MarktmanagementThema;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
-use Nemundo\Admin\Com\Hr\AdminHr;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminLabelValueTable;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
 use Nemundo\Admin\Com\Table\Row\AdminTableRow;
-use Nemundo\Admin\Com\Title\AdminSubtitle;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Admin\Com\Widget\AdminWidget;
 use Nemundo\Com\Html\Hyperlink\EmailHyperlink;
 use Nemundo\Com\Html\Hyperlink\PhoneHyperlink;
 use Nemundo\Com\Template\AbstractTemplateDocument;
-use Nemundo\Core\Type\Number\Number;
 use Nemundo\User\Usergroup\UsergroupMembership;
 
 class AktivitaetPage extends AbstractTemplateDocument
@@ -50,16 +49,29 @@ class AktivitaetPage extends AbstractTemplateDocument
 
         $search = new AdminSearchForm($layout);
 
+        if ($this->thema->id === (new MarktmanagementThema())->id) {
+            $region = new RegionListBox($search);
+            $region->searchMode = true;
+            $region->submitOnChange = true;
+        }
+
         $kategorie = new KategorieListBox($search);
         $kategorie->searchMode = true;
         $kategorie->submitOnChange = true;
         $kategorie->themaId = $this->thema->id;
 
 
-        $reader = new AktivitaetReader();
-        $reader->model->loadKategorie()->loadKontakt();
+        $reader = new AktivitaetDataReader();
+        //$reader->model->loadKategorie()->loadKontakt();
         $reader->filter->andEqual($reader->model->isDeleted, false);
         $reader->filter->andEqual($reader->model->kategorie->themaId, $this->thema->id);
+
+        if ($this->thema->id === (new MarktmanagementThema())->id) {
+            if ($region->hasValue()) {
+                $reader->filter->andEqual($reader->model->kategorie->regionId, $region->getValue());
+            }
+        }
+
 
         if ($kategorie->hasValue()) {
             $reader->filter->andEqual($reader->model->kategorieId, $kategorie->getValue());
@@ -75,6 +87,7 @@ class AktivitaetPage extends AbstractTemplateDocument
             $table
                 ->addLabelValue($aktivitaetRow->model->aktivitaet->label, $aktivitaetRow->aktivitaet)
                 ->addLabelValue($aktivitaetRow->model->kategorie->label, $aktivitaetRow->kategorie->kategorie)
+                ->addLabelValue($aktivitaetRow->model->kategorie->region->label, $aktivitaetRow->kategorie->region->region)
                 ->addLabelValue($aktivitaetRow->model->datum->label, $aktivitaetRow->datum)
                 ->addLabelValue($aktivitaetRow->model->kosten->label, $aktivitaetRow->kosten)
                 ->addLabelValue($aktivitaetRow->model->leistung->label, $aktivitaetRow->leistung)
@@ -106,6 +119,7 @@ class AktivitaetPage extends AbstractTemplateDocument
 
             $reader->filter->andEqual($reader->model->aktivitaetId, $aktivitaetRow->id);
             $reader->filter->andEqual($reader->model->isDeleted, false);
+            $reader->addOrder($reader->model->itemOrder);
 
             foreach ($reader->getData() as $optionRow) {
 
@@ -121,15 +135,22 @@ class AktivitaetPage extends AbstractTemplateDocument
                     $count->filter->andEqual($count->model->partnerId, $partnerId);
                     if ($count->getCount() === 0) {
 
-/*                        $site = clone(AnmeldungSaveSite::$site);
-                        $site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
+                        /*                        $site = clone(AnmeldungSaveSite::$site);
+                                                $site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
 
-                        $btn = new AdminSiteButton($layout);
-                        $btn->site = $site;*/
+                                                $btn = new AdminSiteButton($layout);
+                                                $btn->site = $site;*/
 
-                        $site = clone(AnmeldungSaveSite::$site);
-                        $site->addParameter(new OptionParameter($optionRow->id));
-                        $row->addSite($site);
+
+                        if (!(new PartnerLookup())->isAnmeldungFinalisiert()) {
+                            $site = clone(AnmeldungSaveSite::$site);
+                            $site->addParameter(new OptionParameter($optionRow->id));
+                            $row->addSite($site);
+
+                        } else {
+                            $row->addEmpty();
+                        }
+
 
                     } else {
 
@@ -141,9 +162,11 @@ class AktivitaetPage extends AbstractTemplateDocument
                         $id->filter->andEqual($id->model->partnerId, $partnerId);
                         $anmeldungId = $id->getId();
 
-                        $site = clone(AnmeldungDeleteSite::$site);
-                        $site->addParameter(new AnmeldungParameter($anmeldungId));
-                        $row->addIconSite($site);
+                        if (!(new PartnerLookup())->isAnmeldungFinalisiert()) {
+                            $site = clone(AnmeldungDeleteSite::$site);
+                            $site->addParameter(new AnmeldungParameter($anmeldungId));
+                            $row->addIconSite($site);
+                        }
 
                     }
 

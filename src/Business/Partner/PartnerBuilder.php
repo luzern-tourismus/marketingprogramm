@@ -20,7 +20,7 @@ class PartnerBuilder extends AbstractBuilder
 
     protected function loadBuilder()
     {
-        $this->type=new PartnerType();
+        $this->type = new PartnerType();
     }
 
 
@@ -33,7 +33,8 @@ class PartnerBuilder extends AbstractBuilder
         $data->strasse = $this->strasse;
         $data->plz = $this->plz;
         $data->ort = $this->ort;
-        $this->id= $data->save();
+        $data->anmeldungFinalisiert=false;
+        $this->id = $data->save();
 
     }
 

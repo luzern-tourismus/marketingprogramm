@@ -26,6 +26,16 @@ public $thema;
 */
 public $isDeleted;
 
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $regionId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType
+*/
+public $region;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_kategorie";
 $this->aliasTableName = "marketingprogramm_kategorie";
@@ -65,6 +75,13 @@ $this->isDeleted->aliasFieldName = "marketingprogramm_kategorie_is_deleted";
 $this->isDeleted->label = "Is Deleted";
 $this->isDeleted->allowNullValue = false;
 
+$this->regionId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->regionId->tableName = "marketingprogramm_kategorie";
+$this->regionId->fieldName = "region";
+$this->regionId->aliasFieldName = "marketingprogramm_kategorie_region";
+$this->regionId->label = "Region";
+$this->regionId->allowNullValue = true;
+
 }
 public function loadThema() {
 if ($this->thema == null) {
@@ -73,6 +90,16 @@ $this->thema->tableName = "marketingprogramm_kategorie";
 $this->thema->fieldName = "thema";
 $this->thema->aliasFieldName = "marketingprogramm_kategorie_thema";
 $this->thema->label = "Thema";
+}
+return $this;
+}
+public function loadRegion() {
+if ($this->region == null) {
+$this->region = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType($this, "marketingprogramm_kategorie_region");
+$this->region->tableName = "marketingprogramm_kategorie";
+$this->region->fieldName = "region";
+$this->region->aliasFieldName = "marketingprogramm_kategorie_region";
+$this->region->label = "Region";
 }
 return $this;
 }

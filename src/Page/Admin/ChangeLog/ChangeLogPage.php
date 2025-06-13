@@ -5,6 +5,7 @@ namespace LuzernTourismus\MarketingProgramm\Page\Admin\ChangeLog;
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBusinessType;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Com\AbstractLogView;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Com\ListBox\ChangeLogTypeListBox;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\OperationListBox;
 use LuzernTourismus\MarketingProgramm\Data\ChangeLog\ChangeLogReader;
 use LuzernTourismus\MarketingProgramm\Data\ChangeLogType\ChangeLogType;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
@@ -29,12 +30,28 @@ class ChangeLogPage extends AbstractTemplateDocument
         $search = new AdminSearchForm($layout);
 
         $type = new ChangeLogTypeListBox($search);
+        $type->searchMode=true;
+        $type->submitOnChange=true;
+
+        $operation = new OperationListBox($search);
+        $operation->searchMode=true;
+        $operation->submitOnChange=true;
 
 
         $table = new AdminTable($layout);
 
         $reader = new ChangeLogReader();
         $reader->model->loadUser()->loadOperation()->loadChangeLogType();
+
+        if ($type->hasValue()) {
+            $reader->filter->andEqual($reader->model->changeLogTypeId,$type->getValue());
+        }
+
+        if ($operation->hasValue()) {
+            $reader->filter->andEqual($reader->model->operationId,$operation->getValue());
+        }
+
+
         $reader->addOrder($reader->model->id,SortOrder::DESCENDING);
 
         (new AdminTableHeader($table))
@@ -43,7 +60,7 @@ class ChangeLogPage extends AbstractTemplateDocument
             ->addText($reader->model->dataId->label)
             ->addText($reader->model->operation->label)
             ->addText($reader->model->changeLogType->label)
-        ;
+        ->addText('Change Log');
 
 
         foreach ($reader->getData() as $changeLogRow) {

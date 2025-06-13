@@ -8,7 +8,7 @@ use LuzernTourismus\MarketingProgramm\Data\Kontakt\Kontakt;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktReader;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktUpdate;
 use LuzernTourismus\MarketingProgramm\Data\KontaktLog\KontaktLog;
-use LuzernTourismus\MarketingProgramm\Usergroup\ReaderUsergroup;
+use LuzernTourismus\MarketingProgramm\Usergroup\KontaktUsergroup;
 use Nemundo\Core\Type\Text\Text;
 use Nemundo\User\Builder\UserBuilder;
 
@@ -61,9 +61,14 @@ class KontaktBuilder extends AbstractBuilder
 
         $user = new UserBuilder();
         $user->email = $email;
+        $user->displayName = $kontaktRow->getVornameNachname();
         $user->createUser();
 
-        $user->addUsergroup(new ReaderUsergroup());
+        $user->addUsergroup(new KontaktUsergroup());
+
+
+        //$user->sendMail(new KontaktLoginMail());
+
 
     }
 
@@ -119,8 +124,8 @@ class KontaktBuilder extends AbstractBuilder
         } else {
             $data->telefonHasChanged = false;
         }
-        
-        
+
+
         /*$data->vornameHasChanged = true;
         $data->vornameNew = $kontaktNewRow->vorname;
         $data->emailHasChanged = true;

@@ -21,7 +21,7 @@ class KategorieEditPage extends AbstractTemplateDocument
         $title->content = KategorieEditSite::$site->title;  // 'Katgorie editieren';
 
         $form = new KategorieForm($layout);
-        $form->kategorieId = (new KategorieParameter())->getValue();
+        $form->dataId = (new KategorieParameter())->getValue();
         $form->redirectSite = KategorieAdminSite::$site;
 
 

@@ -22,6 +22,11 @@ public $themaId;
 */
 public $isDeleted;
 
+/**
+* @var string
+*/
+public $regionId;
+
 public function __construct() {
 parent::__construct();
 $this->model = new KategorieModel();
@@ -30,6 +35,7 @@ public function update() {
 $this->typeValueList->setModelValue($this->model->kategorie, $this->kategorie);
 $this->typeValueList->setModelValue($this->model->themaId, $this->themaId);
 $this->typeValueList->setModelValue($this->model->isDeleted, $this->isDeleted);
+$this->typeValueList->setModelValue($this->model->regionId, $this->regionId);
 parent::update();
 }
 }

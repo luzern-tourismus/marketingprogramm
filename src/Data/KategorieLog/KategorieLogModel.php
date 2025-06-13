@@ -66,6 +66,31 @@ public $kategorieId;
 */
 public $kategorie;
 
+/**
+* @var \Nemundo\Model\Type\Number\YesNoType
+*/
+public $regionHasChanged;
+
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $regionOldId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType
+*/
+public $regionOld;
+
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $regionNewId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType
+*/
+public $regionNew;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_kategorie_log";
 $this->aliasTableName = "marketingprogramm_kategorie_log";
@@ -143,6 +168,28 @@ $this->kategorieId->aliasFieldName = "marketingprogramm_kategorie_log_kategorie"
 $this->kategorieId->label = "Kategorie";
 $this->kategorieId->allowNullValue = false;
 
+$this->regionHasChanged = new \Nemundo\Model\Type\Number\YesNoType($this);
+$this->regionHasChanged->tableName = "marketingprogramm_kategorie_log";
+$this->regionHasChanged->externalTableName = "marketingprogramm_kategorie_log";
+$this->regionHasChanged->fieldName = "region_has_changed";
+$this->regionHasChanged->aliasFieldName = "marketingprogramm_kategorie_log_region_has_changed";
+$this->regionHasChanged->label = "Region Has Changed";
+$this->regionHasChanged->allowNullValue = false;
+
+$this->regionOldId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->regionOldId->tableName = "marketingprogramm_kategorie_log";
+$this->regionOldId->fieldName = "region_old";
+$this->regionOldId->aliasFieldName = "marketingprogramm_kategorie_log_region_old";
+$this->regionOldId->label = "Region Old";
+$this->regionOldId->allowNullValue = true;
+
+$this->regionNewId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->regionNewId->tableName = "marketingprogramm_kategorie_log";
+$this->regionNewId->fieldName = "region_new";
+$this->regionNewId->aliasFieldName = "marketingprogramm_kategorie_log_region_new";
+$this->regionNewId->label = "Region New";
+$this->regionNewId->allowNullValue = true;
+
 $index = new \Nemundo\Model\Definition\Index\ModelIndex($this);
 $index->indexName = "log";
 $index->addType($this->logId);
@@ -185,6 +232,26 @@ $this->kategorie->tableName = "marketingprogramm_kategorie_log";
 $this->kategorie->fieldName = "kategorie";
 $this->kategorie->aliasFieldName = "marketingprogramm_kategorie_log_kategorie";
 $this->kategorie->label = "Kategorie";
+}
+return $this;
+}
+public function loadRegionOld() {
+if ($this->regionOld == null) {
+$this->regionOld = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType($this, "marketingprogramm_kategorie_log_region_old");
+$this->regionOld->tableName = "marketingprogramm_kategorie_log";
+$this->regionOld->fieldName = "region_old";
+$this->regionOld->aliasFieldName = "marketingprogramm_kategorie_log_region_old";
+$this->regionOld->label = "Region Old";
+}
+return $this;
+}
+public function loadRegionNew() {
+if ($this->regionNew == null) {
+$this->regionNew = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionExternalType($this, "marketingprogramm_kategorie_log_region_new");
+$this->regionNew->tableName = "marketingprogramm_kategorie_log";
+$this->regionNew->fieldName = "region_new";
+$this->regionNew->aliasFieldName = "marketingprogramm_kategorie_log_region_new";
+$this->regionNew->label = "Region New";
 }
 return $this;
 }

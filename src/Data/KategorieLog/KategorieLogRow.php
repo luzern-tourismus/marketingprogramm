@@ -76,6 +76,31 @@ public $kategorieId;
 */
 public $kategorie;
 
+/**
+* @var bool
+*/
+public $regionHasChanged;
+
+/**
+* @var int
+*/
+public $regionOldId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionRow
+*/
+public $regionOld;
+
+/**
+* @var int
+*/
+public $regionNewId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Region\RegionRow
+*/
+public $regionNew;
+
 public function __construct(\Nemundo\Db\Row\AbstractDataRow $row, $model, $multiLanguage = false) {
 parent::__construct($row->getData());
 $this->row = $row;
@@ -100,6 +125,15 @@ $this->kategorieId = intval($this->getModelValue($model->kategorieId));
 if ($model->kategorie !== null) {
 $this->loadLuzernTourismusMarketingProgrammDataKategorieKategoriekategorieRow($model->kategorie);
 }
+$this->regionHasChanged = boolval($this->getModelValue($model->regionHasChanged));
+$this->regionOldId = intval($this->getModelValue($model->regionOldId));
+if ($model->regionOld !== null) {
+$this->loadLuzernTourismusMarketingProgrammDataRegionRegionregionOldRow($model->regionOld);
+}
+$this->regionNewId = intval($this->getModelValue($model->regionNewId));
+if ($model->regionNew !== null) {
+$this->loadLuzernTourismusMarketingProgrammDataRegionRegionregionNewRow($model->regionNew);
+}
 }
 private function loadLuzernTourismusMarketingProgrammDataChangeLogChangeLoglogRow($model) {
 $this->log = new \LuzernTourismus\MarketingProgramm\Data\ChangeLog\ChangeLogRow($this->row, $model);
@@ -112,5 +146,11 @@ $this->themaNew = new \LuzernTourismus\MarketingProgramm\Data\Thema\ThemaRow($th
 }
 private function loadLuzernTourismusMarketingProgrammDataKategorieKategoriekategorieRow($model) {
 $this->kategorie = new \LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieRow($this->row, $model);
+}
+private function loadLuzernTourismusMarketingProgrammDataRegionRegionregionOldRow($model) {
+$this->regionOld = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionRow($this->row, $model);
+}
+private function loadLuzernTourismusMarketingProgrammDataRegionRegionregionNewRow($model) {
+$this->regionNew = new \LuzernTourismus\MarketingProgramm\Data\Region\RegionRow($this->row, $model);
 }
 }

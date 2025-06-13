@@ -2,8 +2,8 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Kategorie;
 
-use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieReader;
 use LuzernTourismus\MarketingProgramm\Parameter\KategorieParameter;
+use LuzernTourismus\MarketingProgramm\Reader\Kategorie\KategorieDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieEditSite;
@@ -29,24 +29,27 @@ class KategorieAdminPage extends AbstractTemplateDocument
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = KategorieNewSite::$site;
-        $btn->showTitle=false;
+        $btn->showTitle = false;
 
         $table = new AdminTable($layout);
 
-        $header = new AdminTableHeader($table);
-        $header->addText('Kategorie');
-        $header->addText('Thema');
-        $header->addEmpty(2);
 
-
-        $reader = new KategorieReader();
-        $reader->model->loadThema();
+        $reader = new KategorieDataReader();
+//        $reader->model->loadThema();
         $reader->addOrder($reader->model->kategorie);
+
+
+        (new AdminTableHeader($table))
+            ->addText($reader->model->kategorie->label)
+            ->addText($reader->model->region->label)
+            ->addText($reader->model->thema->label)
+            ->addEmpty(3);
+
+
         foreach ($reader->getData() as $kategorieRow) {
 
             $row = new AdminTableRow($table);
             $row->strikeThrough = $kategorieRow->isDeleted;
-
 
             $site = clone(KategorieItemSite::$site);
             $site->addParameter(new KategorieParameter($kategorieRow->id));
@@ -55,19 +58,18 @@ class KategorieAdminPage extends AbstractTemplateDocument
 
             //$row->addText($kategorieRow->kategorie);
 
-
-
+            $row->addText($kategorieRow->region->region);
             $row->addText($kategorieRow->thema->thema);
 
             if (!$kategorieRow->isDeleted) {
 
-            $site = clone(KategorieEditSite::$site);
-            $site->addParameter(new KategorieParameter($kategorieRow->id));
-            $row->addIconSite($site);
+                $site = clone(KategorieEditSite::$site);
+                $site->addParameter(new KategorieParameter($kategorieRow->id));
+                $row->addIconSite($site);
 
-            $site = clone(KategorieDeleteSite::$site);
-            $site->addParameter(new KategorieParameter($kategorieRow->id));
-            $row->addIconSite($site);
+                $site = clone(KategorieDeleteSite::$site);
+                $site->addParameter(new KategorieParameter($kategorieRow->id));
+                $row->addIconSite($site);
 
             } else {
 

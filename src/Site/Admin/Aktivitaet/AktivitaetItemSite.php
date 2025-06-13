@@ -19,6 +19,7 @@ class AktivitaetItemSite extends AbstractSite
         $this->url = 'AktivitaetItem';
         AktivitaetItemSite::$site = $this;
 
+        new OptionEditSite($this);
         new OptionDeleteSite($this);
 
     }

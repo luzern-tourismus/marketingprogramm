@@ -5,6 +5,7 @@ namespace LuzernTourismus\MarketingProgramm\Page\Admin\Anmeldung;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\AktivitaetListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\PartnerListBox;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungReader;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Anmeldung\AnmeldungAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Anmeldung\AnmeldungExcelExportSite;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
@@ -23,7 +24,7 @@ class AnmeldungAdminPage extends AbstractTemplateDocument
         $layout = new AdminFlexboxLayout($this);
 
         $title = new AdminTitle($layout);
-        $title->content = 'Anmeldungen';
+        $title->content = AnmeldungAdminSite::$site->title;
 
         $search = new AdminSearchForm($layout);
 
@@ -67,11 +68,9 @@ class AnmeldungAdminPage extends AbstractTemplateDocument
                 ->addText($anmeldungRow->partner->firma)
                 ->addText($anmeldungRow->option->aktivitaet->aktivitaet)
                 ->addText($anmeldungRow->option->option)
-                ->addText($anmeldungRow->option->preis);
-
+                ->addText($anmeldungRow->option->getPreis());
 
         }
-
 
         return parent::getContent();
     }

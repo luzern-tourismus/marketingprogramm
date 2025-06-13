@@ -15,6 +15,8 @@ class KategorieBuilder extends AbstractBuilder
 
     public $kategorie;
 
+    public $regionId;
+
     public $themaId;
 
 
@@ -42,11 +44,10 @@ class KategorieBuilder extends AbstractBuilder
     protected function onCreate()
     {
 
-        //$kategorieOldRow = (new KategorieReader())->ge
-
         $data = new Kategorie();
         $data->isDeleted = false;
         $data->kategorie = $this->kategorie;
+        $data->regionId = $this->regionId;
         $data->themaId = $this->themaId;
         $this->id = $data->save();
 
@@ -72,31 +73,40 @@ class KategorieBuilder extends AbstractBuilder
 
         $update = new KategorieUpdate();
         $update->kategorie = $this->kategorie;
+        $update->regionId = $this->regionId;
         $update->themaId = $this->themaId;
         $update->updateById($this->id);
 
-        $kategorieRow = (new KategorieReader())->getRowById($this->id);
+        $kategorieNewRow = (new KategorieReader())->getRowById($this->id);
 
         $data = new KategorieLog();
         $data->logId = $this->logId;
         $data->kategorieId = $this->id;
 
-        if ($kategorieRow->kategorie != $kategorieOldRow->kategorie) {
+        if ($kategorieNewRow->kategorie !== $kategorieOldRow->kategorie) {
             $data->kategorieHasChanged = true;
             $data->kategorieOld = $kategorieOldRow->kategorie;
-            $data->kategorieNew = $kategorieRow->kategorie;
+            $data->kategorieNew = $kategorieNewRow->kategorie;
         } else {
             $data->kategorieHasChanged = false;
         }
 
-        if ($kategorieRow->themaId != $kategorieOldRow->themaId) {
+        if ($kategorieNewRow->regionId !== $kategorieOldRow->regionId) {
+            $data->regionHasChanged = true;
+            $data->regionOldId = $kategorieOldRow->regionId;
+            $data->regionNewId = $kategorieNewRow->regionId;
+
+        } else {
+            $data->regionHasChanged = false;
+        }
+
+        if ($kategorieNewRow->themaId != $kategorieOldRow->themaId) {
             $data->themaHasChanged = true;
             $data->themaOldId = $kategorieOldRow->themaId;
-            $data->themaNewId = $kategorieRow->themaId;
+            $data->themaNewId = $kategorieNewRow->themaId;
         } else {
             $data->themaHasChanged = false;
         }
-
 
         $data->save();
 
@@ -115,6 +125,7 @@ class KategorieBuilder extends AbstractBuilder
         $data->logId = $this->logId;
         $data->kategorieId = $this->id;
         $data->kategorieHasChanged = false;
+        $data->regionHasChanged=false;
         $data->themaHasChanged = false;
         $data->save();
 
@@ -132,6 +143,7 @@ class KategorieBuilder extends AbstractBuilder
         $data->logId = $this->logId;
         $data->kategorieId = $this->id;
         $data->kategorieHasChanged = false;
+        $data->regionHasChanged=false;
         $data->themaHasChanged = false;
         $data->save();
 

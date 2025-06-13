@@ -46,6 +46,11 @@ public $hasPreis;
 */
 public $preis;
 
+/**
+* @var int
+*/
+public $itemOrder;
+
 public function __construct(\Nemundo\Db\Row\AbstractDataRow $row, $model, $multiLanguage = false) {
 parent::__construct($row->getData());
 $this->row = $row;
@@ -58,6 +63,7 @@ $this->loadLuzernTourismusMarketingProgrammDataAktivitaetAktivitaetaktivitaetRow
 $this->option = $this->getModelValue($model->option);
 $this->hasPreis = boolval($this->getModelValue($model->hasPreis));
 $this->preis = intval($this->getModelValue($model->preis));
+$this->itemOrder = intval($this->getModelValue($model->itemOrder));
 }
 private function loadLuzernTourismusMarketingProgrammDataAktivitaetAktivitaetaktivitaetRow($model) {
 $this->aktivitaet = new \LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow($this->row, $model);

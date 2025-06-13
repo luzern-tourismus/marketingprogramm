@@ -25,6 +25,10 @@ class KategorieLogView extends AbstractLogView
                 $ul->addText($kategorieLogRow->kategorieOld . ' => ' . $kategorieLogRow->kategorieNew);
             }
 
+            if ($kategorieLogRow->regionHasChanged) {
+                $ul->addText($kategorieLogRow->regionOld->region . ' => ' . $kategorieLogRow->regionNew->region);
+            }
+
             if ($kategorieLogRow->themaHasChanged) {
                 $ul->addText($kategorieLogRow->themaOld->thema . ' => ' . $kategorieLogRow->themaNew->thema);
             }

@@ -24,7 +24,6 @@ class PartnerAdminPage extends AbstractTemplateDocument
     public function getContent()
     {
 
-
         $layout = new AdminFlexboxLayout($this);
 
         $title = new AdminTitle($layout);
@@ -42,6 +41,7 @@ class PartnerAdminPage extends AbstractTemplateDocument
 
         (new AdminTableHeader($table))
             ->addText($reader->model->firma->label)
+            ->addText($reader->model->anmeldungFinalisiert->label)
             ->addEmpty(3);
 
         foreach ($reader->getData() as $partnerRow) {
@@ -56,6 +56,8 @@ class PartnerAdminPage extends AbstractTemplateDocument
             $site->title = $partnerRow->firma;
             $site->addParameter(new PartnerParameter($partnerRow->id));
             $row->addSite($site);
+
+            $row->addYesNo($partnerRow->anmeldungFinalisiert);
 
             $site = clone(PartnerBestaetigungPdfSite::$site);
             $site->addParameter(new PartnerParameter($partnerRow->id));
