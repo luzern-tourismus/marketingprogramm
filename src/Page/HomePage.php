@@ -31,10 +31,10 @@ class HomePage extends MarketingProgrammTemplate
         $widget = new LoginWidget($twoColumnLayout);
         $widget->showForgotHyperlink = true;
 
-        $widget = new AdminWidget($twoColumnLayout);
+        /*$widget = new AdminWidget($twoColumnLayout);
         $widget->widgetTitle = 'Auto Login';
 
-        new AutoLoginForm($widget);
+        new AutoLoginForm($widget);*/
 
 
 
