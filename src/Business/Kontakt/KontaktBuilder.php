@@ -8,6 +8,7 @@ use LuzernTourismus\MarketingProgramm\Data\Kontakt\Kontakt;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktReader;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktUpdate;
 use LuzernTourismus\MarketingProgramm\Data\KontaktLog\KontaktLog;
+use LuzernTourismus\MarketingProgramm\Mail\KontaktLoginMail;
 use LuzernTourismus\MarketingProgramm\Usergroup\KontaktUsergroup;
 use Nemundo\Core\Type\Text\Text;
 use Nemundo\User\Builder\UserBuilder;
@@ -66,9 +67,7 @@ class KontaktBuilder extends AbstractBuilder
 
         $user->addUsergroup(new KontaktUsergroup());
 
-
-        //$user->sendMail(new KontaktLoginMail());
-
+        $user->sendMail(new KontaktLoginMail());
 
     }
 
