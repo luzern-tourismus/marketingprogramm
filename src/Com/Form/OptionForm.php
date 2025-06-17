@@ -9,6 +9,7 @@ use LuzernTourismus\MarketingProgramm\Data\Option\OptionUpdate;
 use Nemundo\Admin\Com\Form\AbstractAdminEditForm;
 use Nemundo\Admin\Com\ListBox\AdminNumberBox;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
+use Nemundo\Core\Validation\NumberValidation;
 
 class OptionForm extends AbstractAdminEditForm
 {
@@ -78,7 +79,16 @@ class OptionForm extends AbstractAdminEditForm
 
         $update = new OptionUpdate();
         $update->option = $this->option->getValue();
-        $update->preis = $this->preis->getValue();
+
+
+        $preis = $this->preis->getValue();
+        if ((new NumberValidation())->isNumber($preis)) {
+            $update->hasPreis = true;
+            $update->preis = $preis;
+        } else {
+            $update->hasPreis = false;
+        }
+
         $update->itemOrder = $this->itemOrder->getValue();
         $update->updateById($this->dataId);
 

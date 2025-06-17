@@ -18,7 +18,6 @@ class OptionDataRow extends OptionRow
         $preis = $this->preis;
 
         if ($this->hasPreis) {
-            //$preis  =  ((new Number($this->preis))->getFormatNumber() . ' CHF');
             $preis = (new PriceNumber())->getPrice($preis);
         } else {
             $preis = 'tbd';

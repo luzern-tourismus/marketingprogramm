@@ -48,7 +48,6 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $data = new Aktivitaet();
         $data->isDeleted = false;
-        //$data->kategorieId = $this->kategorieId;
         $data->aktivitaet = $this->aktivaet;
         $data->datum = $this->datum;
         $data->kosten = $this->kosten;
@@ -65,8 +64,6 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $this->id = $data->save();
 
-        //$this->saveChangeLog();
-
         $aktivitaetNewRow = (new AktivitaetReader())->getRowById($this->id);
 
         $data = new AktivitaetChangeLog();
@@ -76,10 +73,7 @@ class AktivitaetBuilder extends AbstractBuilder
         $data->aktivitaetNew = $aktivitaetNewRow->aktivitaet;
         $data->datumHasChanged = true;
         $data->datumNew = $aktivitaetNewRow->datum;
-        //$data->dateTime = (new DateTime())->setNow();
-        //$data->userId = (new UserSession())->userId;
         $data->save();
-
 
     }
 
@@ -206,6 +200,11 @@ class AktivitaetBuilder extends AbstractBuilder
         return $this;
 
     }
+
+
+
+
+
 
     public function deleteOption($id)
     {

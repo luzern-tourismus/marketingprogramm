@@ -54,12 +54,6 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             ->addLabelValue($aktivitaetRow->model->kontakt->label, $aktivitaetRow->kontakt->getVornameNachname());
 
 
-
-
-
-
-
-
         $site = clone(OptionNewSite::$site);
         $site->addParameter(new AktivitaetParameter($aktivitaetId));
 
@@ -78,8 +72,8 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             ->addText($reader->model->itemOrder->label)
             ->addEmpty(2);
 
-
         $reader->filter->andEqual($reader->model->aktivitaetId, $aktivitaetId);
+        $reader->filter->andEqual($reader->model->isDeleted, false);
         $reader->addOrder($reader->model->option);
         foreach ($reader->getData() as $optionRow) {
 
@@ -107,51 +101,6 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             }
 
         }
-
-
-        /*
-        $form = new OptionForm($layout);
-        $form->aktivitaetId = $aktivitaetId;
-
-        $table = new AktivitaetLabelValueTable($layout);
-        $table->aktivitaetRow = $aktivitaetRow;
-
-
-        $subtitle = new AdminSubtitle($layout);
-        $subtitle->content = 'Change Log';
-
-        $table = new AdminTable($layout);
-
-        $reader = new AktivitaetChangeLogReader();
-        $reader->model->loadLog();
-        $reader->model->log->loadUser();
-        $reader->filter->andEqual($reader->model->aktivitaetId, $aktivitaetId);
-
-        (new AdminTableHeader($table))
-            ->addText('Change')
-            ->addText($reader->model->log->user->label)
-            ->addText($reader->model->log->dateTime->label)
-       ;
-
-
-        foreach ($reader->getData() as $aktivitaetChangeLogRow) {
-
-            $row = new AdminTableRow($table);
-
-            $ul = new AdminUnorderedList($row);
-
-            if ($aktivitaetChangeLogRow->aktivitaetHasChanged) {
-                $ul->addText($aktivitaetChangeLogRow->aktivitaetOld . ' => ' . $aktivitaetChangeLogRow->aktivitaetNew);
-            }
-
-            if ($aktivitaetChangeLogRow->datumHasChanged) {
-                $ul->addText($aktivitaetChangeLogRow->datumOld . ' => ' . $aktivitaetChangeLogRow->datumNew);
-            }
-
-            $row->addText($aktivitaetChangeLogRow->log->user->login);
-            $row->addText($aktivitaetChangeLogRow->log->dateTime->getShortDateTimeLeadingZeroFormat());
-
-        }*/
 
         return parent::getContent();
     }
