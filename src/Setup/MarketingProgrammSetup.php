@@ -21,7 +21,7 @@ class MarketingProgrammSetup extends AbstractSetup
 
         (new MarketingProgrammApplication())->installApp();
 
-        if (MarketingprogrammConfig::$devMode) {
+        if (!MarketingprogrammConfig::$devMode) {
             $setup = new MailServerSetup();
             $setup->host = 'mail.cyon.ch';
             $setup->port = 465;
