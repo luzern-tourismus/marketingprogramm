@@ -5,13 +5,14 @@ namespace LuzernTourismus\MarketingProgramm\Com\Form;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerModel;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
-use Nemundo\Admin\Com\Form\AbstractAdminForm;
+use Nemundo\Admin\Com\Form\AbstractAdminEditForm;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
+use Nemundo\Core\Type\Text\Text;
 
-class PartnerForm extends AbstractAdminForm
+class PartnerForm extends AbstractAdminEditForm
 {
 
-    public $partnerId;
+    //public $partnerId;
 
     /**
      * @var AdminTextBox
@@ -53,27 +54,43 @@ class PartnerForm extends AbstractAdminForm
         $this->ort->label = $model->ort->label;
 
 
-
-
-        if ($this->partnerId!==null) {
+        /*if ($this->partnerId!==null) {
 
             $partnerRow = (new PartnerReader())->getRowById($this->partnerId);
             $this->firma->value = $partnerRow->firma;
 
-        }
+        }*/
 
         return parent::getContent();
 
     }
 
 
-    protected function onSubmit()
+    protected function loadUpdateForm()
     {
 
-        $builder = new PartnerBuilder($this->partnerId);
+        $partnerRow = (new PartnerReader())->getRowById($this->dataId);
+
+        $this->firma->value = $partnerRow->firma;
+        $this->strasse->value = $partnerRow->strasse;
+        $this->plz->value = $partnerRow->plz;
+        $this->ort->value = $partnerRow->ort;
+
+    }
+
+
+    protected function onSave()
+    {
+
+        $builder = new PartnerBuilder($this->dataId);
         $builder->firma = $this->firma->getValue();
         $builder->strasse = $this->strasse->getValue();
-        $builder->plz = 0;//$this->plz->getValue();
+
+        if ((new Text($this->plz->getValue()))->isNumber()) {
+            $builder->plz = $this->plz->getValue();
+        } else {
+            $builder->plz = 0;
+        }
         $builder->ort = $this->ort->getValue();
         $builder->build();
 

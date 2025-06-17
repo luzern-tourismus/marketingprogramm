@@ -15,7 +15,8 @@ class KontaktNewSite extends AbstractNewIconSite
 
     protected function loadSite()
     {
-        //$this->title = 'KontaktNew';
+
+        $this->title = 'Neuer Kontakt';
         $this->url = 'kontakt-new';
 
         KontaktNewSite::$site = $this;

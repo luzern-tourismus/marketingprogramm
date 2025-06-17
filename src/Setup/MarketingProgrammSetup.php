@@ -20,14 +20,14 @@ class MarketingProgrammSetup extends AbstractSetup
 
         (new MarketingProgrammApplication())->installApp();
 
-        $setup = new MailServerSetup();
+        /*$setup = new MailServerSetup();
         $setup->host ='mail.cyon.ch';
         $setup->port = 465;
         $setup->user = 'noreply@marketingprogramm.luzern.com';
         $setup->password = 'CmL{bKV6(YpM{$M';
         $setup->mailAddress =  'noreply@marketingprogramm.luzern.com';
         $setup->mailText='Marketingprogramm Luzern Tourismus';
-        $setup->save();
+        $setup->save();*/
 
         $reset->remove();
     }

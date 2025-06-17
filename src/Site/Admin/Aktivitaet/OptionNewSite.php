@@ -10,13 +10,13 @@ class OptionNewSite extends AbstractNewIconSite
 {
 
     /**
-     * @var OptionEditSite
+     * @var OptionNewSite
      */
     public static $site;
 
     protected function loadSite()
     {
-        $this->title = 'OptionNew';
+        $this->title = 'Neue Option';
         $this->url = 'option-new';
 
         OptionNewSite::$site = $this;

@@ -16,6 +16,7 @@ use Nemundo\Admin\Com\Table\Row\AdminTableRow;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
 use Nemundo\Db\Sql\Order\SortOrder;
+use Nemundo\User\Com\ListBox\UserListBox;
 
 class ChangeLogPage extends AbstractTemplateDocument
 {
@@ -37,6 +38,10 @@ class ChangeLogPage extends AbstractTemplateDocument
         $operation->searchMode=true;
         $operation->submitOnChange=true;
 
+        $user = new UserListBox($search);
+        $user->searchMode=true;
+        $user->submitOnChange=true;
+
 
         $table = new AdminTable($layout);
 
@@ -51,41 +56,52 @@ class ChangeLogPage extends AbstractTemplateDocument
             $reader->filter->andEqual($reader->model->operationId,$operation->getValue());
         }
 
+        if ($user->hasValue()) {
+            $reader->filter->andEqual($reader->model->userId,$user->getValue());
+        }
+
+
 
         $reader->addOrder($reader->model->id,SortOrder::DESCENDING);
 
         (new AdminTableHeader($table))
+            ->addText($reader->model->changeLogType->label)
+            ->addText($reader->model->operation->label)
+            ->addText('Change Log')
             ->addText($reader->model->dateTime->label)
             ->addText($reader->model->user->label)
-            ->addText($reader->model->dataId->label)
-            ->addText($reader->model->operation->label)
-            ->addText($reader->model->changeLogType->label)
-        ->addText('Change Log');
+            //->addText($reader->model->dataId->label)
+
+
+        ;
 
 
         foreach ($reader->getData() as $changeLogRow) {
 
             $row = new AdminTableRow($table);
 
-            $row->addText($changeLogRow->dateTime->getShortDateTimeLeadingZeroFormat())
-                ->addText($changeLogRow->user->login)
-                ->addText($changeLogRow->dataId)
-                ->addText($changeLogRow->operation->operation)
-                ->addText($changeLogRow->changeLogType->changeLogType);
+            $row
+                ->addText($changeLogRow->changeLogType->changeLogType)
+                ->addText($changeLogRow->operation->operation);
 
             $className = $changeLogRow->changeLogType->phpClass;
-//$row->addText($className);*/
-
 
             /** @var AbstractBusinessType $type */
             $type = new $className();
 
-  //          $row->addText($type->logView);
-
-
             /** @var AbstractLogView $view */
             $view = new $type->logView($row);
             $view->logId= $changeLogRow->id;
+
+
+            $row
+                ->addText($changeLogRow->dateTime->getShortDateTimeLeadingZeroFormat())
+                ->addText($changeLogRow->user->login)
+                //->addText($changeLogRow->dataId)
+
+                ;
+
+
 
 
 

@@ -7,7 +7,7 @@ class CreateOperation extends AbstractOperation
 
     protected function loadOperation() {
         $this->id = 1;
-        $this->operation = 'create';
+        $this->operation = 'Create';
     }
 
 }

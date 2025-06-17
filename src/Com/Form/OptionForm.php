@@ -7,7 +7,6 @@ use LuzernTourismus\MarketingProgramm\Data\Option\OptionModel;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionUpdate;
 use Nemundo\Admin\Com\Form\AbstractAdminEditForm;
-use Nemundo\Admin\Com\Form\AbstractAdminForm;
 use Nemundo\Admin\Com\ListBox\AdminNumberBox;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
 
@@ -37,33 +36,12 @@ class OptionForm extends AbstractAdminEditForm
 
         $model = new OptionModel();
 
-
         $this->option = new AdminTextBox($this);
         $this->option->label = $model->option->label;
         $this->option->validation = true;
 
         $this->preis = new AdminTextBox($this);
         $this->preis->label = $model->preis->label;
-
-        /*$this->itemOrder = new AdminNumberBox($this);
-        $this->itemOrder->label = $model->itemOrder->label;*/
-
-
-        /*
-        if ($this->aktivitaetId!==null) {
-
-            $aktivitaetRow = (new AktivitaetReader())->getRowById($this->aktivitaetId);
-
-            $this->option->value = $aktivitaetRow->aktivitaet;
-            $this->preis->value = $aktivitaetRow->datum;
-            $this->kosten->value = $aktivitaetRow->kosten;
-            $this->leistung->value = $aktivitaetRow->leistung;
-            $this->zielpublikum->value = $aktivitaetRow->zielpublikum;
-            $this->kategorie->value = $aktivitaetRow->kategorieId;
-            $this->kontakt->value = $aktivitaetRow->kontaktId;
-
-        }*/
-
 
         return parent::getContent();
 

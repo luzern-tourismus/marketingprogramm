@@ -4,7 +4,6 @@ namespace LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet\AktivitaetEditPage;
 use Nemundo\Admin\Site\AbstractEditIconSite;
-use Nemundo\Web\Site\AbstractSite;
 
 class AktivitaetEditSite extends AbstractEditIconSite
 {
@@ -17,8 +16,8 @@ class AktivitaetEditSite extends AbstractEditIconSite
 
     protected function loadSite()
     {
-        $this->title = 'AktivitaetEdit';
-        $this->url = 'AktivitaetEdit';
+        $this->title = 'Aktivität editieren';
+        $this->url = 'aktivitaet-edit';
         AktivitaetEditSite::$site = $this;
     }
 

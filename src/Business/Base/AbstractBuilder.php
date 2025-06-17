@@ -70,6 +70,8 @@ abstract class AbstractBuilder extends AbstractBase
 
         $this->updateDataId();
 
+        return $this->id;
+
     }
 
 

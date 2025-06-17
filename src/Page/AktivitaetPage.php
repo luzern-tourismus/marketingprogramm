@@ -8,16 +8,22 @@ use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungCount;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungId;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
+use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\AnmeldungParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetEditSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetItemSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungSaveSite;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\MarktmanagementThema;
+use LuzernTourismus\MarketingProgramm\Usergroup\KontaktUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
+use Nemundo\Admin\Com\Button\AdminSiteButton;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
+use Nemundo\Admin\Com\Layout\Flex\AdminRowFlexLayout;
 use Nemundo\Admin\Com\Table\AdminLabelValueTable;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -62,7 +68,6 @@ class AktivitaetPage extends AbstractTemplateDocument
 
 
         $reader = new AktivitaetDataReader();
-        //$reader->model->loadKategorie()->loadKontakt();
         $reader->filter->andEqual($reader->model->isDeleted, false);
         $reader->filter->andEqual($reader->model->kategorie->themaId, $this->thema->id);
 
@@ -71,7 +76,6 @@ class AktivitaetPage extends AbstractTemplateDocument
                 $reader->filter->andEqual($reader->model->kategorie->regionId, $region->getValue());
             }
         }
-
 
         if ($kategorie->hasValue()) {
             $reader->filter->andEqual($reader->model->kategorieId, $kategorie->getValue());
@@ -82,8 +86,9 @@ class AktivitaetPage extends AbstractTemplateDocument
             $widget = new AdminWidget($layout);
             $widget->widgetTitle = $aktivitaetRow->aktivitaet;
 
+            $widgetLayout = new AdminFlexboxLayout($widget);
 
-            $table = new AdminLabelValueTable($widget);
+            $table = new AdminLabelValueTable($widgetLayout);
             $table
                 ->addLabelValue($aktivitaetRow->model->aktivitaet->label, $aktivitaetRow->aktivitaet)
                 ->addLabelValue($aktivitaetRow->model->kategorie->label, $aktivitaetRow->kategorie->kategorie)
@@ -108,13 +113,12 @@ class AktivitaetPage extends AbstractTemplateDocument
 
             $reader = new OptionReader();
 
-            $table = new AdminTable($widget);
-
+            $table = new AdminTable($widgetLayout);
 
             (new AdminTableHeader($table))
                 ->addText($reader->model->option->label)
                 ->addText($reader->model->preis->label)
-                ->addEmpty();
+                ->addEmpty(2);
 
 
             $reader->filter->andEqual($reader->model->aktivitaetId, $aktivitaetRow->id);
@@ -146,7 +150,6 @@ class AktivitaetPage extends AbstractTemplateDocument
                             $site = clone(AnmeldungSaveSite::$site);
                             $site->addParameter(new OptionParameter($optionRow->id));
                             $row->addSite($site);
-
                         } else {
                             $row->addEmpty();
                         }
@@ -154,7 +157,7 @@ class AktivitaetPage extends AbstractTemplateDocument
 
                     } else {
 
-                        $row->addText('Du bist angemeldet');
+                        $row->addText('Du bist angemeldet.');
 
                         $id = new AnmeldungId();
                         $id->filter->andEqual($id->model->isDeleted, false);
@@ -165,7 +168,8 @@ class AktivitaetPage extends AbstractTemplateDocument
                         if (!(new PartnerLookup())->isAnmeldungFinalisiert()) {
                             $site = clone(AnmeldungDeleteSite::$site);
                             $site->addParameter(new AnmeldungParameter($anmeldungId));
-                            $row->addIconSite($site);
+                            //$row->addIconSite($site);
+                            $row->addSite($site);
                         }
 
                     }
@@ -178,6 +182,21 @@ class AktivitaetPage extends AbstractTemplateDocument
                 }
 
             }
+
+            if ((new UsergroupMembership())->isMemberOfUsergroup(new KontaktUsergroup())) {
+
+                $div = new AdminRowFlexLayout($widgetLayout);
+
+                $btn = new AdminSiteButton($div);
+                $btn->site = clone(AktivitaetEditSite::$site);
+                $btn->site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
+
+                $btn = new AdminSiteButton($div);
+                $btn->site = clone(AktivitaetItemSite::$site);
+                $btn->site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
+
+            }
+
 
         }
 

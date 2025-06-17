@@ -36,6 +36,16 @@ public $email;
 */
 public $isDeleted;
 
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $anredeId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Anrede\AnredeExternalType
+*/
+public $anrede;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_partner_mitarbeiter";
 $this->aliasTableName = "marketingprogramm_partner_mitarbeiter";
@@ -93,6 +103,13 @@ $this->isDeleted->aliasFieldName = "marketingprogramm_partner_mitarbeiter_is_del
 $this->isDeleted->label = "Is deleted";
 $this->isDeleted->allowNullValue = false;
 
+$this->anredeId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->anredeId->tableName = "marketingprogramm_partner_mitarbeiter";
+$this->anredeId->fieldName = "anrede";
+$this->anredeId->aliasFieldName = "marketingprogramm_partner_mitarbeiter_anrede";
+$this->anredeId->label = "Anrede";
+$this->anredeId->allowNullValue = true;
+
 }
 public function loadPartner() {
 if ($this->partner == null) {
@@ -101,6 +118,16 @@ $this->partner->tableName = "marketingprogramm_partner_mitarbeiter";
 $this->partner->fieldName = "partner";
 $this->partner->aliasFieldName = "marketingprogramm_partner_mitarbeiter_partner";
 $this->partner->label = "Partner";
+}
+return $this;
+}
+public function loadAnrede() {
+if ($this->anrede == null) {
+$this->anrede = new \LuzernTourismus\MarketingProgramm\Data\Anrede\AnredeExternalType($this, "marketingprogramm_partner_mitarbeiter_anrede");
+$this->anrede->tableName = "marketingprogramm_partner_mitarbeiter";
+$this->anrede->fieldName = "anrede";
+$this->anrede->aliasFieldName = "marketingprogramm_partner_mitarbeiter_anrede";
+$this->anrede->label = "Anrede";
 }
 return $this;
 }

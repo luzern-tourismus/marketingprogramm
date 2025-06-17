@@ -13,8 +13,11 @@ use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow;
 use Nemundo\Core\Check\ValueCheck;
 use Nemundo\Core\Debug\Debug;
+use Nemundo\Core\Type\Number\Number;
+use Nemundo\Core\Type\Text\Text;
 use Nemundo\Core\Validation\NumberValidation;
 use Nemundo\Db\Sql\Order\SortOrder;
+use Nemundo\Model\Type\Text\TextType;
 
 class AktivitaetBuilder extends AbstractBuilder
 {
@@ -161,6 +164,10 @@ class AktivitaetBuilder extends AbstractBuilder
     public function addOption($option, $preis)
     {
 
+        $preis = preg_replace('/[^0-9.]/', '', $preis);
+
+        //$preis =  (new Number($preis))->removeText()->getValue();
+
         $itemOrder = null;
 
         $count = new OptionCount();
@@ -169,26 +176,17 @@ class AktivitaetBuilder extends AbstractBuilder
             $itemOrder = 0;
         } else {
 
-            //(new Debug())->write('bla');
-
             $reader = new OptionReader();
             $reader->filter->andEqual($reader->model->aktivitaetId, $this->id);
             $reader->addOrder($reader->model->itemOrder, SortOrder::DESCENDING);
             $reader->limit=1;
             foreach ($reader->getData() as $optionRow) {
                 $itemOrder = $optionRow->itemOrder;
-
-                //(new Debug())->write('itemorder');
-
             }
 
             $itemOrder++;
 
         }
-
-        /*(new Debug())->write($itemOrder)->write($this->id);
-        exit;*/
-
 
         $data = new Option();
         $data->isDeleted = false;

@@ -266,7 +266,15 @@
                     "length": "255"
                 }
             ],
-            "index": []
+            "index": [
+                {
+                    "index_name": "anrede",
+                    "index_type": "unique_index",
+                    "field_name": [
+                        "anrede"
+                    ]
+                }
+            ]
         },
         {
             "template": "default",
@@ -837,7 +845,7 @@
             "class_name": "Partner",
             "table_name": "marketingprogramm_partner",
             "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\Partner",
-            "row_class_name": "",
+            "row_class_name": "LuzernTourismus\\MarketingProgramm\\Reader\\Partner\\PartnerDataRow",
             "primary_index": "auto_increment",
             "is_deleted": false,
             "type": [
@@ -1024,6 +1032,15 @@
                     "variable_name": "isDeleted",
                     "allow_null": false,
                     "is_deleted": false
+                },
+                {
+                    "type": "external",
+                    "label": "Anrede",
+                    "field_name": "anrede",
+                    "variable_name": "anrede",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "96283c0a-9bbb-47a9-974b-403ef56f1754"
                 }
             ],
             "index": []

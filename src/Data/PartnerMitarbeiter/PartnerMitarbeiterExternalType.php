@@ -36,6 +36,16 @@ public $email;
 */
 public $isDeleted;
 
+/**
+* @var \Nemundo\Model\Type\Id\IdType
+*/
+public $anredeId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\Anrede\AnredeExternalType
+*/
+public $anrede;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = PartnerMitarbeiterModel::class;
@@ -88,6 +98,13 @@ $this->isDeleted->aliasFieldName = $this->isDeleted->tableName . "_" . $this->is
 $this->isDeleted->label = "Is deleted";
 $this->addType($this->isDeleted);
 
+$this->anredeId = new \Nemundo\Model\Type\Id\IdType();
+$this->anredeId->fieldName = "anrede";
+$this->anredeId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->anredeId->aliasFieldName = $this->anredeId->tableName ."_".$this->anredeId->fieldName;
+$this->anredeId->label = "Anrede";
+$this->addType($this->anredeId);
+
 }
 public function loadPartner() {
 if ($this->partner == null) {
@@ -97,6 +114,17 @@ $this->partner->tableName = $this->parentFieldName . "_" . $this->externalTableN
 $this->partner->aliasFieldName = $this->partner->tableName ."_".$this->partner->fieldName;
 $this->partner->label = "Partner";
 $this->addType($this->partner);
+}
+return $this;
+}
+public function loadAnrede() {
+if ($this->anrede == null) {
+$this->anrede = new \LuzernTourismus\MarketingProgramm\Data\Anrede\AnredeExternalType(null, $this->parentFieldName . "_anrede");
+$this->anrede->fieldName = "anrede";
+$this->anrede->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->anrede->aliasFieldName = $this->anrede->tableName ."_".$this->anrede->fieldName;
+$this->anrede->label = "Anrede";
+$this->addType($this->anrede);
 }
 return $this;
 }

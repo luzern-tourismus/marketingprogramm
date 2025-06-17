@@ -16,7 +16,7 @@ class RegionEditSite extends AbstractEditIconSite
 
     protected function loadSite()
     {
-        $this->title = 'RegionEdit';
+        $this->title = 'Region editieren';
         $this->url = 'RegionEdit';
 
         RegionEditSite::$site = $this;

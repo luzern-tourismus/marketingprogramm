@@ -15,12 +15,13 @@ class AktivitaetItemSite extends AbstractSite
 
     protected function loadSite()
     {
-        $this->title = 'AktivitaetItem';
-        $this->url = 'AktivitaetItem';
+        $this->title = 'Optionen editieren';
+        $this->url = 'aktivitaet-item';
         AktivitaetItemSite::$site = $this;
 
         new OptionEditSite($this);
         new OptionDeleteSite($this);
+        new OptionActiveSite($this);
 
     }
 

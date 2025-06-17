@@ -3,7 +3,6 @@
 namespace LuzernTourismus\MarketingProgramm\Business\Partner;
 
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
-use LuzernTourismus\MarketingProgramm\Data\Partner\Partner;
 use LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiter;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
 use Nemundo\Core\Type\Text\Text;
@@ -14,6 +13,8 @@ class PartnerMitarbeiterBuilder extends AbstractBuilder
 
     public $partnerId;
 
+    public $anredeId;
+
     public $vorname;
 
     public $nachname;
@@ -23,7 +24,7 @@ class PartnerMitarbeiterBuilder extends AbstractBuilder
 
     protected function loadBuilder()
     {
-        $this->type= new PartnerMitarbeiterType();
+        $this->type = new PartnerMitarbeiterType();
     }
 
 
@@ -34,11 +35,12 @@ class PartnerMitarbeiterBuilder extends AbstractBuilder
 
         $data = new PartnerMitarbeiter();
         $data->isDeleted = false;
+        $data->anredeId = $this->anredeId;
         $data->vorname = $this->vorname;
         $data->name = $this->nachname;
         $data->email = $email;
         $data->partnerId = $this->partnerId;
-        $this->id= $data->save();
+        $this->id = $data->save();
 
         $user = new UserBuilder();
         $user->email = $email;

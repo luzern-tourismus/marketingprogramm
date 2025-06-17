@@ -10,7 +10,7 @@ class PartnerMitarbeiterType extends AbstractBusinessType
     protected function loadType()
     {
 
-        $this->businessType= 'partner_mitarbeiter';
+        $this->businessType= 'Partner Mitarbeiter';
         $this->logView= PartnerMitarbeiterLogView::class;
 
     }

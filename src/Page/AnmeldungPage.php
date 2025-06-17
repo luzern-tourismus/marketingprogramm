@@ -5,6 +5,7 @@ namespace LuzernTourismus\MarketingProgramm\Page;
 use LuzernTourismus\MarketingProgramm\Data\Anmeldung\AnmeldungReader;
 use LuzernTourismus\MarketingProgramm\Lookup\PartnerLookup;
 use LuzernTourismus\MarketingProgramm\Parameter\AnmeldungParameter;
+use LuzernTourismus\MarketingProgramm\Price\PriceNumber;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\AnmeldungFinalisierenSite;
 use Nemundo\Admin\Com\Button\AdminSiteButton;
@@ -62,12 +63,12 @@ class AnmeldungPage extends AbstractTemplateDocument
                     ->addText($anmeldungRow->option->option)
                     ->addText($anmeldungRow->option->getPreis());
 
-                /*if ($anmeldungRow->option->hasPreis) {
+                if ($anmeldungRow->option->hasPreis) {
                     $row->addText($anmeldungRow->option->preis);
                     if (!$anmeldungRow->isDeleted) {
                         $total += $anmeldungRow->option->preis;
                     }
-                } else {
+                } /*else {
                     $row->addText('tbd');
                 }*/
 
@@ -90,7 +91,7 @@ class AnmeldungPage extends AbstractTemplateDocument
             $row->addEmpty();
 
             $bold = new Bold();
-            $bold->content = $total;
+            $bold->content = (new PriceNumber())->getPrice( $total);  //.' CHF';
             $row->addText($bold->getBodyContent());
 
 

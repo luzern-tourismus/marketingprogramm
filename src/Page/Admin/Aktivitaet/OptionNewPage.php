@@ -8,6 +8,7 @@ use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetItemSite;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
+use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
 
 class OptionNewPage extends AbstractTemplateDocument
@@ -17,8 +18,8 @@ class OptionNewPage extends AbstractTemplateDocument
 
         $layout = new AdminFlexboxLayout($this);
 
-        //$optionId =  (new OptionParameter())->getValue();
-        //$optionRow = (new OptionReader())->getRowById($optionId);
+        $title = new AdminTitle($layout);
+        $title->content = 'Neue Option';
 
         $aktivitaetId = (new AktivitaetParameter())->getValue();
 
@@ -27,9 +28,7 @@ class OptionNewPage extends AbstractTemplateDocument
 
         $form = new OptionForm($layout);
         $form->aktivitaetId = $aktivitaetId;
-        //$form->dataId =$optionId;
         $form->redirectSite= $site;
-
 
         return parent::getContent();
     }

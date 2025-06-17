@@ -13,6 +13,7 @@ class KategorieLogView extends AbstractLogView
     {
 
         $reader = new KategorieLogReader();
+        $reader->model->loadRegionOld()->loadRegionNew();
         $reader->model->loadThemaOld()->loadThemaNew();
 
         $reader->filter->andEqual($reader->model->logId, $this->logId);

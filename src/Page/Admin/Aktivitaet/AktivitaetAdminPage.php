@@ -3,6 +3,8 @@
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\KontaktListBox;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\PartnerListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\ThemaListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
@@ -42,6 +44,10 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $kategorie->searchMode = true;
         $kategorie->submitOnChange = true;
 
+        $kontakt = new KontaktListBox($search);
+        $kontakt->searchMode = true;
+        $kontakt->submitOnChange = true;
+
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = AktivitaetNewSite::$site;
@@ -54,6 +60,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $reader
             ->filterByThema($thema->getValue())
             ->filterByKategorie($kategorie->getValue())
+            ->filterByKontakt($kontakt->getValue())
             ->orderByAktivitaet();
 
 
@@ -65,6 +72,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
             ->addText($reader->model->aktivitaet->label)
             ->addText($reader->model->kategorie->thema->label)
             ->addText($reader->model->kategorie->label)
+            ->addText($reader->model->kontakt->label)
             ->addEmpty(2);
 
 
@@ -80,8 +88,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
 
             $row->addText($aktivitaetRow->kategorie->thema->thema);
             $row->addText($aktivitaetRow->kategorie->kategorie);
-            //$row->addText($aktivitaetRow->datum);
-
+            $row->addText($aktivitaetRow->kontakt->getVornameNachname());
 
             $site = clone(AktivitaetEditSite::$site);
             $site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
@@ -99,7 +106,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
                 $site->addParameter(new AktivitaetParameter($aktivitaetRow->id));
                 $row->addIconSite($site);
 
-                $row->addEmpty();
+                //$row->addEmpty();
 
             }
 

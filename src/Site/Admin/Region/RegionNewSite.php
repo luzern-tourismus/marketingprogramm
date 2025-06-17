@@ -16,8 +16,8 @@ class RegionNewSite extends AbstractNewIconSite
 
     protected function loadSite()
     {
-        $this->title = 'RegionNew';
-        $this->url = 'RegionNew';
+        $this->title = 'Neue Region';
+        $this->url = 'region-new';
 
         RegionNewSite::$site = $this;
 

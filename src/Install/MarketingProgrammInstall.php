@@ -15,14 +15,19 @@ use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\DeleteOperation;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\UndoDeleteOperation;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\UpdateOperation;
 use LuzernTourismus\MarketingProgramm\ChangeLog\Setup\BusinessSetup;
+use LuzernTourismus\MarketingProgramm\Data\Anrede\Anrede;
 use LuzernTourismus\MarketingProgramm\Data\ChangeLogOperation\ChangeLogOperation;
 use LuzernTourismus\MarketingProgramm\Data\MarketingProgrammModelCollection;
 use LuzernTourismus\MarketingProgramm\Data\Thema\Thema;
 use LuzernTourismus\MarketingProgramm\Script\KontaktImportScript;
+use LuzernTourismus\MarketingProgramm\Script\PartnerMailScript;
+use LuzernTourismus\MarketingProgramm\Type\Anrede\AbstractAnrede;
+use LuzernTourismus\MarketingProgramm\Type\Anrede\FrauAnrede;
+use LuzernTourismus\MarketingProgramm\Type\Anrede\HerrAnrede;
 use LuzernTourismus\MarketingProgramm\Type\Thema\AbstractThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\BasismarketingThema;
 use LuzernTourismus\MarketingProgramm\Type\Thema\MarktmanagementThema;
-use LuzernTourismus\MarketingProgramm\Type\Thema\WerbungThema;
+use LuzernTourismus\MarketingProgramm\Type\Thema\TouristInformationThema;
 use LuzernTourismus\MarketingProgramm\Usergroup\KontaktUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\PartnerUsergroup;
 use LuzernTourismus\MarketingProgramm\Usergroup\VerwaltungUsergroup;
@@ -43,11 +48,12 @@ class MarketingProgrammInstall extends AbstractInstall
             ->addUsergroup(new VerwaltungUsergroup());
 
         (new ScriptSetup(new MarketingProgrammApplication()))
-            ->addScript(new KontaktImportScript());
+            ->addScript(new KontaktImportScript())
+            ->addScript(new PartnerMailScript());
 
 
         $this
-            ->addThema(new WerbungThema())
+            ->addThema(new TouristInformationThema())
             ->addThema(new BasismarketingThema())
             ->addThema(new MarktmanagementThema());
 
@@ -65,11 +71,15 @@ class MarketingProgrammInstall extends AbstractInstall
             ->addType(new PartnerType())
             ->addType(new PartnerMitarbeiterType());
 
+        $this
+            ->addAnrede(new HerrAnrede())
+            ->addAnrede(new FrauAnrede());
+
 
     }
 
 
-    public function addThema(AbstractThema $thema)
+    private function addThema(AbstractThema $thema)
     {
 
         $data = new Thema();
@@ -83,7 +93,7 @@ class MarketingProgrammInstall extends AbstractInstall
     }
 
 
-    public function addChangeLogOperation(AbstractOperation $operation)
+    private function addChangeLogOperation(AbstractOperation $operation)
     {
 
         $data = new ChangeLogOperation();
@@ -95,5 +105,18 @@ class MarketingProgrammInstall extends AbstractInstall
 
     }
 
+
+    private function addAnrede(AbstractAnrede $anrede)
+    {
+
+        $data = new Anrede();
+        $data->updateOnDuplicate=true;
+        $data->id = $anrede->id;
+        $data->anrede = $anrede->anrede;
+        $data->save();
+
+        return $this;
+
+    }
 
 }

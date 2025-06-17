@@ -38,6 +38,16 @@ class AktivitaetDataReader extends AktivitaetReader
     }
 
 
+    public function filterByKontakt($kontaktId)
+    {
+        if ((new ValueCheck())->hasValue($kontaktId)) {
+            $this->filter->andEqual($this->model->kontaktId, $kontaktId);
+        }
+        return $this;
+    }
+
+
+
     public function orderByAktivitaet()
     {
 

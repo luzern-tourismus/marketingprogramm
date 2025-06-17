@@ -4,6 +4,7 @@ namespace LuzernTourismus\MarketingProgramm\Com\Form;
 
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerBuilder;
 use LuzernTourismus\MarketingProgramm\Business\Partner\PartnerMitarbeiterBuilder;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\AnredeListBox;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerModel;
 use LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterModel;
 use Nemundo\Admin\Com\Form\AbstractAdminForm;
@@ -14,6 +15,11 @@ class PartnerMitarbeiterForm extends AbstractAdminForm
 {
 
     public $partnerId;
+
+    /**
+     * @var AnredeListBox
+     */
+    private $anrede;
 
     /**
      * @var AdminTextBox
@@ -34,6 +40,8 @@ class PartnerMitarbeiterForm extends AbstractAdminForm
     {
 
         $model = new PartnerMitarbeiterModel();
+
+        $this->anrede = new AnredeListBox($this);
 
         $this->vorname = new AdminTextBox($this);
         $this->vorname->label = $model->vorname->label;
@@ -57,6 +65,7 @@ class PartnerMitarbeiterForm extends AbstractAdminForm
     {
 
         $builder = new PartnerMitarbeiterBuilder();
+        $builder->anredeId=$this->anrede->getValue();
         $builder->vorname = $this->vorname->getValue();
         $builder->nachname = $this->nachname->getValue();
         $builder->email = $this->email->getValue();

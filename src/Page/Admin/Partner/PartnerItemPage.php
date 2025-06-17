@@ -37,10 +37,8 @@ class PartnerItemPage extends AbstractTemplateDocument
             $title = new AdminTitle($layout);
             $title->content= $partnerRow->firma;
 
-
             $form = new PartnerMitarbeiterForm($layout);
             $form->partnerId= $partnerRow->id;
-
 
 
             $table = new AdminTable($layout);

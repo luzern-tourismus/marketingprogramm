@@ -32,6 +32,11 @@ public $email;
 */
 public $isDeleted;
 
+/**
+* @var string
+*/
+public $anredeId;
+
 public function __construct() {
 parent::__construct();
 $this->model = new PartnerMitarbeiterModel();
@@ -42,6 +47,7 @@ $this->typeValueList->setModelValue($this->model->name, $this->name);
 $this->typeValueList->setModelValue($this->model->vorname, $this->vorname);
 $this->typeValueList->setModelValue($this->model->email, $this->email);
 $this->typeValueList->setModelValue($this->model->isDeleted, $this->isDeleted);
+$this->typeValueList->setModelValue($this->model->anredeId, $this->anredeId);
 parent::update();
 }
 }

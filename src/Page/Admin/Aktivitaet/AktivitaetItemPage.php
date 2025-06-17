@@ -2,28 +2,22 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
-use LuzernTourismus\MarketingProgramm\Com\Form\OptionForm;
-use LuzernTourismus\MarketingProgramm\Com\Table\AktivitaetLabelValueTable;
-use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
-use LuzernTourismus\MarketingProgramm\Data\AktivitaetChangeLog\AktivitaetChangeLogReader;
-use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use LuzernTourismus\MarketingProgramm\Reader\Option\OptionDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetAdminSite;
+use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\OptionNewSite;
-use LuzernTourismus\MarketingProgramm\Site\AktivitaetSite;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Button\AdminSiteButton;
-use Nemundo\Admin\Com\Html\AdminUnorderedList;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
+use Nemundo\Admin\Com\Table\AdminLabelValueTable;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
 use Nemundo\Admin\Com\Table\Row\AdminTableRow;
-use Nemundo\Admin\Com\Title\AdminSubtitle;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
 
@@ -41,7 +35,6 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         $aktivitaetId = (new AktivitaetParameter())->getValue();
 
         $reader = new AktivitaetDataReader();
-        //$reader->model->loadKategorie()->loadKontakt();
         $reader->filter->andEqual($reader->model->id, $aktivitaetId);
         $aktivitaetRow = $reader->getRow();
 
@@ -49,13 +42,29 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         $title->content = $aktivitaetRow->aktivitaet;
 
 
-        //$table = new OptionTable($layout);
-        //$table->aktivitaetId = $aktivitaetId;
+        $table = new AdminLabelValueTable($layout);
+        $table
+            ->addLabelValue($aktivitaetRow->model->aktivitaet->label, $aktivitaetRow->aktivitaet)
+            ->addLabelValue($aktivitaetRow->model->kategorie->label, $aktivitaetRow->kategorie->kategorie)
+            ->addLabelValue($aktivitaetRow->model->kategorie->region->label, $aktivitaetRow->kategorie->region->region)
+            ->addLabelValue($aktivitaetRow->model->datum->label, $aktivitaetRow->datum)
+            ->addLabelValue($aktivitaetRow->model->kosten->label, $aktivitaetRow->kosten)
+            ->addLabelValue($aktivitaetRow->model->leistung->label, $aktivitaetRow->leistung)
+            ->addLabelValue($aktivitaetRow->model->zielpublikum->label, $aktivitaetRow->zielpublikum)
+            ->addLabelValue($aktivitaetRow->model->kontakt->label, $aktivitaetRow->kontakt->getVornameNachname());
+
+
+
+
+
+
+
 
         $site = clone(OptionNewSite::$site);
         $site->addParameter(new AktivitaetParameter($aktivitaetId));
 
         $btn = new AdminIconSiteButton($layout);
+        $btn->showTitle = false;
         $btn->site = $site;
 
 
@@ -67,7 +76,7 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             ->addText($reader->model->option->label)
             ->addText($reader->model->preis->label)
             ->addText($reader->model->itemOrder->label)
-            ->addEmpty();
+            ->addEmpty(2);
 
 
         $reader->filter->andEqual($reader->model->aktivitaetId, $aktivitaetId);
@@ -84,13 +93,20 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             $site->addParameter(new OptionParameter($optionRow->id));
             $row->addIconSite($site);
 
+            if ($optionRow->isDeleted) {
 
-            $site = clone(OptionDeleteSite::$site);
-            $site->addParameter(new OptionParameter($optionRow->id));
-            $row->addIconSite($site);
+                $site = clone(OptionActiveSite::$site);
+                $site->addParameter(new OptionParameter($optionRow->id));
+                $row->addIconSite($site);
+
+            } else {
+
+                $site = clone(OptionDeleteSite::$site);
+                $site->addParameter(new OptionParameter($optionRow->id));
+                $row->addIconSite($site);
+            }
 
         }
-
 
 
         /*

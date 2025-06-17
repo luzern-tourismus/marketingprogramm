@@ -3,7 +3,6 @@
 namespace LuzernTourismus\MarketingProgramm\Business\Kategorie;
 
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
-use LuzernTourismus\MarketingProgramm\ChangeLog\Operation\DeleteOperation;
 use LuzernTourismus\MarketingProgramm\Data\Kategorie\Kategorie;
 use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieReader;
 use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieUpdate;
@@ -26,7 +25,6 @@ class KategorieBuilder extends AbstractBuilder
     }
 
 
-
     protected function onCheck()
     {
 
@@ -47,7 +45,11 @@ class KategorieBuilder extends AbstractBuilder
         $data = new Kategorie();
         $data->isDeleted = false;
         $data->kategorie = $this->kategorie;
-        $data->regionId = $this->regionId;
+
+        if ((new ValueCheck())->hasValue($this->regionId)) {
+            $data->regionId = $this->regionId;
+        }
+
         $data->themaId = $this->themaId;
         $this->id = $data->save();
 
@@ -60,6 +62,15 @@ class KategorieBuilder extends AbstractBuilder
         $data->kategorieNew = $kategorieRow->kategorie;
         $data->themaHasChanged = true;
         $data->themaNewId = $kategorieRow->themaId;
+
+        if ((new ValueCheck())->hasValue($this->regionId)) {
+            $data->regionNewId = $this->regionId;
+            $data->regionHasChanged = true;
+        } else {
+            $data->regionHasChanged = false;
+        }
+
+
         $data->save();
 
 
@@ -73,7 +84,10 @@ class KategorieBuilder extends AbstractBuilder
 
         $update = new KategorieUpdate();
         $update->kategorie = $this->kategorie;
-        $update->regionId = $this->regionId;
+
+        if ((new ValueCheck())->hasValue($this->regionId)) {
+            $update->regionId = $this->regionId;
+        }
         $update->themaId = $this->themaId;
         $update->updateById($this->id);
 
@@ -125,7 +139,7 @@ class KategorieBuilder extends AbstractBuilder
         $data->logId = $this->logId;
         $data->kategorieId = $this->id;
         $data->kategorieHasChanged = false;
-        $data->regionHasChanged=false;
+        $data->regionHasChanged = false;
         $data->themaHasChanged = false;
         $data->save();
 
@@ -143,7 +157,7 @@ class KategorieBuilder extends AbstractBuilder
         $data->logId = $this->logId;
         $data->kategorieId = $this->id;
         $data->kategorieHasChanged = false;
-        $data->regionHasChanged=false;
+        $data->regionHasChanged = false;
         $data->themaHasChanged = false;
         $data->save();
 

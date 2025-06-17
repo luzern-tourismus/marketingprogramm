@@ -47,6 +47,7 @@ class AnmeldungExcelExportSite extends AbstractExcelSite
         $row = [];
         $row[] = $reader->model->partner->label;
         $row[] = $reader->model->option->label;
+        $row[] = $reader->model->option->preis->label;
 
         $excel->addBoldRow($row);
 
@@ -55,7 +56,9 @@ class AnmeldungExcelExportSite extends AbstractExcelSite
             $row = [];
             $row[] = $anmeldungRow->partner->firma;
             $row[] = $anmeldungRow->option->option;
+            $row[] = $anmeldungRow->option->preis;
 
+            $excel->addRow($row);
 
         }
 

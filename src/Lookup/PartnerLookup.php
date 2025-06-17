@@ -30,15 +30,19 @@ class PartnerLookup extends AbstractBase
     public function isAnmeldungFinalisiert()
     {
 
-        return $this->getPartnerRow()->anmeldungFinalisiert;
+        $value = null;
+        $partnerRow = $this->getPartnerRow();
+        if ($partnerRow !== null) {
+            $value = $this->getPartnerRow()->anmeldungFinalisiert;
+        }
+
+        return $value;
 
     }
 
 
     public function getPartnerRow()
     {
-
-        //$partnerRow = null;
 
         if (PartnerLookup::$partnerRow == null) {
 

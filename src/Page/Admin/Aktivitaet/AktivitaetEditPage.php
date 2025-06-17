@@ -22,8 +22,8 @@ class AktivitaetEditPage extends AbstractTemplateDocument
         $title->content = 'Aktivität editieren';
 
         $form = new AktivitaetForm($layout);
-        $form->aktivitaetId = $aktivitaetId;
-        $form->redirectSite = AktivitaetAdminSite::$site;
+        $form->dataId = $aktivitaetId;
+        //$form->redirectSite = AktivitaetAdminSite::$site;
 
         return parent::getContent();
     }

@@ -20,7 +20,7 @@ class PartnerEditPage extends AbstractTemplateDocument
         $title->content = 'Partner bearbeiten';
 
         $form = new PartnerForm($layout);
-        $form->partnerId= (new PartnerParameter())->getValue();
+        $form->dataId = (new PartnerParameter())->getValue();
         $form->redirectSite = PartnerAdminSite::$site;
 
         return parent::getContent();

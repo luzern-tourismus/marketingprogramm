@@ -35,5 +35,9 @@ $this->anrede->label = "Anrede";
 $this->anrede->allowNullValue = false;
 $this->anrede->length = 255;
 
+$index = new \Nemundo\Model\Definition\Index\ModelUniqueIndex($this);
+$index->indexName = "anrede";
+$index->addType($this->anrede);
+
 }
 }

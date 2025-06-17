@@ -41,6 +41,8 @@ class PartnerAdminPage extends AbstractTemplateDocument
 
         (new AdminTableHeader($table))
             ->addText($reader->model->firma->label)
+            ->addText($reader->model->strasse->label)
+            ->addText($reader->model->plz->label.'/'.$reader->model->ort->label)
             ->addText($reader->model->anmeldungFinalisiert->label)
             ->addEmpty(3);
 
@@ -56,6 +58,10 @@ class PartnerAdminPage extends AbstractTemplateDocument
             $site->title = $partnerRow->firma;
             $site->addParameter(new PartnerParameter($partnerRow->id));
             $row->addSite($site);
+
+            $row->addText($partnerRow->strasse);
+            $row->addText($partnerRow->getPlzOrt());
+            //$row->addText($partnerRow->ort);
 
             $row->addYesNo($partnerRow->anmeldungFinalisiert);
 

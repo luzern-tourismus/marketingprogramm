@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Reader\Option;
 
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionRow;
+use LuzernTourismus\MarketingProgramm\Price\PriceNumber;
 use Nemundo\Core\Type\Number\Number;
 
 // LuzernTourismus\MarketingProgramm\Reader\Option\OptionDataRow
@@ -17,7 +18,8 @@ class OptionDataRow extends OptionRow
         $preis = $this->preis;
 
         if ($this->hasPreis) {
-            $preis  =  ((new Number($this->preis))->getFormatNumber() . ' CHF');
+            //$preis  =  ((new Number($this->preis))->getFormatNumber() . ' CHF');
+            $preis = (new PriceNumber())->getPrice($preis);
         } else {
             $preis = 'tbd';
         }

@@ -16,7 +16,7 @@ class AktivitaetNewSite extends AbstractNewIconSite
 
     protected function loadSite()
     {
-        //$this->title = 'AktivitaetNew';
+        $this->title = 'Neue Aktivität';
         $this->url = 'aktivitaet-new';
         AktivitaetNewSite::$site = $this;
     }
