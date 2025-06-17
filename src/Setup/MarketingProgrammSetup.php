@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Setup;
 
 use LuzernTourismus\MarketingProgramm\Application\MarketingProgrammApplication;
+use LuzernTourismus\MarketingProgramm\Config\MarketingprogrammConfig;
 use Nemundo\App\Mail\Setup\MailServerSetup;
 use Nemundo\App\Script\Setup\ScriptSetup;
 use Nemundo\Project\Install\ProjectInstall;
@@ -20,14 +21,16 @@ class MarketingProgrammSetup extends AbstractSetup
 
         (new MarketingProgrammApplication())->installApp();
 
-        /*$setup = new MailServerSetup();
-        $setup->host ='mail.cyon.ch';
-        $setup->port = 465;
-        $setup->user = 'noreply@marketingprogramm.luzern.com';
-        $setup->password = 'CmL{bKV6(YpM{$M';
-        $setup->mailAddress =  'noreply@marketingprogramm.luzern.com';
-        $setup->mailText='Marketingprogramm Luzern Tourismus';
-        $setup->save();*/
+        if (MarketingprogrammConfig::$devMode) {
+            $setup = new MailServerSetup();
+            $setup->host = 'mail.cyon.ch';
+            $setup->port = 465;
+            $setup->user = 'noreply@marketingprogramm.luzern.com';
+            $setup->password = 'CmL{bKV6(YpM{$M';
+            $setup->mailAddress = 'noreply@marketingprogramm.luzern.com';
+            $setup->mailText = 'Marketingprogramm Luzern Tourismus';
+            $setup->save();
+        }
 
         $reset->remove();
     }
