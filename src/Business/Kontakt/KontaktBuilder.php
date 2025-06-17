@@ -140,7 +140,7 @@ class KontaktBuilder extends AbstractBuilder
     protected function onDelete()
     {
 
-        $update = new KategorieUpdate();
+        $update = new KontaktUpdate();
         $update->isDeleted = true;
         $update->updateById($this->id);
 

@@ -23,6 +23,7 @@ class AktivitaetEditPage extends AbstractTemplateDocument
 
         $form = new AktivitaetForm($layout);
         $form->dataId = $aktivitaetId;
+        $form->refererRedirect=true;
         //$form->redirectSite = AktivitaetAdminSite::$site;
 
         return parent::getContent();

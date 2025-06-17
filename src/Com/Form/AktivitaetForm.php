@@ -9,13 +9,10 @@ use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetModel;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use Nemundo\Admin\Com\Form\AbstractAdminEditForm;
-use Nemundo\Admin\Com\Form\AbstractAdminForm;
 use Nemundo\Admin\Com\HtmlEditor\AdminHtmlEditor;
-use Nemundo\Admin\Com\ListBox\AdminLargeTextBox;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
 use Nemundo\Com\FormBuilder\UrlReferer\UrlRefererHiddenInput;
 use Nemundo\Com\FormBuilder\UrlReferer\UrlRefererRequest;
-use Nemundo\Core\Debug\Debug;
 use Nemundo\Core\Http\Url\UrlRedirect;
 
 class AktivitaetForm extends AbstractAdminEditForm
@@ -26,7 +23,12 @@ class AktivitaetForm extends AbstractAdminEditForm
     /**
      * @var bool
      */
-    public $refererRedirect=false;
+    public $refererRedirect = false;
+
+    /**
+     * @var bool
+     */
+    public $addParameter = false;
 
 
     /**
@@ -75,7 +77,7 @@ class AktivitaetForm extends AbstractAdminEditForm
         $this->aktivitaet->validation = true;
 
         $this->kategorie = new KategorieListBox($this);
-        $this->kategorie->validation=true;
+        $this->kategorie->validation = true;
 
         $this->datum = new AdminTextBox($this);
         $this->datum->label = 'Datum';
@@ -135,8 +137,6 @@ class AktivitaetForm extends AbstractAdminEditForm
     }
 
 
-
-
     protected function onSave()
     {
 
@@ -151,20 +151,15 @@ class AktivitaetForm extends AbstractAdminEditForm
         $id = $builder->build();
 
         if ($this->refererRedirect) {
-        $url = (new UrlRefererRequest())->getValue();
-        (new UrlRedirect())->redirect($url);
+            $url = (new UrlRefererRequest())->getValue();
+            (new UrlRedirect())->redirect($url);
         }
 
-        $this->redirectSite->addParameter(new AktivitaetParameter($id));
-
-        //(new Debug())->write($_POST);
-
-        //exit;
-
+        if ($this->addParameter) {
+            $this->redirectSite->addParameter(new AktivitaetParameter($id));
+        }
 
     }
-
-
 
 
     /*protected function onSubmit()

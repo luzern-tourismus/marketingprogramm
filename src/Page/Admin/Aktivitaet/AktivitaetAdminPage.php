@@ -57,6 +57,9 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $table = new AdminTable($layout);
 
         $reader = new AktivitaetDataReader();
+
+        $reader->filter->andEqual($reader->model->isDeleted,false);
+
         $reader
             ->filterByThema($thema->getValue())
             ->filterByKategorie($kategorie->getValue())

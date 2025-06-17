@@ -30,7 +30,7 @@ class RegionAdminPage extends AbstractTemplateDocument
         $layout = new AdminFlexboxLayout($this);
 
         $title = new AdminTitle($layout);
-        $title->content = RegionAdminSite::$site->title;  // 'Partner';
+        $title->content = RegionAdminSite::$site->title;
 
 
         $btn = new AdminIconSiteButton($layout);
@@ -40,7 +40,7 @@ class RegionAdminPage extends AbstractTemplateDocument
         $table = new AdminTable($layout);
 
         $reader = new RegionDataReader();
-
+        $reader->filter->andEqual($reader->model->isDeleted,false);
 
         (new AdminTableHeader($table))
             ->addText($reader->model->region->label)

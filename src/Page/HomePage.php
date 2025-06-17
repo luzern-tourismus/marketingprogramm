@@ -33,9 +33,8 @@ class HomePage extends MarketingProgrammTemplate
         if (MarketingProgrammConfig::$devMode) {
             $widget = new AdminWidget($twoColumnLayout);
             $widget->widgetTitle = 'Auto Login';
+            new AutoLoginForm($widget);
         }
-
-        new AutoLoginForm($widget);
 
 
         return parent::getContent();

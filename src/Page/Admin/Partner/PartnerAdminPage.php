@@ -37,6 +37,7 @@ class PartnerAdminPage extends AbstractTemplateDocument
         $table = new AdminTable($layout);
 
         $reader = new PartnerDataReader();
+        $reader->filter->andEqual($reader->model->isDeleted,false);
         $reader->orderByFirma();
 
         (new AdminTableHeader($table))

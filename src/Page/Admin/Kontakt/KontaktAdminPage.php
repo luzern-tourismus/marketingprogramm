@@ -33,6 +33,7 @@ class KontaktAdminPage extends AbstractTemplateDocument
         $table = new AdminTable($layout);
 
         $reader = new KontaktReader();
+        $reader->filter->andEqual($reader->model->isDeleted,false);
 
         (new AdminTableHeader($table))
             ->addText($reader->model->nachname->label)

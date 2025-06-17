@@ -35,7 +35,7 @@ class KategorieAdminPage extends AbstractTemplateDocument
 
 
         $reader = new KategorieDataReader();
-//        $reader->model->loadThema();
+        $reader->filter->andEqual($reader->model->isDeleted,false);
         $reader->addOrder($reader->model->kategorie);
 
 

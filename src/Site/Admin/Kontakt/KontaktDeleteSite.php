@@ -39,6 +39,8 @@ class KontaktDeleteSite extends AbstractDeleteIconSite
         $update->isDeleted = true;
         $update->updateById($kontaktId);*/
 
+
+
         (new UrlReferer())->redirect();
 
     }

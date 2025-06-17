@@ -21,7 +21,9 @@ class RegionListBox extends AdminListBox
     {
         $this->label = 'Region';
 
-        foreach ((new RegionDataReader())->getData() as $regionRow) {
+        $reader = new RegionDataReader();
+        $reader->filter->andEqual($reader->model->isDeleted, false);
+        foreach ($reader->getData() as $regionRow) {
             $this->addItem($regionRow->id, $regionRow->region);
         }
 
