@@ -4,7 +4,6 @@ namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KategorieListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\KontaktListBox;
-use LuzernTourismus\MarketingProgramm\Com\ListBox\PartnerListBox;
 use LuzernTourismus\MarketingProgramm\Com\ListBox\ThemaListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
@@ -52,7 +51,7 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $showDeleted = new AdminCheckBox($search);
         $showDeleted->label = 'Gelöschte anzeigen';
         $showDeleted->searchMode = true;
-$showDeleted->submitOnChange = true;
+        $showDeleted->submitOnChange = true;
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = AktivitaetNewSite::$site;

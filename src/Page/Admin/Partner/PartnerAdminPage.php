@@ -2,8 +2,10 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Partner;
 
+use LuzernTourismus\MarketingProgramm\Com\ListBox\StatusListBox;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 use LuzernTourismus\MarketingProgramm\Parameter\PartnerParameter;
+use LuzernTourismus\MarketingProgramm\Parameter\StatusParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerActiveSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerBestaetigungPdfSite;
@@ -11,7 +13,10 @@ use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerItemSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerNewSite;
+use LuzernTourismus\MarketingProgramm\Type\Status\ActiveStatus;
+use LuzernTourismus\MarketingProgramm\Type\Status\DeletedStatus;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
+use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -29,6 +34,12 @@ class PartnerAdminPage extends AbstractTemplateDocument
         $title = new AdminTitle($layout);
         $title->content = 'Partner';
 
+        $search = new AdminSearchForm($layout);
+
+        $status = new StatusListBox($search);
+        $status->searchMode=true;
+        $status->submitOnChange=true;
+
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = PartnerNewSite::$site;
@@ -37,7 +48,25 @@ class PartnerAdminPage extends AbstractTemplateDocument
         $table = new AdminTable($layout);
 
         $reader = new PartnerDataReader();
+
+        $parameter = new StatusParameter();
+
+        if ($parameter->hasValue()) {
+
+            if ($parameter->getValue() == (new ActiveStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted,false);
+            }
+
+            if ($parameter->getValue() == (new DeletedStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted,true);
+            }
+
+        } else {
+
         $reader->filter->andEqual($reader->model->isDeleted,false);
+        }
+
+
         $reader->orderByFirma();
 
         (new AdminTableHeader($table))

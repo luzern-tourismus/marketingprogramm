@@ -28,7 +28,7 @@ class MarketingProgrammSetup extends AbstractSetup
             $setup->user = 'noreply@marketingprogramm.luzern.com';
             $setup->password = 'CmL{bKV6(YpM{$M';
             $setup->mailAddress = 'noreply@marketingprogramm.luzern.com';
-            $setup->mailText = 'Marketingprogramm Luzern Tourismus';
+            $setup->mailText = 'Luzern Tourismus';
             $setup->save();
         }
 

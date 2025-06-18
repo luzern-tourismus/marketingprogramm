@@ -2,25 +2,25 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Region;
 
-use LuzernTourismus\MarketingProgramm\Parameter\PartnerParameter;
+use LuzernTourismus\MarketingProgramm\Com\ListBox\StatusListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\RegionParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Region\RegionDataReader;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerActiveSite;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerBestaetigungPdfSite;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerDeleteSite;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerEditSite;
-use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerItemSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Region\RegionAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Region\RegionDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Region\RegionEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Region\RegionNewSite;
+use LuzernTourismus\MarketingProgramm\Type\Status\ActiveDeletedStatus;
+use LuzernTourismus\MarketingProgramm\Type\Status\ActiveStatus;
+use LuzernTourismus\MarketingProgramm\Type\Status\DeletedStatus;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
+use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
 use Nemundo\Admin\Com\Table\Row\AdminTableRow;
 use Nemundo\Admin\Com\Title\AdminTitle;
 use Nemundo\Com\Template\AbstractTemplateDocument;
+use Nemundo\Core\Debug\Debug;
 
 class RegionAdminPage extends AbstractTemplateDocument
 {
@@ -37,10 +37,37 @@ class RegionAdminPage extends AbstractTemplateDocument
         $btn->site = RegionNewSite::$site;
         $btn->showTitle = false;
 
+
+        $search = new AdminSearchForm($layout);
+
+        $status = new StatusListBox($search);
+        $status->searchMode = true;
+        $status->submitOnChange = true;
+
+
         $table = new AdminTable($layout);
 
         $reader = new RegionDataReader();
-        $reader->filter->andEqual($reader->model->isDeleted,false);
+
+
+        if ($status->hasValue()) {
+
+            if ($status->getValue() == (new ActiveStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted, false);
+            }
+
+            if ($status->getValue() == (new DeletedStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted, true);
+                //(new Debug())->write('deleted');
+            }
+
+            if ($status->getValue() == (new ActiveDeletedStatus())->id) {
+                //$reader->filter->andEqual($reader->model->isDeleted,true);
+            }
+
+        } else {
+            $reader->filter->andEqual($reader->model->isDeleted, false);
+        }
 
         (new AdminTableHeader($table))
             ->addText($reader->model->region->label)

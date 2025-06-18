@@ -3,7 +3,6 @@
 namespace LuzernTourismus\MarketingProgramm\Business\Kontakt;
 
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
-use LuzernTourismus\MarketingProgramm\Data\Kategorie\KategorieUpdate;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\Kontakt;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktReader;
 use LuzernTourismus\MarketingProgramm\Data\Kontakt\KontaktUpdate;
@@ -150,11 +149,10 @@ class KontaktBuilder extends AbstractBuilder
     protected function onUndoDelete()
     {
 
-        $update = new KategorieUpdate();
+        $update = new KontaktUpdate();
         $update->isDeleted = false;
         $update->updateById($this->id);
 
     }
-
 
 }

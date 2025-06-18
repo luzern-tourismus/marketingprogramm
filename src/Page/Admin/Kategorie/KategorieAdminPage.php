@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Kategorie;
 
+use LuzernTourismus\MarketingProgramm\Com\ListBox\StatusListBox;
 use LuzernTourismus\MarketingProgramm\Parameter\KategorieParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Kategorie\KategorieDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieActiveSite;
@@ -9,7 +10,11 @@ use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieDeleteSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieEditSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieItemSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Kategorie\KategorieNewSite;
+use LuzernTourismus\MarketingProgramm\Type\Status\ActiveDeletedStatus;
+use LuzernTourismus\MarketingProgramm\Type\Status\ActiveStatus;
+use LuzernTourismus\MarketingProgramm\Type\Status\DeletedStatus;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
+use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -31,11 +36,41 @@ class KategorieAdminPage extends AbstractTemplateDocument
         $btn->site = KategorieNewSite::$site;
         $btn->showTitle = false;
 
+
+        $search = new AdminSearchForm($layout);
+
+        $status = new StatusListBox($search);
+        $status->searchMode = true;
+        $status->submitOnChange = true;
+
+
+
         $table = new AdminTable($layout);
 
 
         $reader = new KategorieDataReader();
-        $reader->filter->andEqual($reader->model->isDeleted,false);
+        //$reader->filter->andEqual($reader->model->isDeleted,false);
+
+        if ($status->hasValue()) {
+
+            if ($status->getValue() == (new ActiveStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted, false);
+            }
+
+            if ($status->getValue() == (new DeletedStatus())->id) {
+                $reader->filter->andEqual($reader->model->isDeleted, true);
+                //(new Debug())->write('deleted');
+            }
+
+            if ($status->getValue() == (new ActiveDeletedStatus())->id) {
+                //$reader->filter->andEqual($reader->model->isDeleted,true);
+            }
+
+        } else {
+            $reader->filter->andEqual($reader->model->isDeleted, false);
+        }
+
+
         $reader->addOrder($reader->model->kategorie);
 
 

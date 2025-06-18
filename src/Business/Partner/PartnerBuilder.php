@@ -5,6 +5,7 @@ namespace LuzernTourismus\MarketingProgramm\Business\Partner;
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
 use LuzernTourismus\MarketingProgramm\Data\Partner\Partner;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerUpdate;
+use Nemundo\Core\Check\ValueCheck;
 
 class PartnerBuilder extends AbstractBuilder
 {
@@ -35,7 +36,7 @@ class PartnerBuilder extends AbstractBuilder
         $data->strasse = $this->strasse;
         $data->plz = $this->plz;
         $data->ort = $this->ort;
-        $data->anmeldungFinalisiert=false;
+        $data->anmeldungFinalisiert = false;
         $data->mitarbeiterId = $this->mitarbeiterId;
         $this->id = $data->save();
 
@@ -50,7 +51,10 @@ class PartnerBuilder extends AbstractBuilder
         $update->strasse = $this->strasse;
         $update->plz = $this->plz;
         $update->ort = $this->ort;
-        $update->mitarbeiterId = $this->mitarbeiterId;
+
+        if ((new ValueCheck())->hasValue($this->mitarbeiterId)) {
+            $update->mitarbeiterId = $this->mitarbeiterId;
+        }
         $update->updateById($this->id);
 
     }
