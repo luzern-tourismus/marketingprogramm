@@ -17,6 +17,8 @@ class PartnerBuilder extends AbstractBuilder
 
     public $ort;
 
+    public $mitarbeiterId;
+
 
     protected function loadBuilder()
     {
@@ -34,6 +36,7 @@ class PartnerBuilder extends AbstractBuilder
         $data->plz = $this->plz;
         $data->ort = $this->ort;
         $data->anmeldungFinalisiert=false;
+        $data->mitarbeiterId = $this->mitarbeiterId;
         $this->id = $data->save();
 
     }
@@ -47,6 +50,7 @@ class PartnerBuilder extends AbstractBuilder
         $update->strasse = $this->strasse;
         $update->plz = $this->plz;
         $update->ort = $this->ort;
+        $update->mitarbeiterId = $this->mitarbeiterId;
         $update->updateById($this->id);
 
     }

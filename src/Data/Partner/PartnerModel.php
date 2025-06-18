@@ -36,6 +36,16 @@ public $ort;
 */
 public $anmeldungFinalisiert;
 
+/**
+* @var \Nemundo\Model\Type\External\Id\NumberExternalIdType
+*/
+public $mitarbeiterId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterExternalType
+*/
+public $mitarbeiter;
+
 protected function loadModel() {
 $this->tableName = "marketingprogramm_partner";
 $this->aliasTableName = "marketingprogramm_partner";
@@ -102,5 +112,22 @@ $this->anmeldungFinalisiert->aliasFieldName = "marketingprogramm_partner_anmeldu
 $this->anmeldungFinalisiert->label = "Anmeldung Finalisiert";
 $this->anmeldungFinalisiert->allowNullValue = false;
 
+$this->mitarbeiterId = new \Nemundo\Model\Type\External\Id\NumberExternalIdType($this);
+$this->mitarbeiterId->tableName = "marketingprogramm_partner";
+$this->mitarbeiterId->fieldName = "mitarbeiter";
+$this->mitarbeiterId->aliasFieldName = "marketingprogramm_partner_mitarbeiter";
+$this->mitarbeiterId->label = "Mitarbeiter";
+$this->mitarbeiterId->allowNullValue = true;
+
+}
+public function loadMitarbeiter() {
+if ($this->mitarbeiter == null) {
+$this->mitarbeiter = new \LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterExternalType($this, "marketingprogramm_partner_mitarbeiter");
+$this->mitarbeiter->tableName = "marketingprogramm_partner";
+$this->mitarbeiter->fieldName = "mitarbeiter";
+$this->mitarbeiter->aliasFieldName = "marketingprogramm_partner_mitarbeiter";
+$this->mitarbeiter->label = "Mitarbeiter";
+}
+return $this;
 }
 }

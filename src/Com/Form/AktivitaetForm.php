@@ -82,6 +82,8 @@ class AktivitaetForm extends AbstractAdminEditForm
         $this->datum = new AdminTextBox($this);
         $this->datum->label = 'Datum';
 
+        // https://github.com/DennisSuitters/summernote-cleaner
+
         $this->kosten = new AdminHtmlEditor($this);
         $this->kosten->label = 'Kosten';
         //$this->kosten->height=300;

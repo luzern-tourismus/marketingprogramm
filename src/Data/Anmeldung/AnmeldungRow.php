@@ -22,7 +22,7 @@ public $id;
 public $partnerId;
 
 /**
-* @var \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow
+* @var \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow
 */
 public $partner;
 
@@ -56,7 +56,7 @@ $this->loadLuzernTourismusMarketingProgrammDataOptionOptionoptionRow($model->opt
 }
 }
 private function loadLuzernTourismusMarketingProgrammDataPartnerPartnerpartnerRow($model) {
-$this->partner = new \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow($this->row, $model);
+$this->partner = new \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow($this->row, $model);
 }
 private function loadLuzernTourismusMarketingProgrammDataOptionOptionoptionRow($model) {
 $this->option = new \LuzernTourismus\MarketingProgramm\Reader\Option\OptionDataRow($this->row, $model);

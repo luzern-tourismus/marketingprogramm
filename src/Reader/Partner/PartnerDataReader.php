@@ -7,6 +7,16 @@ use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 class PartnerDataReader extends PartnerReader
 {
 
+
+    public function __construct()
+    {
+
+        parent::__construct();
+        $this->model->loadMitarbeiter();
+
+    }
+
+
     public function orderByFirma()
     {
 

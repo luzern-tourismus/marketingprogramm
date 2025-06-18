@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Com\Form\OptionForm;
+use LuzernTourismus\MarketingProgramm\Com\Table\AktivitaetLabelValueTable;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
@@ -23,6 +24,10 @@ class OptionEditPage extends AbstractTemplateDocument
 
         $optionId =  (new OptionParameter())->getValue();
         $optionRow = (new OptionReader())->getRowById($optionId);
+
+        $table = new AktivitaetLabelValueTable($layout);
+        $table->fromAktivitaetId($optionRow->aktivitaetId);
+
 
         $site = clone(AktivitaetItemSite::$site);
         $site->addParameter(new AktivitaetParameter($optionRow->aktivitaetId) );

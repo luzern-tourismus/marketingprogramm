@@ -3,9 +3,13 @@
 namespace LuzernTourismus\MarketingProgramm\Com\Form;
 
 use LuzernTourismus\MarketingProgramm\Business\Aktivitaet\AktivitaetBuilder;
+use LuzernTourismus\MarketingProgramm\Com\Table\AktivitaetLabelValueTable;
+use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetRow;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionModel;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionUpdate;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
+use LuzernTourismus\MarketingProgramm\Reader\Option\OptionDataReader;
 use Nemundo\Admin\Com\Form\AbstractAdminEditForm;
 use Nemundo\Admin\Com\ListBox\AdminNumberBox;
 use Nemundo\Admin\Com\ListBox\AdminTextBox;
@@ -34,6 +38,12 @@ class OptionForm extends AbstractAdminEditForm
 
     public function getContent()
     {
+
+        //$optionRow = (new OptionDataReader())->getRowById($this->dataId);
+        //$aktivitaetRow = $optionRow->aktivitaet;  // -> (new AktivitaetDataReader())->getRowById($this->aktivitaetId);
+
+
+
 
         $model = new OptionModel();
 

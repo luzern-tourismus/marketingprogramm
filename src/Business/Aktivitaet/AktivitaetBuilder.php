@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Business\Aktivitaet;
 
 use LuzernTourismus\MarketingProgramm\Business\Base\AbstractBuilder;
+use LuzernTourismus\MarketingProgramm\Clean\WordClean;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\Aktivitaet;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetReader;
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetUpdate;
@@ -10,14 +11,9 @@ use LuzernTourismus\MarketingProgramm\Data\AktivitaetChangeLog\AktivitaetChangeL
 use LuzernTourismus\MarketingProgramm\Data\Option\Option;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionCount;
 use LuzernTourismus\MarketingProgramm\Data\Option\OptionReader;
-use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataRow;
 use Nemundo\Core\Check\ValueCheck;
-use Nemundo\Core\Debug\Debug;
-use Nemundo\Core\Type\Number\Number;
-use Nemundo\Core\Type\Text\Text;
 use Nemundo\Core\Validation\NumberValidation;
 use Nemundo\Db\Sql\Order\SortOrder;
-use Nemundo\Model\Type\Text\TextType;
 
 class AktivitaetBuilder extends AbstractBuilder
 {
@@ -45,6 +41,8 @@ class AktivitaetBuilder extends AbstractBuilder
 
     protected function onCreate()
     {
+
+        $this->cleanData();
 
         $data = new Aktivitaet();
         $data->isDeleted = false;
@@ -81,17 +79,16 @@ class AktivitaetBuilder extends AbstractBuilder
     protected function onUpdate()
     {
 
+        $this->cleanData();
+
         $aktivitaetOldRow = (new AktivitaetReader())->getRowById($this->id);
 
         $update = new AktivitaetUpdate();
-        //$update->isDeleted = false;
-        //$update->kategorieId = $this->kategorieId;
         $update->aktivitaet = $this->aktivaet;
         $update->datum = $this->datum;
         $update->kosten = $this->kosten;
         $update->leistung = $this->leistung;
         $update->zielpublikum = $this->zielpublikum;
-        //$update->kontaktId = $this->kontaktId;
 
         if ((new ValueCheck())->hasValue($this->kategorieId)) {
             $update->kategorieId = $this->kategorieId;
@@ -126,12 +123,20 @@ class AktivitaetBuilder extends AbstractBuilder
             $data->datumHasChanged = false;
         }
 
-        //$data->dateTime = (new DateTime())->setNow();
-        //$data->userId = (new UserSession())->userId;
-
         $data->save();
 
     }
+
+
+    protected function cleanData()
+    {
+
+        $this->kosten = (new WordClean())->cleanHtml($this->kosten);
+        $this->leistung = (new WordClean())->cleanHtml($this->leistung);
+
+    }
+
+
 
 
     protected function onDelete()
@@ -160,8 +165,6 @@ class AktivitaetBuilder extends AbstractBuilder
 
         $preis = preg_replace('/[^0-9.]/', '', $preis);
 
-        //$preis =  (new Number($preis))->removeText()->getValue();
-
         $itemOrder = null;
 
         $count = new OptionCount();
@@ -173,7 +176,7 @@ class AktivitaetBuilder extends AbstractBuilder
             $reader = new OptionReader();
             $reader->filter->andEqual($reader->model->aktivitaetId, $this->id);
             $reader->addOrder($reader->model->itemOrder, SortOrder::DESCENDING);
-            $reader->limit=1;
+            $reader->limit = 1;
             foreach ($reader->getData() as $optionRow) {
                 $itemOrder = $optionRow->itemOrder;
             }
@@ -200,10 +203,6 @@ class AktivitaetBuilder extends AbstractBuilder
         return $this;
 
     }
-
-
-
-
 
 
     public function deleteOption($id)

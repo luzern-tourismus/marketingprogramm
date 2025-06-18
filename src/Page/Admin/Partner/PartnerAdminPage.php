@@ -44,6 +44,7 @@ class PartnerAdminPage extends AbstractTemplateDocument
             ->addText($reader->model->firma->label)
             ->addText($reader->model->strasse->label)
             ->addText($reader->model->plz->label.'/'.$reader->model->ort->label)
+            ->addText($reader->model->mitarbeiter->label)
             ->addText($reader->model->anmeldungFinalisiert->label)
             ->addEmpty(3);
 
@@ -62,7 +63,7 @@ class PartnerAdminPage extends AbstractTemplateDocument
 
             $row->addText($partnerRow->strasse);
             $row->addText($partnerRow->getPlzOrt());
-            //$row->addText($partnerRow->ort);
+            $row->addText($partnerRow->mitarbeiter->getVornameName());
 
             $row->addYesNo($partnerRow->anmeldungFinalisiert);
 

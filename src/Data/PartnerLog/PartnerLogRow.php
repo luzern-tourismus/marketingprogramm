@@ -22,7 +22,7 @@ public $id;
 public $partnerId;
 
 /**
-* @var \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow
+* @var \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow
 */
 public $partner;
 
@@ -80,7 +80,7 @@ $this->strasseHasChanged = boolval($this->getModelValue($model->strasseHasChange
 $this->strasseOld = $this->getModelValue($model->strasseOld);
 }
 private function loadLuzernTourismusMarketingProgrammDataPartnerPartnerpartnerRow($model) {
-$this->partner = new \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow($this->row, $model);
+$this->partner = new \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow($this->row, $model);
 }
 private function loadLuzernTourismusMarketingProgrammDataChangeLogChangeLoglogRow($model) {
 $this->log = new \LuzernTourismus\MarketingProgramm\Data\ChangeLog\ChangeLogRow($this->row, $model);

@@ -36,6 +36,16 @@ public $ort;
 */
 public $anmeldungFinalisiert;
 
+/**
+* @var \Nemundo\Model\Type\Id\IdType
+*/
+public $mitarbeiterId;
+
+/**
+* @var \LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterExternalType
+*/
+public $mitarbeiter;
+
 protected function loadExternalType() {
 parent::loadExternalType();
 $this->externalModelClassName = PartnerModel::class;
@@ -97,5 +107,23 @@ $this->anmeldungFinalisiert->aliasFieldName = $this->anmeldungFinalisiert->table
 $this->anmeldungFinalisiert->label = "Anmeldung Finalisiert";
 $this->addType($this->anmeldungFinalisiert);
 
+$this->mitarbeiterId = new \Nemundo\Model\Type\Id\IdType();
+$this->mitarbeiterId->fieldName = "mitarbeiter";
+$this->mitarbeiterId->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->mitarbeiterId->aliasFieldName = $this->mitarbeiterId->tableName ."_".$this->mitarbeiterId->fieldName;
+$this->mitarbeiterId->label = "Mitarbeiter";
+$this->addType($this->mitarbeiterId);
+
+}
+public function loadMitarbeiter() {
+if ($this->mitarbeiter == null) {
+$this->mitarbeiter = new \LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterExternalType(null, $this->parentFieldName . "_mitarbeiter");
+$this->mitarbeiter->fieldName = "mitarbeiter";
+$this->mitarbeiter->tableName = $this->parentFieldName . "_" . $this->externalTableName;
+$this->mitarbeiter->aliasFieldName = $this->mitarbeiter->tableName ."_".$this->mitarbeiter->fieldName;
+$this->mitarbeiter->label = "Mitarbeiter";
+$this->addType($this->mitarbeiter);
+}
+return $this;
 }
 }

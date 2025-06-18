@@ -22,7 +22,7 @@ public $id;
 public $partnerId;
 
 /**
-* @var \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow
+* @var \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow
 */
 public $partner;
 
@@ -74,7 +74,7 @@ $this->loadLuzernTourismusMarketingProgrammDataAnredeAnredeanredeRow($model->anr
 }
 }
 private function loadLuzernTourismusMarketingProgrammDataPartnerPartnerpartnerRow($model) {
-$this->partner = new \LuzernTourismus\MarketingProgramm\Data\Partner\PartnerRow($this->row, $model);
+$this->partner = new \LuzernTourismus\MarketingProgramm\Reader\Partner\PartnerDataRow($this->row, $model);
 }
 private function loadLuzernTourismusMarketingProgrammDataAnredeAnredeanredeRow($model) {
 $this->anrede = new \LuzernTourismus\MarketingProgramm\Data\Anrede\AnredeRow($this->row, $model);

@@ -899,6 +899,15 @@
                     "variable_name": "anmeldungFinalisiert",
                     "allow_null": false,
                     "is_deleted": false
+                },
+                {
+                    "type": "external",
+                    "label": "Mitarbeiter",
+                    "field_name": "mitarbeiter",
+                    "variable_name": "mitarbeiter",
+                    "allow_null": true,
+                    "is_deleted": false,
+                    "external_model_id": "315b6c75-be54-4961-b7ba-858e70536062"
                 }
             ],
             "index": []
@@ -985,7 +994,7 @@
             "class_name": "PartnerMitarbeiter",
             "table_name": "marketingprogramm_partner_mitarbeiter",
             "namespace": "LuzernTourismus\\MarketingProgramm\\Data\\PartnerMitarbeiter",
-            "row_class_name": "",
+            "row_class_name": "LuzernTourismus\\MarketingProgramm\\Reader\\PartnerMitarbeiter\\PartnerMitarbeiterDataRow",
             "primary_index": "auto_increment",
             "is_deleted": false,
             "type": [

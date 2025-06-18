@@ -17,6 +17,7 @@ use LuzernTourismus\MarketingProgramm\Site\Admin\Aktivitaet\AktivitaetNewSite;
 use Nemundo\Admin\Com\Button\AdminIconSiteButton;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
+use Nemundo\Admin\Com\ListBox\AdminCheckBox;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
 use Nemundo\Admin\Com\Table\Row\AdminTableRow;
@@ -48,6 +49,10 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
         $kontakt->searchMode = true;
         $kontakt->submitOnChange = true;
 
+        $showDeleted = new AdminCheckBox($search);
+        $showDeleted->label = 'Gelöschte anzeigen';
+        $showDeleted->searchMode = true;
+$showDeleted->submitOnChange = true;
 
         $btn = new AdminIconSiteButton($layout);
         $btn->site = AktivitaetNewSite::$site;
@@ -58,7 +63,13 @@ class AktivitaetAdminPage extends AbstractTemplateDocument
 
         $reader = new AktivitaetDataReader();
 
-        $reader->filter->andEqual($reader->model->isDeleted,false);
+        //$reader->filter->andEqual($reader->model->isDeleted,false);
+
+        if (!$showDeleted->hasValue()) {
+            $reader->filter->andEqual($reader->model->isDeleted, false);
+        } else {
+            $reader->filter->andEqual($reader->model->isDeleted, true);
+        }
 
         $reader
             ->filterByThema($thema->getValue())

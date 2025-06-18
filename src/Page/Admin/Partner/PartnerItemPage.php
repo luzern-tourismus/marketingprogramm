@@ -7,6 +7,7 @@ use LuzernTourismus\MarketingProgramm\Data\Partner\Partner;
 use LuzernTourismus\MarketingProgramm\Data\Partner\PartnerReader;
 use LuzernTourismus\MarketingProgramm\Data\PartnerMitarbeiter\PartnerMitarbeiterReader;
 use LuzernTourismus\MarketingProgramm\Parameter\PartnerParameter;
+use LuzernTourismus\MarketingProgramm\Reader\PartnerMitarbeiter\PartnerMitarbeiterDataReader;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerAdminSite;
 use LuzernTourismus\MarketingProgramm\Site\Admin\Partner\PartnerItemSite;
 use Nemundo\Admin\Com\Button\AdminSiteButton;
@@ -43,10 +44,12 @@ class PartnerItemPage extends AbstractTemplateDocument
 
             $table = new AdminTable($layout);
 
-            $mitarbeiterReader = new PartnerMitarbeiterReader();
-            $mitarbeiterReader->filter->andEqual($mitarbeiterReader->model->partnerId, $partnerRow->id);
+            $mitarbeiterReader = new PartnerMitarbeiterDataReader();
+            $mitarbeiterReader->filterByPartnerId($partnerRow->id);
+            //$mitarbeiterReader->filter->andEqual($mitarbeiterReader->model->partnerId, $partnerRow->id);
 
             (new AdminTableHeader($table))
+                ->addText($mitarbeiterReader->model->anrede->label)
                 ->addText($mitarbeiterReader->model->name->label)
                 ->addText($mitarbeiterReader->model->vorname->label)
                 ->addText($mitarbeiterReader->model->email->label);
@@ -55,6 +58,7 @@ class PartnerItemPage extends AbstractTemplateDocument
             foreach ($mitarbeiterReader->getData() as $mitarbeiterRow) {
 
                 (new AdminTableRow($table))
+                    ->addText($mitarbeiterRow->anrede->anrede)
                     ->addText($mitarbeiterRow->name)
                     ->addText($mitarbeiterRow->vorname)
                     ->addText($mitarbeiterRow->email);

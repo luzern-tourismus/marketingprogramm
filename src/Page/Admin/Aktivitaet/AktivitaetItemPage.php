@@ -2,6 +2,7 @@
 
 namespace LuzernTourismus\MarketingProgramm\Page\Admin\Aktivitaet;
 
+use LuzernTourismus\MarketingProgramm\Com\Table\AktivitaetLabelValueTable;
 use LuzernTourismus\MarketingProgramm\Parameter\AktivitaetParameter;
 use LuzernTourismus\MarketingProgramm\Parameter\OptionParameter;
 use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
@@ -41,8 +42,10 @@ class AktivitaetItemPage extends AbstractTemplateDocument
         $title = new AdminTitle($layout);
         $title->content = $aktivitaetRow->aktivitaet;
 
+        $table = new AktivitaetLabelValueTable($layout);
+        $table->aktivitaetRow= $aktivitaetRow;
 
-        $table = new AdminLabelValueTable($layout);
+        /*$table = new AdminLabelValueTable($layout);
         $table
             ->addLabelValue($aktivitaetRow->model->aktivitaet->label, $aktivitaetRow->aktivitaet)
             ->addLabelValue($aktivitaetRow->model->kategorie->label, $aktivitaetRow->kategorie->kategorie)
@@ -51,7 +54,7 @@ class AktivitaetItemPage extends AbstractTemplateDocument
             ->addLabelValue($aktivitaetRow->model->kosten->label, $aktivitaetRow->kosten)
             ->addLabelValue($aktivitaetRow->model->leistung->label, $aktivitaetRow->leistung)
             ->addLabelValue($aktivitaetRow->model->zielpublikum->label, $aktivitaetRow->zielpublikum)
-            ->addLabelValue($aktivitaetRow->model->kontakt->label, $aktivitaetRow->kontakt->getVornameNachname());
+            ->addLabelValue($aktivitaetRow->model->kontakt->label, $aktivitaetRow->kontakt->getVornameNachname());*/
 
 
         $site = clone(OptionNewSite::$site);

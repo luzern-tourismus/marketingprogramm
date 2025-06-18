@@ -3,6 +3,7 @@
 namespace LuzernTourismus\MarketingProgramm\Com\Table;
 
 use LuzernTourismus\MarketingProgramm\Data\Aktivitaet\AktivitaetRow;
+use LuzernTourismus\MarketingProgramm\Reader\Aktivitaet\AktivitaetDataReader;
 use Nemundo\Admin\Com\Table\AdminLabelValueTable;
 
 class AktivitaetLabelValueTable extends AdminLabelValueTable
@@ -12,6 +13,28 @@ class AktivitaetLabelValueTable extends AdminLabelValueTable
      * @var AktivitaetRow
      */
     public $aktivitaetRow;
+
+
+
+    public function fromAktivitaetId($aktivitaetId)
+    {
+
+        $this->aktivitaetRow = (new AktivitaetDataReader())->getRowById($aktivitaetId);
+        return $this;
+
+    }
+
+
+    public function fromAktivitaetRow(AktivitaetRow $aktivitaetRow)
+    {
+
+        $this->aktivitaetRow =$aktivitaetRow;
+        return $this;
+
+    }
+
+
+
 
     public function getContent()
     {

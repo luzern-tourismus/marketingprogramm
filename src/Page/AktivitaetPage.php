@@ -24,6 +24,7 @@ use Nemundo\Admin\Com\Button\AdminSiteButton;
 use Nemundo\Admin\Com\Form\AdminSearchForm;
 use Nemundo\Admin\Com\Layout\AdminFlexboxLayout;
 use Nemundo\Admin\Com\Layout\Flex\AdminRowFlexLayout;
+use Nemundo\Admin\Com\ListBox\AdminCheckBox;
 use Nemundo\Admin\Com\Table\AdminLabelValueTable;
 use Nemundo\Admin\Com\Table\AdminTable;
 use Nemundo\Admin\Com\Table\AdminTableHeader;
@@ -67,8 +68,13 @@ class AktivitaetPage extends AbstractTemplateDocument
         $kategorie->themaId = $this->thema->id;
 
 
+
         $reader = new AktivitaetDataReader();
+
+
         $reader->filter->andEqual($reader->model->isDeleted, false);
+
+
         $reader->filter->andEqual($reader->model->kategorie->themaId, $this->thema->id);
 
         if ($this->thema->id === (new MarktmanagementThema())->id) {
